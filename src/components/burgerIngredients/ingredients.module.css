@@ -1,0 +1,14 @@
+.cards {
+    display: grid;
+    grid-template-columns: repeat(2, 272px);
+
+}
+
+.scroll {
+    max-height: 756px;
+    overflow-y: scroll;
+}
+
+.scroll_margin {
+    scroll-margin-top: 10px;
+}
