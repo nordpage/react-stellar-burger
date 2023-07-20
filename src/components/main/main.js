@@ -1,11 +1,11 @@
 import React from 'react';
-import styles from "../app/app.module.css";
-import BurgerIngredients from "../burger-ingredients/burgerIngredients";
-import BurgerConstructor from "../burgerConstructor/burgerConstructor";
+import styles from "./main.module.css";
+import BurgerIngredients from "../burger-ingredients/burger-ingredients";
+import BurgerConstructor from "../burger-constructor/burger-constructor";
 
 function Main(props) {
     const [data, setData] = React.useState(props.data)
-    const [constructorData, setConstructorData] = React.useState([])
+    const [constructorData, setConstructorData] = React.useState(props.tempData)
 
     const OnItemClick = (item, counter) =>{
         const newData = [...data]
@@ -18,7 +18,7 @@ function Main(props) {
     }
 
     return(
-        <main className={styles.main}>
+        <main className={styles.container}>
             <BurgerIngredients data={data} OnItemClick={OnItemClick}/>
             <BurgerConstructor ingredients={constructorData}/>
         </main>

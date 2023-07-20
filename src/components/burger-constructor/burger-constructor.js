@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import BurgerPrice from "./burgerPrice/burgerPrice";
-import stylesConstructor from "./burger-constructor.module.css";
+import BurgerPrice from "./burger-price/burger-price";
+import styles from "./burger-constructor.module.css";
 
 function BurgerConstructor(props) {
 
@@ -25,7 +25,7 @@ function BurgerConstructor(props) {
                     thumbnail={topBun.image}
                     />
                 </div>}
-                <div className={`${stylesConstructor.ingredients} custom-scroll`}>
+                <div className={`${styles.ingredients} custom-scroll`}>
                     {
                         list.filter(item => item.type !== "bun").map((ingr, index) =>
                             <Ingredient ingr={ingr} key={index}/>
@@ -56,7 +56,7 @@ function BurgerConstructor(props) {
     }
 
     return(
-        <section className={`${stylesConstructor.container} pt-25`}>
+        <section className={`${styles.container} pt-25`}>
             <Burger/>
             {
                 list.length > 0 && <BurgerPrice items={list}/>

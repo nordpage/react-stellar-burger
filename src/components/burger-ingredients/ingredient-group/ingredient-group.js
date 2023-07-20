@@ -1,6 +1,7 @@
 import React from 'react';
 import IngredientItem from "../ingredient-item/ingredient-item";
-import stylesIngredientsGroup from "./ingredient-group.module.css"
+import styles from "./ingredient-group.module.css"
+
 function IngredientGroup(props) {
     const [list] = React.useState(props.data)
     function OnItemClick(item, counter) {
@@ -14,9 +15,9 @@ function IngredientGroup(props) {
 
 
     return(
-        <section className={`${stylesIngredientsGroup.scroll_margin} mt-10 mb-6`} id={props.uid}>
+        <section className={`${styles.scroll_margin} mt-10 mb-6`} id={props.uid}>
             <h2 className="text text_type_main-medium" >{props.name}</h2>
-            <ul className={`${stylesIngredientsGroup.cards} ml-2 mr-2`}>
+            <ul className={`${styles.cards} ml-2 mr-2`}>
                 <Items filter={props.uid}/>
             </ul>
         </section>
