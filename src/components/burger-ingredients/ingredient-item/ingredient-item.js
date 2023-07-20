@@ -6,7 +6,7 @@ import {ingredientPropType} from "../../../utils/prop-types";
 
 const IngredientItem = function(props) {
 
-    function OnItemClick(item, counter) {
+    function onItemClick(item, counter) {
         props.OnItemClick(item, counter);
     }
 

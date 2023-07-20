@@ -32,8 +32,8 @@ const BurgerIngredients = function(props) {
         });
     };
 
-    function OnItemClick(item, counter) {
-        props.OnItemClick(item, counter)
+    function onItemClick(item, counter) {
+        props.onItemClick(item, counter)
     }
 
     return (
@@ -50,7 +50,7 @@ const BurgerIngredients = function(props) {
                     Начинки
                 </Tab>
             </div>
-            <IngredientsContainer OnItemClick={OnItemClick} handleScroll={handleScroll} data={props.data}/>
+            <IngredientsContainer onItemClick={onItemClick} handleScroll={handleScroll} data={props.data}/>
         </section>
     )
 

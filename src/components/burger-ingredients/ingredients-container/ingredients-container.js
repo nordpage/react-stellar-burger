@@ -6,8 +6,8 @@ import PropTypes from "prop-types";
 
 const IngredientsContainer = function(props) {
 
-    function OnItemClick(item, counter) {
-        props.OnItemClick(item, counter)
+    function onItemClick(item, counter) {
+        props.onItemClick(item, counter)
     }
 
      function handleScroll(event) {
@@ -18,13 +18,13 @@ const IngredientsContainer = function(props) {
     return (
         <section className={`${styles.scroll} custom-scroll`} onScroll={handleScroll}>
             <section id ="bun" className="scroll-section" data-offset={0}>
-                <IngredientGroup name="Булки" uid="bun" data={props.data} key="1" OnItemClick={OnItemClick}/>
+                <IngredientGroup name="Булки" uid="bun" data={props.data} key="1" onItemClick={onItemClick}/>
             </section>
             <section id="sauce" className="scroll-section" data-offset={310}>
-                <IngredientGroup name="Соусы" uid="sauce" data={props.data} key="2" OnItemClick={OnItemClick}/>
+                <IngredientGroup name="Соусы" uid="sauce" data={props.data} key="2" onItemClick={onItemClick}/>
             </section>
             <section id="main" className="scroll-section" data-offset={840}>
-                <IngredientGroup name="Начинки" uid="main" data={props.data} key="3" OnItemClick={OnItemClick}/>
+                <IngredientGroup name="Начинки" uid="main" data={props.data} key="3" onItemClick={onItemClick}/>
             </section>
         </section>
     )

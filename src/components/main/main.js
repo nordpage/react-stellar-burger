@@ -7,10 +7,10 @@ function Main(props) {
     const [data, setData] = React.useState(props.data)
     const [constructorData, setConstructorData] = React.useState(props.tempData)
 
-    const OnItemClick = (item, counter) =>{
+    const onItemClick = (item, counter) =>{
         const newData = [...data]
-        const currentItem = newData.find(ingr => {
-            return ingr._id === item._id
+        const currentItem = newData.find(ingredient => {
+            return ingredient._id === item._id
         });
         currentItem.counter = counter
         setData(newData)
@@ -19,7 +19,7 @@ function Main(props) {
 
     return(
         <main className={styles.container}>
-            <BurgerIngredients data={data} OnItemClick={OnItemClick}/>
+            <BurgerIngredients data={data} onItemClick={onItemClick}/>
             <BurgerConstructor ingredients={constructorData}/>
         </main>
     )
