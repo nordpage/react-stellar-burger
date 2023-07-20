@@ -70,6 +70,6 @@ const BurgerConstructor = function(props) {
 export default BurgerConstructor;
 
 BurgerConstructor.propTypes = {
-  item: PropTypes.objectOf(ingredientPropType),
+  item: ingredientPropType,
   ingredients: PropTypes.array.isRequired
 }
