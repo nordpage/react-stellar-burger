@@ -1,10 +1,18 @@
 .card {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 4px;
     width: 272px;
     height: 208px;
     align-items: center;
+    justify-content: center;
+}
+
+.counter {
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
 .price {
