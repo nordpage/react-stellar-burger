@@ -1,8 +1,9 @@
 import React from 'react';
 import IngredientItem from "../ingredient-item/ingredient-item";
 import styles from "./ingredient-group.module.css"
+import PropTypes from "prop-types";
 
-function IngredientGroup(props) {
+const IngredientGroup = function(props) {
     const [list] = React.useState(props.data)
     function OnItemClick(item, counter) {
         props.OnItemClick(item, counter)
@@ -25,3 +26,11 @@ function IngredientGroup(props) {
 }
 
 export default IngredientGroup
+
+IngredientGroup.propTypes = {
+  OnItemClick: PropTypes.func,
+  data: PropTypes.array.isRequired,
+  filter: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  uid: PropTypes.string.isRequired
+}

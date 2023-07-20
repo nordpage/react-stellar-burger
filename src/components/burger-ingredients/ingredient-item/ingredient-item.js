@@ -1,8 +1,10 @@
 import React from 'react';
 import styles from './ingredient-item.module.css';
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import PropTypes from "prop-types";
+import {ingredientPropType} from "../../../utils/prop-types";
 
-function IngredientItem(props) {
+const IngredientItem = function(props) {
 
     function OnItemClick(item, counter) {
         props.OnItemClick(item, counter);
@@ -21,3 +23,8 @@ function IngredientItem(props) {
 }
 
 export default IngredientItem;
+
+IngredientItem.propTypes = {
+    OnItemClick: PropTypes.func,
+    item: PropTypes.objectOf(ingredientPropType)
+}

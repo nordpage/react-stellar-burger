@@ -2,8 +2,10 @@ import React, {useEffect} from 'react';
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerPrice from "./burger-price/burger-price";
 import styles from "./burger-constructor.module.css";
+import PropTypes from "prop-types";
+import {ingredientPropType} from "../../utils/prop-types";
 
-function BurgerConstructor(props) {
+const BurgerConstructor = function(props) {
 
     const [list, setList] = React.useState(props.ingredients)
 
@@ -27,8 +29,8 @@ function BurgerConstructor(props) {
                 </div>}
                 <div className={`${styles.ingredients} custom-scroll`}>
                     {
-                        list.filter(item => item.type !== "bun").map((ingr, index) =>
-                            <Ingredient ingr={ingr} key={index}/>
+                        list.filter(item => item.type !== "bun").map((ingredient, index) =>
+                            <Ingredient item={ingredient} key={index}/>
                         )
                     }
                 </div>
@@ -47,9 +49,9 @@ function BurgerConstructor(props) {
     const Ingredient = (props) =>  {
         return <div className="mb-4">
                 <DragIcon type="primary"/> <ConstructorElement
-                text={props.ingr.name}
-                price={props.ingr.price}
-                thumbnail={props.ingr.image}
+                text={props.item.name}
+                price={props.item.price}
+                thumbnail={props.item.image}
             />
             </div>
 
@@ -66,3 +68,8 @@ function BurgerConstructor(props) {
 }
 
 export default BurgerConstructor;
+
+BurgerConstructor.propTypes = {
+  item: PropTypes.objectOf(ingredientPropType),
+  ingredients: PropTypes.array.isRequired
+}

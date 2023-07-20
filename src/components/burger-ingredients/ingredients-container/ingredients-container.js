@@ -2,8 +2,9 @@ import React from 'react';
 
 import styles from "./ingredients-container.module.css"
 import IngredientGroup from "../ingredient-group/ingredient-group";
+import PropTypes from "prop-types";
 
-function IngredientsContainer(props) {
+const IngredientsContainer = function(props) {
 
     function OnItemClick(item, counter) {
         props.OnItemClick(item, counter)
@@ -30,3 +31,9 @@ function IngredientsContainer(props) {
 }
 
 export default IngredientsContainer
+
+IngredientsContainer.propTypes = {
+  OnItemClick: PropTypes.func,
+  data: PropTypes.array.isRequired,
+  handleScroll: PropTypes.func
+}

@@ -6,7 +6,7 @@ import styles from "./burger-ingredients.module.css";
 import IngredientsContainer from "./ingredients-container/ingredients-container";
 
 
-function BurgerIngredients(props) {
+const BurgerIngredients = function(props) {
     const [current, setCurrent] = React.useState('bun')
 
     function chooseTab(currentValue) {
@@ -56,3 +56,8 @@ function BurgerIngredients(props) {
 }
 
 export default BurgerIngredients;
+
+BurgerIngredients.propTypes = {
+  OnItemClick: PropTypes.func,
+  data: PropTypes.array.isRequired
+}
