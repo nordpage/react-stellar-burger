@@ -1,0 +1,11 @@
+.container {
+    min-height: 912px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.ingredients {
+    max-height: 568px;
+    overflow-y: scroll;
+}

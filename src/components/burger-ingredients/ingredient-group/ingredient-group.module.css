@@ -1,0 +1,8 @@
+.scroll_margin {
+    scroll-margin-top: 10px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(2, 272px);
+}
