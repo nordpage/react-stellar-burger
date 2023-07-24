@@ -26,5 +26,5 @@ export default IngredientItem;
 
 IngredientItem.propTypes = {
     OnItemClick: PropTypes.func,
-    item: ingredientPropType
+    item: ingredientPropType.isRequired
 }
