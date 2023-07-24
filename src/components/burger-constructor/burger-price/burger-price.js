@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-price.module.css"
-function BurgerPrice(props) {
+const BurgerPrice = function(props) {
     const [list, setList] = React.useState(props.items)
 
     useEffect(() => {

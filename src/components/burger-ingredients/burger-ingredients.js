@@ -5,6 +5,7 @@ import styles from "./burger-ingredients.module.css";
 
 import IngredientsContainer from "./ingredients-container/ingredients-container";
 import PropTypes from "prop-types";
+import {BUN, MAIN, SAUCE} from "../../utils/constants";
 
 
 const BurgerIngredients = function(props) {
@@ -40,13 +41,13 @@ const BurgerIngredients = function(props) {
         <section className={`${styles.container} mb-10`}>
             <h1 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h1>
             <div style={{display: 'flex'}} className="mb-10">
-                <Tab value="one" active={current === 'bun'} onClick={() => chooseTab("bun")}>
+                <Tab value="one" active={current === BUN} onClick={() => chooseTab(BUN)}>
                     Булки
                 </Tab>
-                <Tab value="two" active={current === 'sauce'} onClick={() => chooseTab("sauce")}>
+                <Tab value="two" active={current === SAUCE} onClick={() => chooseTab(SAUCE)}>
                     Соусы
                 </Tab>
-                <Tab value="three" active={current === 'main'} onClick={() => chooseTab("main")}>
+                <Tab value="three" active={current === MAIN} onClick={() => chooseTab(MAIN)}>
                     Начинки
                 </Tab>
             </div>

@@ -4,6 +4,8 @@ import BurgerPrice from "./burger-price/burger-price";
 import styles from "./burger-constructor.module.css";
 import PropTypes from "prop-types";
 import {ingredientPropType} from "../../utils/prop-types";
+import BurgerIngredient from "./burger-ingredient/burger-ingredient";
+import {BUN} from "../../utils/constants";
 
 const BurgerConstructor = function(props) {
 
@@ -14,14 +16,14 @@ const BurgerConstructor = function(props) {
     }, [props])
 
     function Burger() {
-        const topBun = list.filter(item => item.type === "bun")[0]
-        const bottomBun = list.filter(item => item.type === "bun")[1]
+        const topBun = list.filter(item => item.type === BUN)[0]
+        const bottomBun = list.filter(item => item.type === BUN)[1]
         return(
             <div>
                 {topBun && <div className="mb-4 ml-8 mr-2">
                     <ConstructorElement
                     type={"top"}
-                    isLocked={true}
+                    isLocked
                     text={topBun.name}
                     price={topBun.price}
                     thumbnail={topBun.image}
@@ -29,15 +31,15 @@ const BurgerConstructor = function(props) {
                 </div>}
                 <div className={`${styles.ingredients} custom-scroll`}>
                     {
-                        list.filter(item => item.type !== "bun").map((ingredient, index) =>
-                            <Ingredient item={ingredient} key={index}/>
+                        list.filter(item => item.type !== BUN).map((ingredient, index) =>
+                            <BurgerIngredient item={ingredient} key={index}/>
                         )
                     }
                 </div>
                 {bottomBun && <div className="ml-8">
                     <ConstructorElement
                     type={"bottom"}
-                    isLocked={true}
+                    isLocked
                     text={bottomBun.name}
                     price={bottomBun.price}
                     thumbnail={bottomBun.image}
@@ -45,16 +47,6 @@ const BurgerConstructor = function(props) {
                 </div>}
             </div>
         )
-    }
-    const Ingredient = (props) =>  {
-        return <div className="mb-4">
-                <DragIcon type="primary"/> <ConstructorElement
-                text={props.item.name}
-                price={props.item.price}
-                thumbnail={props.item.image}
-            />
-            </div>
-
     }
 
     return(
