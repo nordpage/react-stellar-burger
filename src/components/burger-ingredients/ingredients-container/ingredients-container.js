@@ -7,8 +7,8 @@ import {BUN, MAIN, SAUCE} from "../../../utils/constants";
 
 const IngredientsContainer = function(props) {
 
-    function onItemClick(item, counter) {
-        props.onItemClick(item, counter)
+    function onItemClick(item, type) {
+        props.onItemClick(item, type)
     }
 
      function handleScroll(event) {

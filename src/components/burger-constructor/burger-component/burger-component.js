@@ -28,29 +28,31 @@ const BurgerComponent = function (props) {
 
     return(
         <div>
-            {memorizedTopBun && <div className="mb-4 ml-8 mr-2">
-                <ConstructorElement
-                    type={"top"}
-                    isLocked
-                    text={memorizedTopBun.name}
-                    price={memorizedTopBun.price}
-                    thumbnail={memorizedTopBun.image}
-                />
-            </div>}
-            <div className={`${styles.ingredients} custom-scroll`}>
+            {memorizedTopBun &&
+                <div className="mr-8">
+                    <ConstructorElement
+                        type={"top"}
+                        isLocked
+                        text={memorizedTopBun.name}
+                        price={memorizedTopBun.price}
+                        thumbnail={memorizedTopBun.image}
+                        extraClass="mb-4 ml-8"
+                    />
+                </div>}
+            <div className={`${styles.ingredients} custom-scroll mr-4`}>
                 {
                     memorizedIngredients
                 }
             </div>
-            {memorizedBottomBun && <div className="ml-8">
-                <ConstructorElement
+            {memorizedBottomBun && <ConstructorElement
                     type={"bottom"}
                     isLocked
                     text={memorizedBottomBun.name}
                     price={memorizedBottomBun.price}
                     thumbnail={memorizedBottomBun.image}
+                    extraClass="ml-8 mr-8"
                 />
-            </div>}
+            }
         </div>
     )
 }

@@ -5,7 +5,11 @@
     justify-content: space-between;
 }
 
+.inner {
+    margin: 0 16px;
+}
+
 .ingredients {
-    max-height: 568px;
+    max-height: 576px;
     overflow-y: scroll;
 }

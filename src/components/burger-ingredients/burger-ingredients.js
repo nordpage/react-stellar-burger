@@ -33,8 +33,8 @@ const BurgerIngredients = function(props) {
         });
     };
 
-    function onItemClick(item, counter) {
-        props.onItemClick(item, counter)
+    function onItemClick(item, type) {
+        props.onItemClick(item, type)
     }
 
     return (
