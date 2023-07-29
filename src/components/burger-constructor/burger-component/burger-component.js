@@ -27,16 +27,16 @@ const BurgerComponent = function (props) {
     }, [list])
 
     return(
-        <div>
+        <div className={styles.burger}>
             {memorizedTopBun &&
-                <div className="mr-8">
+                <div className="mr-8 ml-8">
                     <ConstructorElement
                         type={"top"}
                         isLocked
                         text={memorizedTopBun.name}
                         price={memorizedTopBun.price}
                         thumbnail={memorizedTopBun.image}
-                        extraClass="mb-4 ml-8"
+                        extraClass="mb-4"
                     />
                 </div>}
             <div className={`${styles.ingredients} custom-scroll mr-4`}>
@@ -44,14 +44,16 @@ const BurgerComponent = function (props) {
                     memorizedIngredients
                 }
             </div>
-            {memorizedBottomBun && <ConstructorElement
+            {memorizedBottomBun &&
+                <div className="mr-8 ml-8">
+                <ConstructorElement
                     type={"bottom"}
                     isLocked
                     text={memorizedBottomBun.name}
                     price={memorizedBottomBun.price}
                     thumbnail={memorizedBottomBun.image}
-                    extraClass="ml-8 mr-8"
                 />
+                </div>
             }
         </div>
     )

@@ -1,12 +1,15 @@
+.burger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .container {
     min-height: 912px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-}
-
-.inner {
-    margin: 0 16px;
 }
 
 .ingredients {
