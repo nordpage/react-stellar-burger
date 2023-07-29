@@ -2,15 +2,19 @@ import React, {useState} from 'react';
 import styles from "./main.module.css";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import Overlay from "../overlay/overlay";
 import Modal from "../modal/modal";
+import {modalTypes} from "../../utils/modal-types";
+import OrderDetails from "../modal/order-details/order-details";
+import IngredientDetails from "../modal/ingredient-details/ingredient-details";
+import ModalOverlay from "../modal/modal-overlay/modal-overlay";
 
 function Main(props) {
-    const [data, setData] = React.useState(props.data)
+    const [data] = React.useState(props.data)
     const [constructorData, setConstructorData] = React.useState(props.tempData)
     const [modal, setModal] = useState(false)
     const [modalType, setModalType] = useState(null)
     const [currentItem, setCurrentItem] = useState()
+    const [order, setOrder] = useState(null)
 
     const onItemClick = (item, type) =>{
        setModal(true);
@@ -18,18 +22,42 @@ function Main(props) {
        setCurrentItem(item)
     }
 
+    const onOrderClick = (type, order) => {
+        setModal(true)
+        setModalType(type)
+        setOrder(order)
+    }
+
+    const onClose = () => {
+        setModal(false)
+        setModalType("")
+    }
+
+    const modalWindow = (modalType) => {
+        switch (modalType) {
+            case modalTypes.Order:
+                return <Modal shown={modal} onClose={onClose}>
+                    <OrderDetails order= {order} />
+                </Modal>
+            case modalTypes.Ingredient:
+                return <Modal shown={modal} onClose={onClose} title="Детали ингредиента">
+                    <IngredientDetails item = {currentItem}/>
+                </Modal>
+        }
+    }
+
     return(
         <>
             <main className={styles.container}>
                 <BurgerIngredients data={data} onItemClick={onItemClick}/>
-                <BurgerConstructor ingredients={constructorData}/>
+                <BurgerConstructor ingredients={constructorData} onOrderClick={onOrderClick}/>
             </main>
             {
-                modal && <div>
-                    <Modal item={currentItem} type={modalType}/>
-                </div>
-
+               modal && <ModalOverlay>
+                    {modalWindow(modalType)}
+                </ModalOverlay>
             }
+
         </>
     )
 }

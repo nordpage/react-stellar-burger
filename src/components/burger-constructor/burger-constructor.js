@@ -8,11 +8,16 @@ import BurgerComponent from "./burger-component/burger-component";
 const BurgerConstructor = function(props) {
 
 
+    const onOrderClick = (type, order) => {
+        props.onOrderClick(type, order)
+    }
+
+
     return(
         <section className={`${styles.container} pt-25`}>
             <BurgerComponent ingredients={props.ingredients}/>
             {
-                props.ingredients.length > 0 && <BurgerPrice items={props.ingredients}/>
+                props.ingredients.length > 0 && <BurgerPrice items={props.ingredients} onOrderClick={onOrderClick}/>
             }
         </section>
     )
