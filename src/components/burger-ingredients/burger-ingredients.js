@@ -6,9 +6,10 @@ import styles from "./burger-ingredients.module.css";
 import IngredientsContainer from "./ingredients-container/ingredients-container";
 import PropTypes from "prop-types";
 import {BUN, MAIN, SAUCE} from "../../utils/constants";
+import {ingredientPropType} from "../../utils/prop-types";
 
 
-const BurgerIngredients = function(props) {
+const BurgerIngredients = function({data, onClick}) {
     const [current, setCurrent] = React.useState('bun')
 
     function chooseTab(currentValue) {
@@ -34,7 +35,7 @@ const BurgerIngredients = function(props) {
     };
 
     function onItemClick(item, type) {
-        props.onItemClick(item, type)
+        onClick(item, type)
     }
 
     return (
@@ -51,7 +52,7 @@ const BurgerIngredients = function(props) {
                     Начинки
                 </Tab>
             </div>
-            <IngredientsContainer onItemClick={onItemClick} handleScroll={handleScroll} data={props.data}/>
+            <IngredientsContainer onClick={onItemClick} onScroll={handleScroll} data={data}/>
         </section>
     )
 
@@ -61,5 +62,5 @@ export default BurgerIngredients;
 
 BurgerIngredients.propTypes = {
   OnItemClick: PropTypes.func,
-  data: PropTypes.array.isRequired
+  data: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired
 }

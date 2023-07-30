@@ -1,23 +1,17 @@
-import React, {useEffect, useMemo} from 'react';
+import React, {useMemo} from 'react';
 import {Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-price.module.css"
 import {ingredientPropType} from "../../../utils/prop-types";
 import PropTypes from "prop-types";
 import {modalTypes} from "../../../utils/modal-types";
-const BurgerPrice = function(props) {
-    const [list, setList] = React.useState(props.items)
-
-    useEffect(() => {
-        setList(props.items)
-    }, [props])
-
+const BurgerPrice = function({items, onClick}) {
 
    const memoizedFullPrice = useMemo(() => {
-       return list.reduce((total, currentValue) => total + currentValue.price,0);
-    }, [list])
+       return items.reduce((total, currentValue) => total + currentValue.price,0);
+    }, [items])
 
     const onOrderClick = (type, order) => {
-        props.onOrderClick(type, order)
+        onClick(type, order)
     }
 
     const orderNumber = () => {
@@ -35,5 +29,5 @@ const BurgerPrice = function(props) {
 export default BurgerPrice
 
 BurgerPrice.propTypes = {
-    items: PropTypes.arrayOf(ingredientPropType).isRequired
+    items: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired
 }

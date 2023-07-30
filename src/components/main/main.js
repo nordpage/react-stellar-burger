@@ -6,11 +6,10 @@ import Modal from "../modal/modal";
 import {modalTypes} from "../../utils/modal-types";
 import OrderDetails from "../modal/order-details/order-details";
 import IngredientDetails from "../modal/ingredient-details/ingredient-details";
-import ModalOverlay from "../modal/modal-overlay/modal-overlay";
 
-function Main(props) {
-    const [data] = React.useState(props.data)
-    const [constructorData, setConstructorData] = React.useState(props.tempData)
+function Main({mainData, tempData}) {
+    const [data] = React.useState(mainData)
+    const [constructorData, setConstructorData] = React.useState(tempData)
     const [modal, setModal] = useState(false)
     const [modalType, setModalType] = useState(null)
     const [currentItem, setCurrentItem] = useState()
@@ -36,11 +35,11 @@ function Main(props) {
     const modalWindow = (modalType) => {
         switch (modalType) {
             case modalTypes.Order:
-                return <Modal shown={modal} onClose={onClose}>
+                return <Modal shown={modal} onModalClose={onClose}>
                     <OrderDetails order= {order} />
                 </Modal>
             case modalTypes.Ingredient:
-                return <Modal shown={modal} onClose={onClose} title="Детали ингредиента">
+                return <Modal shown={modal} onModalClose={onClose} title="Детали ингредиента">
                     <IngredientDetails item = {currentItem}/>
                 </Modal>
         }
@@ -49,13 +48,11 @@ function Main(props) {
     return(
         <>
             <main className={styles.container}>
-                <BurgerIngredients data={data} onItemClick={onItemClick}/>
-                <BurgerConstructor ingredients={constructorData} onOrderClick={onOrderClick}/>
+                <BurgerIngredients data={data} onClick={onItemClick}/>
+                <BurgerConstructor ingredients={constructorData} onClick={onOrderClick}/>
             </main>
             {
-               modal && <ModalOverlay>
-                    {modalWindow(modalType)}
-                </ModalOverlay>
+               modal && modalWindow(modalType)
             }
 
         </>

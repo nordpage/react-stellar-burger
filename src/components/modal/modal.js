@@ -3,12 +3,14 @@ import styles from "./modal.module.css"
 import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import {ingredientPropType} from "../../utils/prop-types";
+import ModalOverlay from "./modal-overlay/modal-overlay";
+import ReactDOM from "react-dom";
 
-const Modal = function (props) {
-    const [visibility, setVisibility] = useState(props.shown)
+const Modal = function ({title, children, shown, onModalClose}) {
+    const [visibility, setVisibility] = useState(shown)
 
     const onClose = () => {
-        props.onClose()
+        onModalClose()
     }
 
     const onAnimationEnd = () => {
@@ -29,16 +31,19 @@ const Modal = function (props) {
     }, []);
 
 
-    return(
-        <div className={`${styles.window} ${visibility ? styles.showModal : styles.hideModal}`} onAnimationEnd={() => onAnimationEnd()}>
-            <div className={`${styles.top} mt-10 ml-10 mr-10`}>
-                {props.title && <h1 className={`${styles.title} text text_type_main-large`}>{props.title}</h1>}
-                <div className={styles.closeContainer}><CloseIcon type="primary" onClick={() => setVisibility(false)}/></div>
+    return ReactDOM.createPortal(
+        <ModalOverlay>
+            <div className={`${styles.window} ${visibility ? styles.showModal : styles.hideModal}`} onAnimationEnd={() => onAnimationEnd()}>
+                <div className={`${styles.top} mt-10 ml-10 mr-10`}>
+                    {title && <h1 className={`${styles.title} text text_type_main-large`}>{title}</h1>}
+                    <div className={styles.closeContainer}><CloseIcon type="primary" onClick={() => setVisibility(false)}/></div>
+                </div>
+                <div className={`${styles.container} ml-25 mr-25 mb-15`}>
+                    {children}
+                </div>
             </div>
-            <div className={`${styles.container} ml-25 mr-25 mb-15`}>
-                {props.children}
-            </div>
-        </div>
+        </ModalOverlay>,
+        document.body
     )
 }
 
@@ -48,5 +53,5 @@ Modal.propTypes = {
     shown: PropTypes.bool.isRequired,
     title: PropTypes.string,
     children: ingredientPropType.isRequired,
-    onClose: PropTypes.func.isRequired
+    onModalClose: PropTypes.func.isRequired
 }

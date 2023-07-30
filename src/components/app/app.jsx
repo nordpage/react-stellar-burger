@@ -3,7 +3,7 @@ import {tempData} from "../../utils/data";
 import AppHeader from "../header/appHeader";
 import Main from "../main/main";
 import {useEffect, useState} from "react";
-import {API_URL} from "../../utils/constants";
+import {fetchIngredients} from "../../utils/api";
 
 const App = function() {
 
@@ -15,8 +15,7 @@ const App = function() {
 
     const fetchData = () => {
         setState({...state, hasError: false, isLoading: true})
-        fetch(API_URL)
-            .then(res => res.json())
+        fetchIngredients()
             .then(data => {
                 setState({...state, data: data.data, isLoading: false})
             })
@@ -30,7 +29,7 @@ const App = function() {
   return (
     <div className={styles.app}>
       <AppHeader />
-        {state.data.length > 0 &&  <Main data={state.data} tempData={tempData}/>}
+        {state.data.length > 0 &&  <Main mainData={state.data} tempData={tempData}/>}
     </div>
   );
 }

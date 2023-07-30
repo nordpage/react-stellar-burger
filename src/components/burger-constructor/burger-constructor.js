@@ -5,19 +5,19 @@ import PropTypes from "prop-types";
 import {ingredientPropType} from "../../utils/prop-types";
 import BurgerComponent from "./burger-component/burger-component";
 
-const BurgerConstructor = function(props) {
+const BurgerConstructor = function({ingredients, onClick}) {
 
 
     const onOrderClick = (type, order) => {
-        props.onOrderClick(type, order)
+        onClick(type, order)
     }
 
 
     return(
         <section className={`${styles.container} pt-25`}>
-            <BurgerComponent ingredients={props.ingredients}/>
+            <BurgerComponent ingredients={ingredients}/>
             {
-                props.ingredients.length > 0 && <BurgerPrice items={props.ingredients} onOrderClick={onOrderClick}/>
+                ingredients.length > 0 && <BurgerPrice items={ingredients} onClick={onOrderClick}/>
             }
         </section>
     )
@@ -26,5 +26,5 @@ const BurgerConstructor = function(props) {
 export default BurgerConstructor;
 
 BurgerConstructor.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientPropType).isRequired
+  ingredients: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired
 }

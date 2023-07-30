@@ -5,19 +5,19 @@ import PropTypes from "prop-types";
 import {ingredientPropType} from "../../../utils/prop-types";
 import {modalTypes} from "../../../utils/modal-types";
 
-const IngredientItem = function(props) {
+const IngredientItem = function({item, onClick}) {
 
     function onItemClick(item, type) {
-        props.onItemClick(item, type);
+        onClick(item, type);
     }
 
     return (
-        <section className={`${styles.card} mt-6`} onClick={() => onItemClick(props.item, modalTypes.Ingredient)}>
-            {props.item.counter > 0 && <Counter count={props.item.counter} size="default" extraClass={`${styles.counter} m-1`} />}
-            <img src={props.item.image} alt={props.item.name} className="mb-1"/>
-            <div className={`${styles.price} mb-1`}><span className="text text_type_digits-default">{props.item.price}</span> <CurrencyIcon type="primary" /></div>
+        <section className={`${styles.card} mt-6`} onClick={() => onItemClick(item, modalTypes.Ingredient)}>
+            {item.counter > 0 && <Counter count={item.counter} size="default" extraClass={`${styles.counter} m-1`} />}
+            <img src={item.image} alt={item.name} className="mb-1"/>
+            <div className={`${styles.price} mb-1`}><span className="text text_type_digits-default">{item.price}</span> <CurrencyIcon type="primary" /></div>
             <p className={`${styles.title} text text_type_main-small`}>
-                {props.item.name}
+                {item.name}
             </p>
         </section>
     )
