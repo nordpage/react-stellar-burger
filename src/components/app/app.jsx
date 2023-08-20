@@ -1,15 +1,35 @@
 import styles from "./app.module.css";
-import { data } from "../../utils/data";
+import {tempData} from "../../utils/data";
+import AppHeader from "../header/appHeader";
+import Main from "../main/main";
+import {useEffect, useState} from "react";
+import {fetchIngredients} from "../../utils/api";
 
-function App() {
+const App = function() {
+
+    const [state, setState] = useState({
+        isLoading: false,
+        hasError: false,
+        data: []
+    })
+
+    const fetchData = () => {
+        setState({...state, hasError: false, isLoading: true})
+        fetchIngredients()
+            .then(data => {
+                setState({...state, data: data.data, isLoading: false})
+            })
+            .catch(() => setState({...state, hasError: true, isLoading: false}))
+    }
+
+    useEffect(() => {
+        fetchData()
+    }, [])
+
   return (
     <div className={styles.app}>
-      <pre style={{
-      	margin: "auto",
-      	fontSize: "1.5rem"
-      }}>
-      	Измените src/components/app/app.jsx и сохраните для обновления.
-      </pre>
+      <AppHeader />
+        {state.data.length > 0 &&  <Main mainData={state.data} tempData={tempData}/>}
     </div>
   );
 }

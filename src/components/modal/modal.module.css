@@ -1,0 +1,89 @@
+.background {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0,0,0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hidden {
+    display: none;
+}
+
+.window {
+    width: 718px;
+    max-height: 720px;
+    min-height: 539px;
+    background: #1C1C21;
+    border-radius: 40px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.04), 0 4px 8px 0 rgba(0, 0, 0, 0.04), 0 16px 24px 0 rgba(0, 0, 0, 0.04), 0 24px 32px 0 rgba(0, 0, 0, 0.04);
+
+}
+
+.top {
+    min-height: 64px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: end;
+}
+
+.title {
+    width: 100%;
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+.closeContainer {
+    align-self: end;
+    margin: auto 0;
+}
+
+.closeContainer:hover {
+    cursor: pointer;
+}
+
+.showModal {
+    animation: show 300ms ease-in-out;
+}
+
+.hideModal {
+    animation: hide 300ms ease-in-out;
+}
+
+
+@keyframes show {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes hide {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
