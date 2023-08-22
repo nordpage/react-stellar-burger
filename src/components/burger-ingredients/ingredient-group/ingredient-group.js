@@ -1,16 +1,19 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import IngredientItem from "../ingredient-item/ingredient-item";
 import styles from "./ingredient-group.module.css"
 import PropTypes from "prop-types";
+import {IngredientsContext} from "../../../services/ingredientsContext";
 
-const IngredientGroup = function({data, filter, name, onClick}) {
-    const [list] = React.useState(data)
+const IngredientGroup = function({filter, name}) {
+
+    const {data: data, onClick: onClick} = useContext(IngredientsContext)
+
     function onItemClick(item, counter) {
         onClick(item, counter);
     }
     function Items ()  {
-        return list.filter(filtered => filtered.type === filter).map((item, index) => (
-            <IngredientItem item={item} key={index} onClick={onItemClick}/>
+        return data.filter(filtered => filtered.type === filter).map((item, index) => (
+            <IngredientItem item={item} key={index}/>
         ))
     }
 
@@ -28,8 +31,6 @@ const IngredientGroup = function({data, filter, name, onClick}) {
 export default IngredientGroup
 
 IngredientGroup.propTypes = {
-  OnItemClick: PropTypes.func,
-  data: PropTypes.array.isRequired,
   filter: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired
 }

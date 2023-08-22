@@ -52,16 +52,18 @@ const BurgerPrice = function() {
 
 
     const onOrderClick = (type) => {
-        const bun = constructorData.find(item => item.type === BUN)._id
-        const ids = constructorData.map(item => item._id)
-        ids.push(bun)
-        setApiState({...apiState, hasError: false, isLoading: true})
-        fetchOrder(ids)
-            .then(data => {
-                setApiState({...apiState, data: data, isLoading: false})
-                onClick(type, data.order.number)
-            })
-            .catch(() => setApiState({...apiState, hasError: true, isLoading: false}))
+        const bun = constructorData.find(item => item.type === BUN)
+        if (bun !== undefined) {
+            const ids = constructorData.map(item => item._id)
+            ids.push(bun._id)
+            setApiState({...apiState, hasError: false, isLoading: true})
+            fetchOrder(ids)
+                .then(data => {
+                    setApiState({...apiState, data: data, isLoading: false})
+                    onClick(type, data.order.number)
+                })
+                .catch(() => setApiState({...apiState, hasError: true, isLoading: false}))
+        }
     }
 
     return(

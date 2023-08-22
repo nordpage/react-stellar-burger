@@ -7,6 +7,7 @@ import {modalTypes} from "../../utils/modal-types";
 import OrderDetails from "../modal/order-details/order-details";
 import IngredientDetails from "../modal/ingredient-details/ingredient-details";
 import {ConstructorContext} from "../../services/constructorContext";
+import {IngredientsContext} from "../../services/ingredientsContext";
 
 function Main({mainData}) {
     const [data, setData] = React.useState(mainData)
@@ -68,7 +69,9 @@ function Main({mainData}) {
     return(
         <>
             <main className={styles.container}>
-                <BurgerIngredients data={data} onClick={onItemClick}/>
+                <IngredientsContext.Provider value={{data: data, onClick: onItemClick}}>
+                    <BurgerIngredients/>
+                </IngredientsContext.Provider>
                 <ConstructorContext.Provider value={{data: constructorData, onCheckOut: onOrderClick, onRemove: onRemoveFromCart}}>
                     <BurgerConstructor/>
                 </ConstructorContext.Provider>

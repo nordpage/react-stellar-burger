@@ -1,13 +1,14 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-ingredients.module.css";
 import IngredientsContainer from "./ingredients-container/ingredients-container";
-import PropTypes from "prop-types";
 import {BUN, MAIN, SAUCE} from "../../utils/constants";
-import {ingredientPropType} from "../../utils/prop-types";
+import {IngredientsContext} from "../../services/ingredientsContext";
 
 
-const BurgerIngredients = function({data, onClick}) {
+const BurgerIngredients = function() {
+    const {onClick: onClick} = useContext(IngredientsContext)
+
     const [current, setCurrent] = React.useState('bun')
 
     function chooseTab(currentValue) {
@@ -50,15 +51,10 @@ const BurgerIngredients = function({data, onClick}) {
                     Начинки
                 </Tab>
             </div>
-            <IngredientsContainer onClick={onItemClick} onScroll={handleScroll} data={data}/>
+            <IngredientsContainer onScroll={handleScroll}/>
         </section>
     )
 
 }
 
 export default BurgerIngredients;
-
-BurgerIngredients.propTypes = {
-  OnItemClick: PropTypes.func,
-  data: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired
-}

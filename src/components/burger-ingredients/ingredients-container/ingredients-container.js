@@ -1,10 +1,13 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import styles from "./ingredients-container.module.css"
 import IngredientGroup from "../ingredient-group/ingredient-group";
 import PropTypes from "prop-types";
 import {BUN, MAIN, SAUCE} from "../../../utils/constants";
+import {IngredientsContext} from "../../../services/ingredientsContext";
 
-const IngredientsContainer = function({data, onClick, onScroll}) {
+const IngredientsContainer = function({onScroll}) {
+
+    const {onClick: onClick} = useContext(IngredientsContext)
 
     function onItemClick(item, counter) {
         onClick(item, counter);
@@ -18,13 +21,13 @@ const IngredientsContainer = function({data, onClick, onScroll}) {
     return (
         <section className={`${styles.scroll} custom-scroll`} onScroll={handleScroll}>
             <section id = {BUN} className="scroll-section" data-offset={0}>
-                <IngredientGroup name="Булки" filter={BUN} data={data} key="1" onClick={onItemClick}/>
+                <IngredientGroup name="Булки" filter={BUN} key="1"/>
             </section>
             <section id={SAUCE} className="scroll-section" data-offset={310}>
-                <IngredientGroup name="Соусы" filter={SAUCE} data={data} key="2" onClick={onItemClick}/>
+                <IngredientGroup name="Соусы" filter={SAUCE} key="2"/>
             </section>
             <section id={MAIN} className="scroll-section" data-offset={840}>
-                <IngredientGroup name="Начинки" filter={MAIN} data={data} key="3" onClick={onItemClick}/>
+                <IngredientGroup name="Начинки" filter={MAIN} key="3"/>
             </section>
         </section>
     )
@@ -34,6 +37,5 @@ export default IngredientsContainer
 
 IngredientsContainer.propTypes = {
   OnItemClick: PropTypes.func,
-  data: PropTypes.array.isRequired,
   handleScroll: PropTypes.func
 }

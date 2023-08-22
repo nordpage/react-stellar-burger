@@ -1,10 +1,13 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import styles from './ingredient-item.module.css';
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
 import {ingredientPropType} from "../../../utils/prop-types";
+import {IngredientsContext} from "../../../services/ingredientsContext";
 
-const IngredientItem = function({item, onClick}) {
+const IngredientItem = function({item}) {
+
+    const {onClick: onClick} = useContext(IngredientsContext)
+
 
     function onItemClick(item, counter) {
         onClick(item, counter);
@@ -25,6 +28,5 @@ const IngredientItem = function({item, onClick}) {
 export default IngredientItem;
 
 IngredientItem.propTypes = {
-    OnItemClick: PropTypes.func,
     item: ingredientPropType.isRequired
 }
