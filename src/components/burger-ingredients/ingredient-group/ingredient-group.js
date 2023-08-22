@@ -5,8 +5,8 @@ import PropTypes from "prop-types";
 
 const IngredientGroup = function({data, filter, name, onClick}) {
     const [list] = React.useState(data)
-    function onItemClick(item, type) {
-        onClick(item, type)
+    function onItemClick(item, counter) {
+        onClick(item, counter);
     }
     function Items ()  {
         return list.filter(filtered => filtered.type === filter).map((item, index) => (

@@ -1,8 +1,6 @@
 import React from 'react';
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
-
 import styles from "./burger-ingredients.module.css";
-
 import IngredientsContainer from "./ingredients-container/ingredients-container";
 import PropTypes from "prop-types";
 import {BUN, MAIN, SAUCE} from "../../utils/constants";
@@ -34,8 +32,8 @@ const BurgerIngredients = function({data, onClick}) {
         });
     };
 
-    function onItemClick(item, type) {
-        onClick(item, type)
+    function onItemClick(item, counter) {
+        onClick(item, counter);
     }
 
     return (

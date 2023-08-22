@@ -1,5 +1,4 @@
 import React from 'react';
-
 import styles from "./ingredients-container.module.css"
 import IngredientGroup from "../ingredient-group/ingredient-group";
 import PropTypes from "prop-types";
@@ -7,8 +6,8 @@ import {BUN, MAIN, SAUCE} from "../../../utils/constants";
 
 const IngredientsContainer = function({data, onClick, onScroll}) {
 
-    function onItemClick(item, type) {
-        onClick(item, type)
+    function onItemClick(item, counter) {
+        onClick(item, counter);
     }
 
      function handleScroll(event) {
