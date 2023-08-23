@@ -32,7 +32,7 @@ const Modal = function ({title, children, shown, onModalClose}) {
 
 
     return ReactDOM.createPortal(
-        <ModalOverlay>
+        <ModalOverlay onClick={onClose}>
             <div className={`${styles.window} ${visibility ? styles.showModal : styles.hideModal}`} onAnimationEnd={() => onAnimationEnd()}>
                 <div className={`${styles.top} mt-10 ml-10 mr-10`}>
                     {title && <h1 className={`${styles.title} text text_type_main-large`}>{title}</h1>}
