@@ -3,8 +3,8 @@ import styles from "./modal.module.css"
 import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import {ingredientPropType} from "../../utils/prop-types";
-import ModalOverlay from "./modal-overlay/modal-overlay";
 import ReactDOM from "react-dom";
+import ModalOverlay from "./modal-overlay/modal-overlay";
 
 const Modal = function ({title, children, shown, onModalClose}) {
     const [visibility, setVisibility] = useState(shown)
@@ -32,7 +32,8 @@ const Modal = function ({title, children, shown, onModalClose}) {
 
 
     return ReactDOM.createPortal(
-        <ModalOverlay>
+        <div className={styles.modal}>
+            <ModalOverlay onClick={onClose}/>
             <div className={`${styles.window} ${visibility ? styles.showModal : styles.hideModal}`} onAnimationEnd={() => onAnimationEnd()}>
                 <div className={`${styles.top} mt-10 ml-10 mr-10`}>
                     {title && <h1 className={`${styles.title} text text_type_main-large`}>{title}</h1>}
@@ -42,7 +43,7 @@ const Modal = function ({title, children, shown, onModalClose}) {
                     {children}
                 </div>
             </div>
-        </ModalOverlay>,
+        </div>,
         document.body
     )
 }

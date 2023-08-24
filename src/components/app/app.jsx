@@ -1,5 +1,4 @@
 import styles from "./app.module.css";
-import {tempData} from "../../utils/data";
 import AppHeader from "../header/appHeader";
 import Main from "../main/main";
 import {useEffect, useState} from "react";
@@ -29,7 +28,7 @@ const App = function() {
   return (
     <div className={styles.app}>
       <AppHeader />
-        {state.data.length > 0 &&  <Main mainData={state.data} tempData={tempData}/>}
+        {state.data.length > 0 &&  <Main mainData={state.data}/>}
     </div>
   );
 }
