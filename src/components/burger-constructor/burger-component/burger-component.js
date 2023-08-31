@@ -28,7 +28,7 @@ const BurgerComponent = function () {
     }, [dispatch])
     const renderIngredient = useCallback((ingredient, index) => {
         return (
-            <BurgerIngredient item={ingredient} index={index} id={ingredient.uid} key={ingredient.uid} moveIngredient = {moveIngredient}/>
+            <BurgerIngredient item={ingredient} index={index} id={ingredient.uid} key={index} moveIngredient = {moveIngredient}/>
         )
     }, [])
 
