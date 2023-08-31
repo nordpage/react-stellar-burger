@@ -1,8 +1,8 @@
 .burger {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    height: 100vh;
 }
 
 .container {
@@ -15,4 +15,12 @@
 .ingredients {
     max-height: 576px;
     overflow-y: scroll;
+}
+
+.placeholderContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
+    text-align: center;
 }

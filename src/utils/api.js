@@ -1,5 +1,6 @@
 import {API_URL} from "./constants";
 
+
 export const fetchIngredients = () => {
     return fetch(`${API_URL}ingredients`)
         .then(getResponseData)

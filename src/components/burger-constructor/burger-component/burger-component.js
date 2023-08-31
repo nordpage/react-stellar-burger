@@ -1,60 +1,80 @@
-import React, {useContext, useMemo} from "react";
+import React, {useCallback, useMemo} from "react";
 import {ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../burger-constructor.module.css";
-import {BUN} from "../../../utils/constants";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
-import {ConstructorContext} from "../../../services/constructorContext";
+import {useDispatch, useSelector} from "react-redux";
+import {useDrop} from "react-dnd";
+import {addToBurger, sorting} from "../../../services/reducers/burgerSlice";
 
 const BurgerComponent = function () {
 
-    const {data: constructorData, onRemove: onRemove} = useContext(ConstructorContext)
+    const {cart} = useSelector((store) => store.burger)
+    const dispatch = useDispatch()
 
-    function onRemoveFromCart(item) {
-        onRemove(item)
-    }
 
-    const memorizedTopBun = useMemo(() => {
-        return constructorData.find(item => item.type === BUN)
-    }, [constructorData])
+    const [{ isHover }, dropRef] = useDrop({
+        accept: 'ingredient',
+        collect: (monitor) => ({
+            isHover: monitor.isOver()
+        }),
+        drop(item) {
+            dispatch(addToBurger(item))
+        }
+    })
 
-    const memorizedBottomBun = useMemo(() => {
-        return constructorData.find(item => item.type === BUN)
-    }, [constructorData])
+
+    const moveIngredient = useCallback((dragIndex, hoverIndex) => {
+        dispatch(sorting({dragIndex, hoverIndex}))
+    }, [dispatch])
+    const renderIngredient = useCallback((ingredient, index) => {
+        return (
+            <BurgerIngredient item={ingredient} index={index} id={ingredient.uid} key={ingredient.uid} moveIngredient = {moveIngredient}/>
+        )
+    }, [])
+
 
     const memorizedIngredients = useMemo(() => {
-        return constructorData.filter(item => item.type !== BUN).map((ingredient, index) =>
-            <BurgerIngredient item={ingredient} key={index}/>
+        return cart.ingredients.map((ingredient, index) =>
+            renderIngredient(ingredient, index)
         )
-    }, [constructorData])
+    }, [cart.ingredients])
 
     return(
-        <div className={styles.burger}>
-            {memorizedTopBun &&
-                <div className="mr-8 ml-8" key="top">
-                    <ConstructorElement
-                        type={"top"}
-                        isLocked
-                        text={memorizedTopBun.name}
-                        price={memorizedTopBun.price}
-                        thumbnail={memorizedTopBun.image}
-                        extraClass="mb-4"
-                    />
-                </div>}
-            <div className={`${styles.ingredients} custom-scroll mr-4`}>
-                {
-                    memorizedIngredients
-                }
-            </div>
-            {memorizedBottomBun &&
-                <div className="mr-8 ml-8" key="bottom">
-                <ConstructorElement
-                    type={"bottom"}
-                    isLocked
-                    text={memorizedBottomBun.name}
-                    price={memorizedBottomBun.price}
-                    thumbnail={memorizedBottomBun.image}
-                />
-                </div>
+        <div className={styles.burger}  ref={dropRef}>
+            {
+                (cart.bun || cart.ingredients.length > 0) ? <>
+                    {cart.bun &&
+                        <div className="mr-8 ml-8" key="top">
+                            <ConstructorElement
+                                type={"top"}
+                                isLocked
+                                text={cart.bun.name}
+                                price={cart.bun.price}
+                                thumbnail={cart.bun.image}
+                                extraClass="mb-4"
+                            />
+                        </div>}
+                    <div className={`${styles.ingredients} custom-scroll mr-4`}>
+                        {
+                            memorizedIngredients
+                        }
+                    </div>
+                    {cart.bun &&
+                        <div className="mr-8 ml-8" key="bottom">
+                            <ConstructorElement
+                                type={"bottom"}
+                                isLocked
+                                text={cart.bun.name}
+                                price={cart.bun.price}
+                                thumbnail={cart.bun.image}
+                            />
+                        </div>
+                    }
+                </> : <>
+                    <div className={styles.placeholderContainer}>
+                        <h1 className="text text_type_main-medium">Добавьте булку и ингредиенты в конструктор</h1>
+                    </div>
+                </>
             }
         </div>
     )

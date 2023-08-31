@@ -1,75 +1,36 @@
-import React, {useContext, useEffect, useReducer, useState} from 'react';
+import React from 'react';
 import {Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-price.module.css"
+import {useDispatch, useSelector} from "react-redux";
+import {usePostOrderMutation} from "../../../services/reducers/burgerApi";
+import {addOrderNumber} from "../../../services/reducers/orderSlice";
+import {openModal} from "../../../services/reducers/modalSlice";
 import {modalTypes} from "../../../utils/modal-types";
-import {BUN} from "../../../utils/constants";
-import {ConstructorContext} from "../../../services/constructorContext";
-import {fetchOrder} from "../../../utils/api";
-
-const initialState = { sum: 0 };
-
-function reducer(state, action) {
-    switch (action.type) {
-        case 'ADD_TO_SUM':
-            return { sum: action.payload };
-        case 'SUBSTRACT_FROM_SUM':
-            return { sum: action.payload };
-        default:
-            return state;
-    }
-}
 
 const BurgerPrice = function() {
 
-    const [state, dispatch] = useReducer(reducer, initialState);
-    const {data: constructorData, onCheckOut: onClick} = useContext(ConstructorContext)
-    const [apiState, setApiState] = useState({
-        isLoading: false,
-        hasError: false,
-        data: {
-            "name": String,
-            "order": {
-                "number": Number
-            },
-            "success": Boolean
-        }
-    })
-
-    const handleButtonClick = () => {
-        const sum = constructorData.reduce((acc, curr) => curr.type === BUN ?  acc + curr.price * 2: acc + curr.price, 0);
-        dispatch({ type: 'ADD_TO_SUM', payload: sum });
-    };
-
-    function removeFromCart() {
-        const sum = constructorData.reduce((acc, curr) => acc - curr.price, 0);
-        dispatch({ type: 'SUBSTRACT_FROM_SUM', payload: sum });
-    }
-
-    useEffect(() => {
-        handleButtonClick()
-    }, [constructorData]);
-    
+    const dispatch = useDispatch();
+    const {cart} = useSelector((store) => store.burger)
+    const [postOrder] = usePostOrderMutation()
 
 
-    const onOrderClick = (type) => {
-        const bun = constructorData.find(item => item.type === BUN)
-        if (bun !== undefined) {
-            const ids = constructorData.map(item => item._id)
-            ids.push(bun._id)
-            setApiState({...apiState, hasError: false, isLoading: true})
-            fetchOrder(ids)
-                .then(data => {
-                    setApiState({...apiState, data: data, isLoading: false})
-                    onClick(type, data.order.number)
-                })
-                .catch(() => setApiState({...apiState, hasError: true, isLoading: false}))
-        }
-    }
+
+   async function postOrderRequest(burger) {
+        if (!burger.bun || !burger.ingredients) return;
+       const orderIds = [burger.bun, burger.ingredients, burger.bun].flat().map(item => item._id)
+       const response = await postOrder(orderIds).unwrap();
+       try {
+           dispatch(addOrderNumber(response.order.number))
+           dispatch(openModal(modalTypes.Order))
+       } catch (e) {
+           console.error(e)
+       }
+   }
 
     return(
         <section className={`${styles.bottomContainer} mt-10 mr-4`}>
-            <div className={styles.priceContainer}><p className="text text_type_digits-medium">{state.sum}</p> <CurrencyIcon type="primary"/></div>
-            <Button htmlType="button" type="primary" size="large" onClick={() => onOrderClick(modalTypes.Order)}>Оформить заказ</Button>
+            <div className={styles.priceContainer}><p className="text text_type_digits-medium">{cart.sum}</p> <CurrencyIcon type="primary"/></div>
+            <Button htmlType="button" type="primary" size="large" onClick={() => postOrderRequest(cart)}>Оформить заказ</Button>
         </section>
     )
 }
