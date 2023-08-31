@@ -13,3 +13,9 @@
     align-items: center;
     gap: 8px;
 }
+
+.loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

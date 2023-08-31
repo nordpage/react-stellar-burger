@@ -28,7 +28,7 @@ const BurgerComponent = function () {
     }, [dispatch])
     const renderIngredient = useCallback((ingredient, index) => {
         return (
-            <BurgerIngredient item={ingredient} index={index} id={ingredient.uid} key={index} moveIngredient = {moveIngredient}/>
+            <BurgerIngredient item={ingredient} index={index} id={ingredient.uid} key={ingredient.key} moveIngredient = {moveIngredient}/>
         )
     }, [])
 
@@ -48,7 +48,7 @@ const BurgerComponent = function () {
                             <ConstructorElement
                                 type={"top"}
                                 isLocked
-                                text={cart.bun.name}
+                                text={`${cart.bun.name} (верх)`}
                                 price={cart.bun.price}
                                 thumbnail={cart.bun.image}
                                 extraClass="mb-4"
@@ -64,7 +64,7 @@ const BurgerComponent = function () {
                             <ConstructorElement
                                 type={"bottom"}
                                 isLocked
-                                text={cart.bun.name}
+                                text={`${cart.bun.name} (низ)`}
                                 price={cart.bun.price}
                                 thumbnail={cart.bun.image}
                             />

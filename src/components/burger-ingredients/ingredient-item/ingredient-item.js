@@ -27,11 +27,15 @@ const IngredientItem = function({item}) {
         if (item.type === BUN) {
             if (cart.bun !== null && cart.bun._id === item._id) {
                 setCounter(1)
+            } else {
+                setCounter(0)
             }
         } else {
             if (cart.ingredients.length > 0) {
                 const amount = cart.ingredients.filter(it => it._id === item._id).length;
                 setCounter(amount)
+            } else {
+                setCounter(0)
             }
         }
     }, [cart]);
