@@ -1,27 +1,19 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import BurgerPrice from "./burger-price/burger-price";
 import styles from "./burger-constructor.module.css";
 import BurgerComponent from "./burger-component/burger-component";
-import {ConstructorContext} from "../../services/constructorContext";
+import {useSelector} from "react-redux";
+
 
 const BurgerConstructor = function() {
 
-    const {data: constructorData, onCheckOut: onCheckOut, onRemove: onRemove} = useContext(ConstructorContext)
-
-    const onOrderClick = (type, order) => {
-        onCheckOut(type, order)
-    }
-
-    function onRemoveFromCart(item) {
-        onRemove(item)
-    }
-
+    const {cart} = useSelector((store) => store.burger)
 
     return(
         <section className={`${styles.container} pt-25`}>
             <BurgerComponent/>
             {
-                constructorData.length > 0 && <BurgerPrice/>
+                (cart.sum > 0) && <BurgerPrice/>
             }
         </section>
     )

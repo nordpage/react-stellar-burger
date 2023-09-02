@@ -1,34 +1,40 @@
 import styles from "./app.module.css";
 import AppHeader from "../header/appHeader";
+import {useGetIngredientsQuery} from "../../services/reducers/burgerApi";
 import Main from "../main/main";
-import {useEffect, useState} from "react";
-import {fetchIngredients} from "../../utils/api";
+import {useDispatch} from "react-redux";
+import {addAll} from "../../services/reducers/ingredientsSlice";
+import {useEffect} from "react";
+import {FadeLoader} from "react-spinners";
 
 const App = function() {
+    const {
+        data: ingredients = [],
+        isError,
+        error,
+        isLoading,
+        isFetching,
+        isSuccess
+    } = useGetIngredientsQuery();
 
-    const [state, setState] = useState({
-        isLoading: false,
-        hasError: false,
-        data: []
-    })
-
-    const fetchData = () => {
-        setState({...state, hasError: false, isLoading: true})
-        fetchIngredients()
-            .then(data => {
-                setState({...state, data: data.data, isLoading: false})
-            })
-            .catch(() => setState({...state, hasError: true, isLoading: false}))
-    }
-
+    const dispatch = useDispatch()
     useEffect(() => {
-        fetchData()
-    }, [])
+        if (isSuccess && ingredients !== undefined) {
+            dispatch(addAll(ingredients))
+        }
+    }, [ingredients]);
+
 
   return (
     <div className={styles.app}>
       <AppHeader />
-        {state.data.length > 0 &&  <Main mainData={state.data}/>}
+        <>
+            {isError && <h2>{error}</h2>}
+            {isLoading && isFetching && <div className={styles.loader}>
+                <FadeLoader color="#8585AD" />
+            </div>}
+            {isSuccess && ingredients !== undefined && <Main/>}
+        </>
     </div>
   );
 }

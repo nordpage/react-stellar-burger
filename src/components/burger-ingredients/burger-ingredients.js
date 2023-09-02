@@ -1,13 +1,10 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-ingredients.module.css";
 import IngredientsContainer from "./ingredients-container/ingredients-container";
 import {BUN, MAIN, SAUCE} from "../../utils/constants";
-import {IngredientsContext} from "../../services/ingredientsContext";
-
 
 const BurgerIngredients = function() {
-    const {onClick: onClick} = useContext(IngredientsContext)
 
     const [current, setCurrent] = React.useState('bun')
 
@@ -25,17 +22,13 @@ const BurgerIngredients = function() {
         const sections = ingredientsContainer.querySelectorAll('.scroll-section');
 
         sections.forEach((section) => {
-            const offset = parseInt(section.dataset.offset);
+            const rect = section.getBoundingClientRect();
 
-            if (scrollPosition >= offset - 20) {
+            if (scrollPosition >= rect.top - 30) {
                 setCurrent(section.id);
             }
         });
     };
-
-    function onItemClick(item, counter) {
-        onClick(item, counter);
-    }
 
     return (
         <section className={`${styles.container} mb-10`}>

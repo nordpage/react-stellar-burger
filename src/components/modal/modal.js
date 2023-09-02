@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react";
 import styles from "./modal.module.css"
 import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
-import {ingredientPropType} from "../../utils/prop-types";
 import ReactDOM from "react-dom";
 import ModalOverlay from "./modal-overlay/modal-overlay";
 
@@ -44,7 +43,7 @@ const Modal = function ({title, children, shown, onModalClose}) {
                 </div>
             </div>
         </div>,
-        document.body
+        document.querySelector("#modals")
     )
 }
 
@@ -53,6 +52,6 @@ export default Modal
 Modal.propTypes = {
     shown: PropTypes.bool.isRequired,
     title: PropTypes.string,
-    children: ingredientPropType.isRequired,
+    children: PropTypes.node.isRequired,
     onModalClose: PropTypes.func.isRequired
 }
