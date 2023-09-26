@@ -1,11 +1,10 @@
-
-
 .nav {
     display: flex;
-    min-height: 88px;
+    max-height: 56px;
     min-width: 1280px;
     flex-direction: row;
     align-items: center;
+    background: #1C1C21;
 }
 
 .inner {
@@ -15,7 +14,7 @@
     flex-direction: row;
     margin: 0 auto;
     justify-content: space-evenly;
-
+    align-items: center;
 }
 
 .buttons {
@@ -34,3 +33,6 @@
     color: white;
 }
 
+.active {
+
+}

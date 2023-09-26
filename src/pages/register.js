@@ -1,25 +1,31 @@
 import React from 'react';
-import styles from "./inputs.module.css"
 import AppHeader from "../components/header/appHeader";
+import styles from "./inputs.module.css";
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import { useNavigate } from "react-router-dom";
 
-export const LoginPage = () => {
+const RegisterPage = () => {
     const navigate = useNavigate();
 
-    function toRegister() {
-        navigate("/register")
+
+    function toLogin() {
+        navigate("/login")
     }
 
-    function toForgotPassword() {
-        navigate("/forgot-password")
-    }
-
-    return (
+    return(
         <div>
             <AppHeader/>
             <div className={styles.container}>
-                <p className="text text_type_main-default">Вход</p>
+                <p className="text text_type_main-default">Регистрация</p>
+                <Input
+                    type={'text'}
+                    placeholder={'Имя'}
+                    name={'name'}
+                    error={false}
+                    errorText={'Ошибка'}
+                    size={'default'}
+                    extraClass="mt-6"
+                />
                 <Input
                     type={'email'}
                     placeholder={'E-mail'}
@@ -40,15 +46,13 @@ export const LoginPage = () => {
                     extraClass="mt-6"
                 />
                 <Button htmlType="button" type="primary" size="large" extraClass="mt-6">
-                    Войти
+                    Зарегистрироваться
                 </Button>
-                <div className={`${styles.buttons} mt-20`}><p className="text text_type_main-default">Вы — новый пользователь?</p> <Button extraClass={styles.button} htmlType="button" type="secondary" size="medium" onClick={() => toRegister()}>
-                    Зарегистрироваться</Button></div>
-                <div className={`${styles.buttons} mt-6`}><p className="text text_type_main-default">Забыли пароль?</p> <Button extraClass={styles.button} htmlType="button" type="secondary" size="medium" onClick={() => toForgotPassword()}>
-                    Восстановить пароль</Button></div>
+                <div className={`${styles.buttons} mt-20`}><p className="text text_type_main-default">Уже зарегистрированы?</p> <Button extraClass={styles.button} htmlType="button" type="secondary" size="medium" onClick={() => toLogin()}>
+                    Войти</Button></div>
             </div>
         </div>
     );
 }
 
-export default LoginPage;
+export default RegisterPage;

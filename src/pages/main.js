@@ -3,9 +3,10 @@ import {useGetIngredientsQuery} from "../services/reducers/burgerApi";
 import {useDispatch} from "react-redux";
 import {addAll} from "../services/reducers/ingredientsSlice";
 import AppHeader from "../components/header/appHeader";
-import styles from "../components/app/app.module.css";
 import {FadeLoader} from "react-spinners";
 import Main from "../components/main/main";
+import styles from "./main.module.css"
+
 
 export const MainPage = () => {
 
@@ -26,7 +27,7 @@ export const MainPage = () => {
     }, [ingredients]);
 
     return (
-        <div>
+        <div className={styles.container}>
             <AppHeader />
             <>
                 {isError && <h2>{error}</h2>}

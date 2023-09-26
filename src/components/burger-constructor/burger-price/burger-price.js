@@ -32,7 +32,7 @@ const BurgerPrice = function() {
    }
 
     return(
-        <section className={`${styles.bottomContainer} mt-10 mr-4`}>
+        <section className={`${styles.bottomContainer} mr-4`}>
         {
                 (loading) ?
                     <div className={styles.loader}>

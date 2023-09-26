@@ -1,0 +1,22 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 480px;
+    height: 430px;
+    margin: auto auto;
+    align-items: center;
+    text-align: center;
+}
+
+.buttons{
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+.button {
+    margin: 0 0 0 8px;
+    padding: 0;
+}
