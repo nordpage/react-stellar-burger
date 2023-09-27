@@ -7,6 +7,8 @@ import {addOrderNumber} from "../../../services/reducers/orderSlice";
 import {openModal} from "../../../services/reducers/modalSlice";
 import {modalTypes} from "../../../utils/modal-types";
 import {FadeLoader} from "react-spinners";
+import {getCookie} from "../../../services/cookies/cookies";
+import {useNavigate} from "react-router-dom";
 
 const BurgerPrice = function() {
 
@@ -14,21 +16,25 @@ const BurgerPrice = function() {
     const dispatch = useDispatch();
     const {cart} = useSelector((store) => store.burger)
     const [postOrder] = usePostOrderMutation()
-
+    const navigate = useNavigate();
 
 
    async function postOrderRequest(burger) {
-        setLoading(true)
-        if (!burger.bun || !burger.ingredients) return;
-       const orderIds = [burger.bun, burger.ingredients, burger.bun].flat().map(item => item._id)
-       const response = await postOrder(orderIds).unwrap();
-       try {
-           dispatch(addOrderNumber(response.order.number))
-           dispatch(openModal(modalTypes.Order))
-           setLoading(false)
-       } catch (e) {
-           console.error(e)
-       }
+        if (getCookie("accessToken")) {
+            setLoading(true)
+            if (!burger.bun || !burger.ingredients) return;
+            const orderIds = [burger.bun, burger.ingredients, burger.bun].flat().map(item => item._id)
+            const response = await postOrder(orderIds).unwrap();
+            try {
+                dispatch(addOrderNumber(response.order.number))
+                dispatch(openModal(modalTypes.Order))
+                setLoading(false)
+            } catch (e) {
+                console.error(e)
+            }
+        } else {
+            navigate("/login")
+        }
    }
 
     return(

@@ -1,15 +1,68 @@
-import React from 'react';
+import React, {useCallback, useState} from 'react';
 import AppHeader from "../components/header/appHeader";
 import styles from "./inputs.module.css";
-import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import { useNavigate } from "react-router-dom";
+import {registerRequest} from "../services/api";
+import {setCookie} from "../services/cookies/cookies";
 
 const RegisterPage = () => {
-    const navigate = useNavigate();
 
+    const onChange = e => {
+        setValue({ ...form, [e.target.name]: e.target.value });
+    };
+
+
+    const [form, setValue] = useState({ name: '', email: '', password: '' });
+
+
+    const [isNameError, setNameError] = useState(false)
+    const [isEmailError, setEmailError] = useState(false)
+    const [isPasswordError, setPasswordError] = useState(false)
+
+    const navigate = useNavigate();
 
     function toLogin() {
         navigate("/login")
+    }
+
+    const registerUser = async form => {
+        setNameError(false)
+        setEmailError(false)
+        setPasswordError(false)
+        if (form.name && form.email && form.password) {
+            const data = await registerRequest(form)
+                .then(res => res.json())
+                .then(data => data)
+
+            if (data.success) {
+                setCookie('accessToken', data.accessToken)
+                setCookie('refreshToken', data.refreshToken)
+                navigate("/")
+            }
+        } else {
+            if (form.name === '') {
+                setNameError(true)
+            }
+            if (form.email === ''){
+                setEmailError(true)
+            }
+            if (form.password === ''){
+                setPasswordError(true)
+            }
+        }
+    }
+
+    let register = useCallback(
+        e => {
+            e.preventDefault()
+            registerUser(form)
+        },
+        [form]
+    )
+
+    const onIconClick = () => {
+
     }
 
     return(
@@ -17,35 +70,39 @@ const RegisterPage = () => {
             <AppHeader/>
             <div className={styles.container}>
                 <p className="text text_type_main-default">Регистрация</p>
-                <Input
-                    type={'text'}
-                    placeholder={'Имя'}
-                    name={'name'}
-                    error={false}
-                    errorText={'Ошибка'}
-                    size={'default'}
-                    extraClass="mt-6"
-                />
-                <Input
-                    type={'email'}
-                    placeholder={'E-mail'}
-                    name={'name'}
-                    error={false}
-                    errorText={'Ошибка'}
-                    size={'default'}
-                    extraClass="mt-6"
-                />
-                <Input
-                    type={'password'}
-                    placeholder={'Пароль'}
-                    name={'name'}
-                    icon={'ShowIcon'}
-                    error={false}
-                    errorText={'Ошибка'}
-                    size={'default'}
-                    extraClass="mt-6"
-                />
-                <Button htmlType="button" type="primary" size="large" extraClass="mt-6">
+                <form>
+                    <Input
+                        type={'text'}
+                        onChange={onChange}
+                        value={form.name}
+                        placeholder={'Имя'}
+                        name={'name'}
+                        error={isNameError}
+                        errorText={'Поле \"Имя\" не может быть пустым'}
+                        size={'default'}
+                        extraClass="mt-6"
+                    />
+                    <EmailInput
+                        onChange={onChange}
+                        value={form.email}
+                        name={'email'}
+                        error={isEmailError}
+                        errorText={'Поле \"E-mail\" не может быть пустым'}
+                        placeholder="E-mail"
+                        extraClass="mt-6"
+                    />
+                    <PasswordInput
+                        onChange={onChange}
+                        value={form.password}
+                        placeholder={'Пароль'}
+                        name={'password'}
+                        error={isPasswordError}
+                        errorText={'Поле \"Пароль\" не может быть пустым'}
+                        size={'default'}
+                        extraClass="mt-6"
+                    />
+                </form>
+                <Button htmlType="button" type="primary" size="large" extraClass="mt-6" onClick={register}>
                     Зарегистрироваться
                 </Button>
                 <div className={`${styles.buttons} mt-20`}><p className="text text_type_main-default">Уже зарегистрированы?</p> <Button extraClass={styles.button} htmlType="button" type="secondary" size="medium" onClick={() => toLogin()}>

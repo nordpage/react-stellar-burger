@@ -9,11 +9,17 @@ const AppHeader = function(){
         <header className={`${styles.nav} m-10`}>
             <div className={styles.inner}>
                 <div className={styles.buttons}>
-                    <NavLink to="/" exact className={`${styles.button} text text_type_main-small p-5 ${({ isActive }) => (isActive ? 'text_color_inactive' : '')}`}><BurgerIcon type="primary" />Конструктор</NavLink>
-                    <NavLink to="/profile" className={`${styles.button} text text_type_main-small p-5 ${({ isActive }) => (isActive ? 'text_color_inactive' : '')}`}><ListIcon type="secondary" />Лента заказов</NavLink>
+                    <NavLink to="/" exact="true">
+                        {({ isActive }) => <span className={`${styles.button} text text_type_main-small p-5 ${isActive ? '' : 'text_color_inactive'}`}><ListIcon type={isActive ? 'primary' : 'secondary'} />Конструктор</span>}
+                    </NavLink>
+                    <NavLink to="/list">
+                        {({ isActive }) => <span className={`${styles.button} text text_type_main-small p-5 ${isActive ? '' : 'text_color_inactive'}`}><BurgerIcon type={isActive ? 'primary' : 'secondary'} />Лента заказов</span>}
+                    </NavLink>
                 </div>
                 <Logo/>
-                <a href="#profile" className={`${styles.button} text text_type_main-small p-5 text_color_inactive`}><ProfileIcon type="secondary" />Личный кабинет</a>
+                <NavLink to="/profile">
+                    {({ isActive }) => <span className={`${styles.button} text text_type_main-small p-5 ${isActive ? '' : 'text_color_inactive'}`}><ProfileIcon type={isActive ? 'primary' : 'secondary'} />Личный кабинет</span>}
+                </NavLink>
             </div>
         </header>
     )
