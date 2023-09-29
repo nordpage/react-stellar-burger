@@ -14,13 +14,14 @@ export const burgerApi = createApi({
             },
         }),
         getUserData: builder.query({
-           query: (token) =>  ({
+           query: () =>  ({
                url: '/auth/user',
                headers: {
-                   Authorization: token
+                   Authorization: getCookie("accessToken")
                }
            }),
-            transformResponse: (response) => {
+            transformResponse: (response, meta) => {
+               console.log(meta);
                return response
             }
         }),

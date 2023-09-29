@@ -9,18 +9,19 @@ function UserDataPage() {
 
     const [user, setUser] = useState({ name: null, email: null });
 
-    const [data, {
+    const {
+        data = {},
         isError,
         error,
         isSuccess
-    }] = useGetUserDataQuery();
+    } = useGetUserDataQuery();
 
 
-    useEffect(async () => {
+    useEffect( () => {
         if (isSuccess && data !== undefined) {
             setUser(data.user)
         } else if (isError) {
-            console.log(error);
+
         }
     }, [data]);
 
@@ -32,6 +33,7 @@ function UserDataPage() {
                 isIcon={true}
                 name={'name'}
                 value={user.name}
+                defaultValue=""
                 error={false}
                 errorText={'Ошибка'}
                 size={'default'}
@@ -42,6 +44,7 @@ function UserDataPage() {
                 isIcon={true}
                 name={'login'}
                 value={user.email}
+                defaultValue=""
                 error={false}
                 errorText={'Ошибка'}
                 size={'default'}
