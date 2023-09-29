@@ -5,9 +5,11 @@ import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-deve
 import { useNavigate } from "react-router-dom";
 import {loginRequest} from "../services/api";
 import {setCookie} from "../services/cookies/cookies";
+import {usePostLoginMutation} from "../services/reducers/burgerApi";
 
 export const LoginPage = () => {
 
+    const [posrLogin] = usePostLoginMutation();
     const onChange = e => {
         setValue({ ...form, [e.target.name]: e.target.value });
     };

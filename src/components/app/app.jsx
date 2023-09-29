@@ -21,7 +21,7 @@ const App = function() {
                 <Route path="/login" element={<LoginPage/>}/>
                 <Route path="/register" element={<RegisterPage/>}/>
                 <Route path="/profile" element={<ProfilePage/>}>
-                    <Route path="" element={<UserDataPage/>}/>
+                    <Route exact path="" element={<UserDataPage/>}/>
                     <Route path="orders" element={<OrdersPage/>}/>
                 </Route>
                 <Route path="/forgot-password" element={<ForgotPasswordPage/>}/>
