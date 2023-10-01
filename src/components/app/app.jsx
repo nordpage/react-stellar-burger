@@ -10,6 +10,7 @@ import IngredientsPage from "../../pages/ingredients";
 import UserDataPage from "../../pages/user-data";
 import OrdersPage from "../../pages/orders";
 import React from "react";
+import ProtectedRoute from "../../pages/protectedRoute";
 
 const App = function() {
 
@@ -20,9 +21,11 @@ const App = function() {
                 <Route path="/" element={<MainPage/>}/>
                 <Route path="/login" element={<LoginPage/>}/>
                 <Route path="/register" element={<RegisterPage/>}/>
-                <Route path="/profile" element={<ProfilePage/>}>
-                    <Route path="" element={<UserDataPage/>}/>
-                    <Route path="orders" element={<OrdersPage/>}/>
+                <Route element={<ProtectedRoute/>}>
+                    <Route path="/profile" element={<ProfilePage/>}>
+                        <Route path="" element={<UserDataPage/>}/>
+                        <Route path="orders" element={<OrdersPage/>}/>
+                    </Route>
                 </Route>
                 <Route path="/forgot-password" element={<ForgotPasswordPage/>}/>
                 <Route path="/reset-password" element={<ResetPasswordPage/>}/>
