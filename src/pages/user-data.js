@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import styles from './user-data.module.css'
 import {EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
-import {useGetUserDataQuery, usePostLogoutMutation} from "../services/reducers/burgerApi";
-import {getCookie} from "../services/cookies/cookies";
+import {useGetUserDataQuery} from "../services/reducers/userApiSlice";
 
 function UserDataPage() {
 

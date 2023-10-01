@@ -3,13 +3,12 @@ import styles from "./inputs.module.css"
 import AppHeader from "../components/header/appHeader";
 import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import { useNavigate } from "react-router-dom";
-import {loginRequest} from "../services/api";
 import {setCookie} from "../services/cookies/cookies";
 import {usePostLoginMutation} from "../services/reducers/burgerApi";
 
 export const LoginPage = () => {
 
-    const [posrLogin] = usePostLoginMutation();
+    const [postLogin] = usePostLoginMutation();
     const onChange = e => {
         setValue({ ...form, [e.target.name]: e.target.value });
     };
@@ -34,14 +33,16 @@ export const LoginPage = () => {
         setEmailError(false)
         setPasswordError(false)
         if (form.email && form.password) {
-            const data = await loginRequest(form)
-                .then(res => res.json())
-                .then(data => data)
+            const response = await postLogin(form).unwrap();
 
-            if (data.success) {
-                setCookie('accessToken', data.accessToken)
-                setCookie('refreshToken', data.refreshToken)
-                navigate("/")
+            try {
+                if (response.success) {
+                    setCookie('accessToken', response.accessToken)
+                    setCookie('refreshToken', response.refreshToken)
+                    navigate("/")
+                }
+            } catch (e) {
+                console.error(e)
             }
         } else {
             if (form.email === ''){

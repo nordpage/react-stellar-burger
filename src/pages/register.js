@@ -3,11 +3,12 @@ import AppHeader from "../components/header/appHeader";
 import styles from "./inputs.module.css";
 import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import { useNavigate } from "react-router-dom";
-import {registerRequest} from "../services/api";
 import {setCookie} from "../services/cookies/cookies";
+import {usePostRegisterMutation} from "../services/reducers/burgerApi";
 
 const RegisterPage = () => {
 
+    const [postRegister] = usePostRegisterMutation();
     const onChange = e => {
         setValue({ ...form, [e.target.name]: e.target.value });
     };
@@ -31,14 +32,16 @@ const RegisterPage = () => {
         setEmailError(false)
         setPasswordError(false)
         if (form.name && form.email && form.password) {
-            const data = await registerRequest(form)
-                .then(res => res.json())
-                .then(data => data)
+            const response = await postRegister(form).unwrap();
 
-            if (data.success) {
-                setCookie('accessToken', data.accessToken)
-                setCookie('refreshToken', data.refreshToken)
-                navigate("/")
+            try {
+                if (response.success) {
+                    setCookie('accessToken', response.accessToken)
+                    setCookie('refreshToken', response.refreshToken)
+                    navigate("/")
+                }
+            } catch (e) {
+                console.error(e)
             }
         } else {
             if (form.name === '') {

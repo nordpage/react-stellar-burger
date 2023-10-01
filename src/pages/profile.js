@@ -17,8 +17,10 @@ function ProfilePage() {
 
         const response = await postLogout(form).unwrap();
         try {
-            setCookie('accessToken', null)
-            setCookie('refreshToken', null)
+            if (response.success) {
+                setCookie('accessToken', null)
+                setCookie('refreshToken', null)
+            }
         } catch (e) {
            console.error(e)
         }

@@ -13,18 +13,6 @@ export const burgerApi = createApi({
                 return response.data
             },
         }),
-        getUserData: builder.query({
-           query: () =>  ({
-               url: '/auth/user',
-               headers: {
-                   Authorization: getCookie("accessToken")
-               }
-           }),
-            transformResponse: (response, meta) => {
-               console.log(meta);
-               return response
-            }
-        }),
         postLogout: builder.mutation({
             query: (form) => ({
                 url: `/auth/logout`,
@@ -35,6 +23,13 @@ export const burgerApi = createApi({
         postLogin : builder.mutation({
             query:(form) => ({
                 url: `/auth/login`,
+                method: "POST",
+                body: form
+            }),
+        }),
+        postRegister: builder.mutation({
+            query:(form) => ({
+                url: `/auth/register`,
                 method: "POST",
                 body: form
             }),
@@ -50,4 +45,4 @@ export const burgerApi = createApi({
 })
 
 
-export const {useGetIngredientsQuery, useGetUserDataQuery, usePostLogoutMutation, usePostLoginMutation, usePostOrderMutation} = burgerApi;
+export const {useGetIngredientsQuery, usePostLogoutMutation, usePostRegisterMutation, usePostLoginMutation, usePostOrderMutation} = burgerApi;
