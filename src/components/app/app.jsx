@@ -19,14 +19,15 @@ const App = function() {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<MainPage/>}/>
-                <Route path="/login" element={<LoginPage/>}/>
                 <Route path="/register" element={<RegisterPage/>}/>
-                <Route element={<ProtectedRoute/>}>
-                    <Route path="/profile" element={<ProfilePage/>}>
-                        <Route path="" element={<UserDataPage/>}/>
-                        <Route path="orders" element={<OrdersPage/>}/>
-                    </Route>
-                </Route>
+
+                <Route path="/profile" element={
+                    <ProtectedRoute>
+                        <ProfilePage/>
+                    </ProtectedRoute>
+                }/>
+                <Route path="/login" element={<LoginPage/>} />
+
                 <Route path="/forgot-password" element={<ForgotPasswordPage/>}/>
                 <Route path="/reset-password" element={<ResetPasswordPage/>}/>
                 <Route path="/ingredients/:id" element={<IngredientsPage/>}/>

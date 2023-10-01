@@ -1,18 +1,23 @@
 import React, {useCallback, useState} from 'react';
 import styles from "./inputs.module.css"
 import AppHeader from "../components/header/appHeader";
-import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
-import { useNavigate } from "react-router-dom";
+import {Button, EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
+import {useLocation, useNavigate } from "react-router-dom";
 import {setCookie} from "../services/cookies/cookies";
 import {usePostLoginMutation} from "../services/reducers/burgerApi";
+import {useDispatch} from "react-redux";
+import {setCredentials} from "../services/reducers/authSlice";
 
 export const LoginPage = () => {
+    const dispatch = useDispatch()
 
     const [postLogin] = usePostLoginMutation();
     const onChange = e => {
         setValue({ ...form, [e.target.name]: e.target.value });
     };
 
+    let location = useLocation();
+    let { from } = location.state || { from: { pathname: "/" } };
 
     const [form, setValue] = useState({ email: '', password: '' });
 
@@ -37,9 +42,15 @@ export const LoginPage = () => {
 
             try {
                 if (response.success) {
+                    dispatch(setCredentials({ ...response, response }))
+
                     setCookie('accessToken', response.accessToken)
                     setCookie('refreshToken', response.refreshToken)
-                    navigate("/")
+                    if (from) {
+                        navigate(from)
+                    } else {
+                        navigate("/")
+                    }
                 }
             } catch (e) {
                 console.error(e)
