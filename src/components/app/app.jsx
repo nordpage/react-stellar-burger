@@ -10,7 +10,7 @@ import IngredientsPage from "../../pages/ingredients";
 import UserDataPage from "../../pages/user-data";
 import OrdersPage from "../../pages/orders";
 import React from "react";
-import ProtectedRoute from "../../pages/protectedRoute";
+import ProtectedRoute from "../../pages/protected-route/protectedRoute";
 
 const App = function() {
 
@@ -21,12 +21,14 @@ const App = function() {
                 <Route path="/" element={<MainPage/>}/>
                 <Route path="/register" element={<RegisterPage/>}/>
 
-                <Route path="/profile" element={
-                    <ProtectedRoute>
-                        <ProfilePage/>
-                    </ProtectedRoute>
-                }/>
-                <Route path="/login" element={<LoginPage/>} />
+
+                <Route path="/profile" element={<ProtectedRoute authRequired={true} children={<ProfilePage/>}/> }>
+                    <Route path="/profile/" element={<UserDataPage/>}/>
+                    <Route path="/profile/orders" element={<OrdersPage/>}/>
+                </Route>
+
+
+                <Route path="/login" element={<ProtectedRoute authRequired={false} children={<LoginPage/>}/> } />
 
                 <Route path="/forgot-password" element={<ForgotPasswordPage/>}/>
                 <Route path="/reset-password" element={<ResetPasswordPage/>}/>

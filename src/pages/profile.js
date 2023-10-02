@@ -43,10 +43,10 @@ function ProfilePage() {
             <div className={styles.container}>
                 <div className={styles.menu}>
                     <div className={styles.menu_list}>
-                        <NavLink exact to="" className={styles.link}>
+                        <NavLink end to="/profile/" className={styles.link}>
                             {({ isActive }) => <span className={`text text_type_main-default ${isActive ? '' : 'text_color_inactive'}`}>Профиль</span>}
                         </NavLink>
-                        <NavLink to="/profile/orders" className={styles.link}>
+                        <NavLink to="/profile/orders/" className={styles.link}>
                             {({ isActive }) => <span className={`text text_type_main-default ${isActive ? '' : 'text_color_inactive'}`}>История заказов</span>}
                         </NavLink>
                         <NavLink to="/" className={styles.link} onClick={logout}>
