@@ -1,5 +1,5 @@
 import styles from "./app.module.css";
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import {BrowserRouter, Routes, Route, useLocation} from 'react-router-dom';
 import MainPage from "../../pages/main";
 import LoginPage from "../../pages/login";
 import RegisterPage from "../../pages/register";
@@ -11,8 +11,10 @@ import UserDataPage from "../../pages/user-data";
 import OrdersPage from "../../pages/orders";
 import React from "react";
 import ProtectedRoute from "../../pages/protected-route/protectedRoute";
+import {ReactLocation, Router} from "react-location";
 
 const App = function() {
+
 
   return (
     <div className={styles.app}>

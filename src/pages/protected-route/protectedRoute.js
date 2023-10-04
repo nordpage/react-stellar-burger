@@ -1,23 +1,20 @@
-import { useSelector } from 'react-redux'
-import {Navigate, NavLink, Outlet, useLocation, useNavigate} from 'react-router-dom'
-import {selectCurrentUser} from "../../services/reducers/authSlice";
+import {Navigate, useLocation} from 'react-router-dom'
 import React from "react";
+import {getCookie} from "../../services/cookies/cookies";
 const ProtectedRoute = ({authRequired = false, children}) => {
-    const user = useSelector(selectCurrentUser);
+    const token = getCookie("accessToken")
     let location = useLocation();
 
-    if (authRequired) {
-        if(!user) {
-            return <Navigate to="/login" state={{ from: location}} replace />
-        }
-        return children
-    } else {
-        if (!user) {
-            return children
-        }
+    if (authRequired && !token) {
+        return <Navigate to="/login" state={{ from: location}} replace />
+    }
+
+    if(!authRequired && token){
         const { from } = location.state || { from: { pathname: "/" } };
         return <Navigate to={from} />;
     }
+
+    return children;
 
 
 };
