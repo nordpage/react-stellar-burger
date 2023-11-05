@@ -2,15 +2,20 @@ import React, {useCallback, useState} from 'react';
 import AppHeader from "../components/header/appHeader";
 import styles from './profile.module.css'
 import {NavLink, Outlet, useNavigate} from "react-router-dom";
-import {getCookie, setCookie} from "../services/cookies/cookies";
 import {usePostLogoutMutation} from "../services/reducers/burgerApi";
+import {useDispatch, useSelector} from "react-redux";
+import {logOut, selectCurrentUser} from "../services/reducers/authSlice";
+import {REFRESH} from "../utils/constants";
 
 function ProfilePage() {
 
-    const refreshToken = getCookie('refreshToken');
+    const user = useSelector(selectCurrentUser)
+    const refreshToken = localStorage.getItem(REFRESH)
+
     let form = null;
 
     const [postLogout] = usePostLogoutMutation();
+    const dispatch = useDispatch()
 
 
     const logoutUser = async form =>{
@@ -18,8 +23,7 @@ function ProfilePage() {
         const response = await postLogout(form).unwrap();
         try {
             if (response.success) {
-                setCookie('accessToken', null)
-                setCookie('refreshToken', null)
+                dispatch(logOut())
             }
         } catch (e) {
            console.error(e)
@@ -30,7 +34,7 @@ function ProfilePage() {
     let logout = useCallback(
         e => {
 
-            if (refreshToken !== '') {
+            if (refreshToken !== null) {
                 form = { token: refreshToken }
                 logoutUser(form)
             }
@@ -43,7 +47,7 @@ function ProfilePage() {
             <div className={styles.container}>
                 <div className={styles.menu}>
                     <div className={styles.menu_list}>
-                        <NavLink end to="/profile/" className={styles.link}>
+                        <NavLink to="/profile" end className={styles.link}>
                             {({ isActive }) => <span className={`text text_type_main-default ${isActive ? '' : 'text_color_inactive'}`}>Профиль</span>}
                         </NavLink>
                         <NavLink to="/profile/orders/" className={styles.link}>

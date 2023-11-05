@@ -3,10 +3,10 @@ import styles from "./inputs.module.css"
 import AppHeader from "../components/header/appHeader";
 import {Button, EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useLocation, useNavigate } from "react-router-dom";
-import {setCookie} from "../services/cookies/cookies";
 import {usePostLoginMutation} from "../services/reducers/burgerApi";
 import {useDispatch} from "react-redux";
 import {setCredentials} from "../services/reducers/authSlice";
+import {REFRESH} from "../utils/constants";
 
 export const LoginPage = () => {
     const dispatch = useDispatch()
@@ -43,9 +43,7 @@ export const LoginPage = () => {
             try {
                 if (response.success) {
                     dispatch(setCredentials({ ...response, response }))
-
-                    setCookie('accessToken', response.accessToken)
-                    setCookie('refreshToken', response.refreshToken)
+                    localStorage.setItem(REFRESH, response.refreshToken)
                     if (from) {
                         navigate(from)
                     } else {

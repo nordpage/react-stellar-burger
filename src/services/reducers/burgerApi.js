@@ -40,9 +40,16 @@ export const burgerApi = createApi({
                 method: "POST",
                 body: { ingredients: payload },
             }),
+        }),
+        postReset: builder.mutation({
+            query:(form) => ({
+                url: `/password-reset`,
+                method: "POST",
+                body: form
+            }),
         })
     }),
 })
 
 
-export const {useGetIngredientsQuery, usePostLogoutMutation, usePostRegisterMutation, usePostLoginMutation, usePostOrderMutation} = burgerApi;
+export const {useGetIngredientsQuery, usePostLogoutMutation, usePostRegisterMutation, usePostLoginMutation, usePostOrderMutation, usePostResetMutation} = burgerApi;

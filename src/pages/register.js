@@ -3,10 +3,13 @@ import AppHeader from "../components/header/appHeader";
 import styles from "./inputs.module.css";
 import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import { useNavigate } from "react-router-dom";
-import {setCookie} from "../services/cookies/cookies";
 import {usePostRegisterMutation} from "../services/reducers/burgerApi";
+import {setCredentials} from "../services/reducers/authSlice";
+import {useDispatch} from "react-redux";
+import {REFRESH} from "../utils/constants";
 
 const RegisterPage = () => {
+    const dispatch = useDispatch()
 
     const [postRegister] = usePostRegisterMutation();
     const onChange = e => {
@@ -36,8 +39,8 @@ const RegisterPage = () => {
 
             try {
                 if (response.success) {
-                    setCookie('accessToken', response.accessToken)
-                    setCookie('refreshToken', response.refreshToken)
+                    dispatch(setCredentials({ ...response, response }))
+                    localStorage.setItem(REFRESH, response.refreshToken)
                     navigate("/")
                 }
             } catch (e) {

@@ -1,12 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import {logOut, setCredentials} from "./authSlice";
 import {API_URL} from "../../utils/constants";
-import {getCookie} from "../cookies/cookies";
 
 const baseQuery = fetchBaseQuery({
     baseUrl: API_URL,
     prepareHeaders: (headers, { getState }) => {
-        const token = getCookie('accessToken')
+        const token = getState().auth.token
         if (token) {
             headers.set("authorization", token)
         }
@@ -17,7 +16,7 @@ const baseQuery = fetchBaseQuery({
 const baseQueryWithReAuth = async (args, api, extraOptions) => {
     let result = await baseQuery(args, api, extraOptions)
 
-    if (result?.error?.originalStatus === 403) {
+    if (result?.error?.status === 403) {
         console.log('sending refresh token')
         // send refresh token to get new access token
         const refreshResult = await baseQuery('/auth/token', api, extraOptions)

@@ -12,6 +12,7 @@ import OrdersPage from "../../pages/orders";
 import React from "react";
 import ProtectedRoute from "../../pages/protected-route/protectedRoute";
 import {ReactLocation, Router} from "react-location";
+import NotFound from "../../pages/not-found";
 
 const App = function() {
 
@@ -35,6 +36,7 @@ const App = function() {
                 <Route path="/forgot-password" element={<ForgotPasswordPage/>}/>
                 <Route path="/reset-password" element={<ResetPasswordPage/>}/>
                 <Route path="/ingredients/:id" element={<IngredientsPage/>}/>
+                <Route path="/404" element={<NotFound />} />
             </Routes>
         </BrowserRouter>
     </div>

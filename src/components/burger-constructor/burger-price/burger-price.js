@@ -9,6 +9,7 @@ import {modalTypes} from "../../../utils/modal-types";
 import {FadeLoader} from "react-spinners";
 import {getCookie} from "../../../services/cookies/cookies";
 import {useNavigate} from "react-router-dom";
+import {selectCurrentToken} from "../../../services/reducers/authSlice";
 
 const BurgerPrice = function() {
 
@@ -17,10 +18,11 @@ const BurgerPrice = function() {
     const {cart} = useSelector((store) => store.burger)
     const [postOrder] = usePostOrderMutation()
     const navigate = useNavigate();
+    const accessToken = useSelector(selectCurrentToken)
 
 
    async function postOrderRequest(burger) {
-        if (getCookie("accessToken")) {
+        if (accessToken) {
             setLoading(true)
             if (!burger.bun || !burger.ingredients) return;
             const orderIds = [burger.bun, burger.ingredients, burger.bun].flat().map(item => item._id)

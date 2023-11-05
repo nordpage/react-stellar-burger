@@ -9,7 +9,7 @@ const AppHeader = function(){
         <header className={`${styles.nav} m-10`}>
             <div className={styles.inner}>
                 <div className={styles.buttons}>
-                    <NavLink to="/" exact className={styles.link}>
+                    <NavLink to="/" end className={styles.link}>
                         {({ isActive }) => <span className={`${styles.button} text text_type_main-small p-5 ${isActive ? '' : 'text_color_inactive'}`}><ListIcon type={isActive ? 'primary' : 'secondary'} />Конструктор</span>}
                     </NavLink>
                     <NavLink to="/list" className={styles.link}>
