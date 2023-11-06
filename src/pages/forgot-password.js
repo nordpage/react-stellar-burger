@@ -8,8 +8,13 @@ import {usePostResetMutation} from "../services/reducers/burgerApi";
 export const ForgotPasswordPage = () => {
 
     const navigate = useNavigate();
-    const [email, setEmail] = useState(null);
+    const [form, setValue] = useState({email:''})
     const [postReset] = usePostResetMutation();
+
+
+    const onChange = e => {
+        setValue({ ...form, email: e.target.value });
+    };
 
     function toLogin() {
         navigate("/login")
@@ -23,7 +28,7 @@ export const ForgotPasswordPage = () => {
     }
 
     async function resetRequest() {
-        const response = await postReset(email).unwrap();
+        const response = await postReset(form).unwrap();
         try {
             if (response.success) {
                 toReset()
@@ -41,14 +46,15 @@ export const ForgotPasswordPage = () => {
                 <Input
                     type={'email'}
                     placeholder={'E-mail'}
-                    onChange={(e) => setEmail(e.target.value)}
+                    value={form.email}
+                    onChange={onChange}
                     name={'name'}
                     error={false}
                     errorText={'Ошибка'}
                     size={'default'}
                     extraClass="mt-6"
                 />
-                <Button htmlType="button" type="primary" size="large" extraClass="mt-6" onClick={resetRequest} disabled={email === null}>
+                <Button htmlType="button" type="primary" size="large" extraClass="mt-6" onClick={resetRequest} disabled={form.email === ''}>
                     Восстановить
                 </Button>
                 <div className={`${styles.buttons} mt-20`}><p className="text text_type_main-default">Вспомнили пароль?</p> <Button extraClass={styles.button} htmlType="button" type="secondary" size="medium" onClick={() => toLogin()}>
