@@ -5,9 +5,10 @@ import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
 import ModalOverlay from "./modal-overlay/modal-overlay";
 
-const Modal = function ({title, children, shown, onModalClose}) {
+const Modal = function ({children, shown, onModalClose}) {
     const [visibility, setVisibility] = useState(shown)
 
+    const title = "Ltnfkb"
     const onClose = () => {
         onModalClose()
     }

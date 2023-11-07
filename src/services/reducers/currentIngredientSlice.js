@@ -14,4 +14,9 @@ export const {
     addCurrentIngredient
 } = currentIngredientSlice.actions
 
+export function addCurrent(item) {
+    return async function addCurrentThunk(dispatch) {
+        dispatch(addCurrentIngredient(item))
+    }
+}
 export default currentIngredientSlice.reducer

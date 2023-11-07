@@ -8,12 +8,14 @@ import {useDrag} from "react-dnd";
 import {BUN} from "../../../utils/constants";
 import {openModal} from "../../../services/reducers/modalSlice";
 import {modalTypes} from "../../../utils/modal-types";
+import {useNavigate} from "react-router-dom";
 
 const IngredientItem = function({item}) {
 
     const [counter, setCounter] = useState(0)
     const dispatch = useDispatch()
     const {cart} = useSelector((store) => store.burger)
+    const navigate = useNavigate();
 
     const [{isDragging}, drag] = useDrag(() => ({
         type: "ingredient",
@@ -40,11 +42,7 @@ const IngredientItem = function({item}) {
         }
     }, [cart]);
 
-
-
-
     function onItemClick(item) {
-        dispatch(addCurrentIngredient(item))
         dispatch(openModal(modalTypes.Ingredient))
     }
 

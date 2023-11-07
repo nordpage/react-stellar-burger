@@ -1,6 +1,5 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 import {API_URL} from "../../utils/constants";
-import {getCookie} from "../cookies/cookies";
 
 
 export const burgerApi = createApi({
@@ -41,9 +40,16 @@ export const burgerApi = createApi({
                 body: { ingredients: payload },
             }),
         }),
-        postReset: builder.mutation({
+        postForgot: builder.mutation({
             query:(form) => ({
                 url: `/password-reset`,
+                method: "POST",
+                body: form
+            }),
+        }),
+        postReset: builder.mutation({
+            query:(form) => ({
+                url: `/password-reset/reset`,
                 method: "POST",
                 body: form
             }),
@@ -52,4 +58,4 @@ export const burgerApi = createApi({
 })
 
 
-export const {useGetIngredientsQuery, usePostLogoutMutation, usePostRegisterMutation, usePostLoginMutation, usePostOrderMutation, usePostResetMutation} = burgerApi;
+export const {useGetIngredientsQuery, usePostLogoutMutation, usePostRegisterMutation, usePostLoginMutation, usePostOrderMutation, usePostForgotMutation, usePostResetMutation} = burgerApi;

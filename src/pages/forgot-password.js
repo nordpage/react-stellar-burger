@@ -3,13 +3,13 @@ import AppHeader from "../components/header/appHeader";
 import styles from "./inputs.module.css";
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useNavigate} from "react-router-dom";
-import {usePostResetMutation} from "../services/reducers/burgerApi";
+import {usePostForgotMutation} from "../services/reducers/burgerApi";
 
 export const ForgotPasswordPage = () => {
 
     const navigate = useNavigate();
     const [form, setValue] = useState({email:''})
-    const [postReset] = usePostResetMutation();
+    const [postForgot] = usePostForgotMutation();
 
 
     const onChange = e => {
@@ -27,8 +27,8 @@ export const ForgotPasswordPage = () => {
         })
     }
 
-    async function resetRequest() {
-        const response = await postReset(form).unwrap();
+    async function forgotRequest() {
+        const response = await postForgot(form).unwrap();
         try {
             if (response.success) {
                 toReset()
@@ -54,7 +54,7 @@ export const ForgotPasswordPage = () => {
                     size={'default'}
                     extraClass="mt-6"
                 />
-                <Button htmlType="button" type="primary" size="large" extraClass="mt-6" onClick={resetRequest} disabled={form.email === ''}>
+                <Button htmlType="button" type="primary" size="large" extraClass="mt-6" onClick={forgotRequest} disabled={form.email === ''}>
                     Восстановить
                 </Button>
                 <div className={`${styles.buttons} mt-20`}><p className="text text_type_main-default">Вспомнили пароль?</p> <Button extraClass={styles.button} htmlType="button" type="secondary" size="medium" onClick={() => toLogin()}>
