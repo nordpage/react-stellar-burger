@@ -67,10 +67,6 @@ const RegisterPage = () => {
         [form]
     )
 
-    const onIconClick = () => {
-
-    }
-
     return(
         <div>
             <AppHeader/>

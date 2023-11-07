@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import styles from './user-data.module.css'
-import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useGetUserDataQuery, useUpdateUserDataMutation} from "../services/reducers/userApiSlice";
 
 function UserDataPage() {
@@ -16,7 +16,6 @@ function UserDataPage() {
     const {
         data = {},
         isError,
-        error,
         isSuccess
     } = useGetUserDataQuery();
 

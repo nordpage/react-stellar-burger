@@ -7,7 +7,6 @@ import {addOrderNumber} from "../../../services/reducers/orderSlice";
 import {openModal} from "../../../services/reducers/modalSlice";
 import {modalTypes} from "../../../utils/modal-types";
 import {FadeLoader} from "react-spinners";
-import {getCookie} from "../../../services/cookies/cookies";
 import {useNavigate} from "react-router-dom";
 import {selectCurrentToken} from "../../../services/reducers/authSlice";
 
