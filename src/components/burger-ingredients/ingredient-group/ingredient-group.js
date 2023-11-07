@@ -17,6 +17,7 @@ const IngredientGroup = function({ingredients, name}) {
                 // а также сохраняем в свойство background роут,
                 // на котором была открыта наша модалка
                 state={{ background: location }}
+                className={styles.link}
             >
             <IngredientItem item={item} key={index}/>
             </Link>

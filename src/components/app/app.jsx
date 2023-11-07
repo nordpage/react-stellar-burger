@@ -1,5 +1,5 @@
 import styles from "./app.module.css";
-import {BrowserRouter, Routes, Route, useLocation, useNavigate, Router} from 'react-router-dom';
+import {Routes, Route, useLocation, useNavigate} from 'react-router-dom';
 import MainPage from "../../pages/main";
 import LoginPage from "../../pages/login";
 import RegisterPage from "../../pages/register";
@@ -12,15 +12,22 @@ import OrdersPage from "../../pages/orders";
 import React from "react";
 import ProtectedRoute from "../../pages/protected-route/protectedRoute";
 import NotFound from "../../pages/not-found";
-import {addCurrentIngredient} from "../../services/reducers/currentIngredientSlice";
 import {closeModal} from "../../services/reducers/modalSlice";
 import IngredientDetails from "../modal/ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
+import {useDispatch, useSelector} from "react-redux";
+import {modalTypes} from "../../utils/modal-types";
+import OrderDetails from "../modal/order-details/order-details";
+import {addOrderNumber} from "../../services/reducers/orderSlice";
+import {clearCart} from "../../services/reducers/burgerSlice";
 
 const App = function() {
     const location = useLocation();
     const navigate = useNavigate();
     const background = location.state && location.state.background;
+    const {modal} = useSelector((store) => store.modal)
+    const dispatch = useDispatch();
+    const {order} = useSelector((store) => store.order)
 
     const handleModalClose = () => {
         // Возвращаемся к предыдущему пути при закрытии модалки
@@ -29,7 +36,7 @@ const App = function() {
 
   return (
     <div className={styles.app}>
-            <Routes>
+            <Routes location={background || location}>
                 <Route path="/" element={<MainPage/>}/>
                 <Route path="/register" element={<RegisterPage/>}/>
                 <Route path="/profile" element={<ProtectedRoute authRequired={true} children={<ProfilePage/>}/> }>
@@ -42,7 +49,7 @@ const App = function() {
 
                 <Route path="/forgot-password" element={<ProtectedRoute authRequired={false} children={<ForgotPasswordPage/>}/> }/>
                 <Route path="/reset-password" element={<ProtectedRoute authRequired={false} children={<ResetPasswordPage/>}/> }/>
-                <Route path="/ingredients/:id" element={<IngredientsPage/>}/>
+                <Route path="/ingredients/:ingredientId" element={<IngredientsPage/>}/>
                 <Route path="/404" element={<NotFound />} />
             </Routes>
             {background && (
@@ -50,13 +57,20 @@ const App = function() {
                     <Route
                         path='/ingredients/:ingredientId'
                         element={
-                            <Modal onModalClose={handleModalClose} title="Детали ингредиента">
-                                <IngredientDetails/>
-                            </Modal>
-                        }
+                         modal.type === modalTypes.Ingredient && <Modal children={<IngredientDetails/>} onModalClose={handleModalClose}/>
+                    }
                     />
                 </Routes>
             )}
+        {
+            modal.type === modalTypes.Order &&  <Modal onModalClose={() => {
+                dispatch(addOrderNumber(0))
+                dispatch(clearCart())
+                dispatch(closeModal())
+            }}>
+                <OrderDetails order= {order.orderNumber} />
+            </Modal>
+        }
     </div>
   );
 }
