@@ -1,15 +1,14 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback} from 'react';
 import AppHeader from "../components/header/appHeader";
 import styles from './profile.module.css'
-import {NavLink, Outlet, useNavigate} from "react-router-dom";
+import {NavLink, Outlet} from "react-router-dom";
 import {usePostLogoutMutation} from "../services/reducers/burgerApi";
-import {useDispatch, useSelector} from "react-redux";
-import {logOut, selectCurrentUser} from "../services/reducers/authSlice";
+import {useDispatch} from "react-redux";
+import {logOut} from "../services/reducers/authSlice";
 import {REFRESH} from "../utils/constants";
 
 function ProfilePage() {
 
-    const user = useSelector(selectCurrentUser)
     const refreshToken = localStorage.getItem(REFRESH)
 
     let form = null;
@@ -32,7 +31,7 @@ function ProfilePage() {
 
 
     let logout = useCallback(
-        e => {
+        () => {
 
             if (refreshToken !== null) {
                 form = { token: refreshToken }

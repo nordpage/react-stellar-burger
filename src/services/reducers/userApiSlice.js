@@ -1,5 +1,4 @@
 import {apiSlice} from "./apiSlice";
-import {getCookie} from "../cookies/cookies";
 export const userApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         updateUserData: builder.mutation({

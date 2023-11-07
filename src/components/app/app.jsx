@@ -50,7 +50,7 @@ const App = function() {
                 <Route path="/forgot-password" element={<ProtectedRoute authRequired={false} children={<ForgotPasswordPage/>}/> }/>
                 <Route path="/reset-password" element={<ProtectedRoute authRequired={false} children={<ResetPasswordPage/>}/> }/>
                 <Route path="/ingredients/:ingredientId" element={<IngredientsPage/>}/>
-                <Route path="/404" element={<NotFound />} />
+                <Route path="*" element={<NotFound />} />
             </Routes>
             {background && (
                 <Routes>

@@ -1,11 +1,11 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import AppHeader from "../components/header/appHeader";
 import styles from "./inputs.module.css";
 import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Navigate, useLocation, useNavigate} from "react-router-dom";
 import {usePostResetMutation} from "../services/reducers/burgerApi";
 
-function ResetPasswordPage(props) {
+function ResetPasswordPage() {
 
     const navigate = useNavigate();
     let location = useLocation();
