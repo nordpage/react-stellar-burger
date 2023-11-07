@@ -87,6 +87,7 @@ function UserDataPage() {
             <Input
                 type={"password"}
                 placeholder={'Пароль'}
+                onChange={() => console.log("Changing password")}
                 icon={'EditIcon'}
                 name={'password'}
                 disabled={!editPass}

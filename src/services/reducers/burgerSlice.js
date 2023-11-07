@@ -49,23 +49,9 @@ export const {
     clearCart
 } = burgerSlice.actions
 
-export function addIngredient (item){
-    return async function addIngredientThunk(dispatch) {
-        dispatch(addToList(item))
-        dispatch(checkSum())
-    }
-}
-
 export function addToBurger(item) {
     return async function addToBurgerThunk(dispatch) {
         item.type === BUN ? dispatch(setBun(item)) : dispatch(addToList(item))
-        dispatch(checkSum())
-    }
-}
-
-export function addBun(item) {
-    return async function addBunThunk(dispatch) {
-        dispatch(setBun(item))
         dispatch(checkSum())
     }
 }
@@ -75,10 +61,6 @@ export function removeIngredient(item) {
         dispatch(deleteFromList(item))
         dispatch(checkSum())
     }
-}
-
-export function getCounter(item) {
-
 }
 
 export default burgerSlice.reducer

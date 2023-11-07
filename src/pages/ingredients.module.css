@@ -9,19 +9,6 @@
     text-align: center;
 }
 
-.details {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-}
-
-.detail {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-}
-
 .image {
     height: 240px;
 }
