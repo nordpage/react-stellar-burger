@@ -4,7 +4,7 @@ import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-com
 import {ingredientPropType} from "../../../utils/prop-types";
 import {useDispatch, useSelector} from "react-redux";
 import {useDrag} from "react-dnd";
-import {BUN} from "../../../utils/constants";
+import {BUN, CURRENT} from "../../../utils/constants";
 import {openModal} from "../../../services/reducers/modalSlice";
 import {modalTypes} from "../../../utils/modal-types";
 
@@ -39,12 +39,13 @@ const IngredientItem = function({item}) {
         }
     }, [cart]);
 
-    function onItemClick() {
+    function onItemClick(item) {
+        localStorage.setItem(CURRENT, item._id)
         dispatch(openModal(modalTypes.Ingredient))
     }
 
     return (
-        <section ref={drag} className={`${styles.card} mt-6`} onClick={onItemClick}>
+        <section ref={drag} className={`${styles.card} mt-6`} onClick={() => onItemClick(item)}>
             {counter > 0 && <Counter count={counter} size="default" extraClass={`${styles.counter} m-1`} />}
             <img src={item.image} alt={item.name} className="mb-1"/>
             <div className={`${styles.price} mb-1`}><span className="text text_type_digits-default">{item.price}</span> <CurrencyIcon type="primary" /></div>

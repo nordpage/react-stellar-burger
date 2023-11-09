@@ -1,9 +1,8 @@
 import {Navigate, useLocation} from 'react-router-dom'
 import React from "react";
-import {useSelector} from "react-redux";
-import {selectCurrentToken} from "../../services/reducers/authSlice";
+import {ACCESS} from "../../utils/constants";
 const ProtectedRoute = ({authRequired = false, children}) => {
-    const token = useSelector(selectCurrentToken)
+    const token = localStorage.getItem(ACCESS)
     let location = useLocation();
 
     if (authRequired && !token) {

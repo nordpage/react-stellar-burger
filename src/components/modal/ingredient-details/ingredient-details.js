@@ -2,15 +2,19 @@ import React from "react";
 import styles from "./ingredient-details.module.css"
 import {useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
+import {CURRENT} from "../../../utils/constants";
 
 const IngredientDetails = function () {
 
     const {ingredients} = useSelector((store) => store.ingredients)
 
-    console.log(ingredients)
     const {ingredientId} = useParams();
 
-    const item = ingredients.find(x => x._id === ingredientId)
+    const currentId = localStorage.getItem(CURRENT);
+
+    const id = currentId !== null ? currentId : ingredientId;
+
+    const item = ingredients.find(x => x._id === id)
 
 
     return item && (

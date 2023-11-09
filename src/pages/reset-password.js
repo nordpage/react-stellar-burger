@@ -44,7 +44,7 @@ function ResetPasswordPage() {
                 isHasAccess() ?
                     <div className={styles.container}>
                         <p className="text text_type_main-default">Восстановление пароля</p>
-                        <form>
+                        <form onSubmit={resetRequest}>
                             <PasswordInput
                                 placeholder={'Введите новый пароль'}
                                 name={'password'}
@@ -65,10 +65,10 @@ function ResetPasswordPage() {
                                    size={'default'}
                                    extraClass="mt-6"
                             />
+                            <Button htmlType="submit" type="primary" size="large" extraClass="mt-6" disabled={disabled()}>
+                                Сохранить
+                            </Button>
                         </form>
-                        <Button htmlType="button" type="primary" size="large" extraClass="mt-6" disabled={disabled()} onClick={resetRequest}>
-                            Сохранить
-                        </Button>
                         <div className={`${styles.buttons} mt-20`}><p className="text text_type_main-default">Вспомнили пароль?</p> <Button extraClass={styles.button} htmlType="button" type="secondary" size="medium" onClick={() => toLogin()}>
                             Войти</Button></div>
                 </div> : <Navigate to="/404" replace />

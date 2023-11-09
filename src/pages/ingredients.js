@@ -5,6 +5,7 @@ import IngredientDetails from "../components/modal/ingredient-details/ingredient
 import {useGetIngredientsQuery} from "../services/reducers/burgerApi";
 import {addAll} from "../services/reducers/ingredientsSlice";
 import {FadeLoader} from "react-spinners";
+import {DETAILS} from "../utils/constants";
 
 export const IngredientsPage = () => {
     const {
@@ -28,12 +29,12 @@ export const IngredientsPage = () => {
             {isLoading && isFetching && <div className={styles.loader}>
                 <FadeLoader color="#8585AD" />
             </div>}
-            {isSuccess && ingredients !== undefined &&   <>
+            {isSuccess && ingredients !== undefined &&   <div>
                 <div className={`${styles.top} mt-10 ml-10 mr-10`}>
-                    <h1 className={`${styles.title} text text_type_main-large`}>Детали ингредиента</h1>
+                    <h1 className={`${styles.title} text text_type_main-large`}>{DETAILS}</h1>
                 </div>
                 <IngredientDetails />
-            </> }
+            </div> }
         </div>
     );
 }

@@ -9,10 +9,10 @@ import ResetPasswordPage from "../../pages/reset-password";
 import IngredientsPage from "../../pages/ingredients";
 import UserDataPage from "../../pages/user-data";
 import OrdersPage from "../../pages/orders";
-import React from "react";
+import React, {useEffect} from "react";
 import ProtectedRoute from "../../pages/protected-route/protectedRoute";
 import NotFound from "../../pages/not-found";
-import {closeModal} from "../../services/reducers/modalSlice";
+import {closeModal, openModal} from "../../services/reducers/modalSlice";
 import IngredientDetails from "../modal/ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import {useDispatch, useSelector} from "react-redux";
@@ -21,6 +21,7 @@ import OrderDetails from "../modal/order-details/order-details";
 import {addOrderNumber} from "../../services/reducers/orderSlice";
 import {clearCart} from "../../services/reducers/burgerSlice";
 import AppHeader from "../header/appHeader";
+import {CURRENT} from "../../utils/constants";
 
 const App = function() {
     const location = useLocation();
@@ -29,9 +30,17 @@ const App = function() {
     const {modal} = useSelector((store) => store.modal)
     const dispatch = useDispatch();
     const {order} = useSelector((store) => store.order)
+    const currentId = localStorage.getItem(CURRENT)
+
+
+    useEffect(() => {
+        if (currentId !== null) {
+            dispatch(openModal(modalTypes.Ingredient))
+        }
+    }, [currentId])
 
     const handleModalClose = () => {
-        // Возвращаемся к предыдущему пути при закрытии модалки
+        if (currentId != null) localStorage.removeItem(CURRENT)
         navigate(-1);
     };
 
@@ -54,7 +63,7 @@ const App = function() {
                 <Route path="/ingredients/:ingredientId" element={<IngredientsPage/>}/>
                 <Route path="*" element={<NotFound />} />
             </Routes>
-            {background && (
+            {(background || currentId !== null) && (
                 <Routes>
                     <Route
                         path='/ingredients/:ingredientId'

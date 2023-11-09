@@ -22,6 +22,7 @@ function ProfilePage() {
         try {
             if (response.success) {
                 dispatch(logOut())
+                localStorage.clear()
             }
         } catch (e) {
            console.error(e)

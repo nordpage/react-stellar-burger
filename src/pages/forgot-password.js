@@ -40,20 +40,22 @@ export const ForgotPasswordPage = () => {
     return (
         <div className={styles.container}>
             <p className="text text_type_main-default">Восстановление пароля</p>
-            <Input
-                type={'email'}
-                placeholder={'E-mail'}
-                value={form.email}
-                onChange={onChange}
-                name={'name'}
-                error={false}
-                errorText={'Ошибка'}
-                size={'default'}
-                extraClass="mt-6"
-            />
-            <Button htmlType="button" type="primary" size="large" extraClass="mt-6" onClick={forgotRequest} disabled={form.email === ''}>
-                Восстановить
-            </Button>
+            <form onSubmit={forgotRequest}>
+                <Input
+                    type={'email'}
+                    placeholder={'E-mail'}
+                    value={form.email}
+                    onChange={onChange}
+                    name={'name'}
+                    error={false}
+                    errorText={'Ошибка'}
+                    size={'default'}
+                    extraClass="mt-6"
+                />
+                <Button htmlType="submit" type="primary" size="large" extraClass="mt-6" disabled={form.email === ''}>
+                    Восстановить
+                </Button>
+            </form>
             <div className={`${styles.buttons} mt-20`}><p className="text text_type_main-default">Вспомнили пароль?</p> <Button extraClass={styles.button} htmlType="button" type="secondary" size="medium" onClick={() => toLogin()}>
                 Войти</Button></div>
         </div>

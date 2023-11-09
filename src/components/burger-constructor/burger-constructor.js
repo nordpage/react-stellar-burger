@@ -10,7 +10,7 @@ const BurgerConstructor = function() {
     const {cart} = useSelector((store) => store.burger)
 
     return(
-        <section className={`${styles.container}`}>
+        <section className={`${styles.container} mb-10`}>
             <BurgerComponent/>
             {
                 (cart.sum > 0) && <BurgerPrice/>

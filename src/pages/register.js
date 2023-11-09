@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import {usePostRegisterMutation} from "../services/reducers/burgerApi";
 import {setCredentials} from "../services/reducers/authSlice";
 import {useDispatch} from "react-redux";
-import {REFRESH} from "../utils/constants";
+import {ACCESS, REFRESH} from "../utils/constants";
 
 const RegisterPage = () => {
     const dispatch = useDispatch()
@@ -40,6 +40,7 @@ const RegisterPage = () => {
                 if (response.success) {
                     dispatch(setCredentials({ ...response, response }))
                     localStorage.setItem(REFRESH, response.refreshToken)
+                    localStorage.setItem(ACCESS, response.accessToken)
                     navigate("/")
                 }
             } catch (e) {
@@ -69,7 +70,7 @@ const RegisterPage = () => {
     return(
         <div className={styles.container}>
             <p className="text text_type_main-default">Регистрация</p>
-            <form>
+            <form onSubmit={register}>
                 <Input
                     type={'text'}
                     onChange={onChange}
@@ -100,10 +101,10 @@ const RegisterPage = () => {
                     size={'default'}
                     extraClass="mt-6"
                 />
+                <Button htmlType="submit" type="primary" size="large" extraClass="mt-6">
+                    Зарегистрироваться
+                </Button>
             </form>
-            <Button htmlType="button" type="primary" size="large" extraClass="mt-6" onClick={register}>
-                Зарегистрироваться
-            </Button>
             <div className={`${styles.buttons} mt-20`}><p className="text text_type_main-default">Уже зарегистрированы?</p> <Button extraClass={styles.button} htmlType="button" type="secondary" size="medium" onClick={() => toLogin()}>
                 Войти</Button></div>
         </div>

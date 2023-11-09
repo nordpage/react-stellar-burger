@@ -45,10 +45,10 @@ const BurgerPrice = function() {
                     <div className={styles.loader}>
                         <FadeLoader color="#8585AD" />
                     </div> :
-                    <>
+                    <div>
                             <div className={styles.priceContainer}><p className="text text_type_digits-medium">{cart.sum}</p> <CurrencyIcon type="primary"/></div>
                             <Button htmlType="button" type="primary" size="large" onClick={() => postOrderRequest(cart)}>Оформить заказ</Button>
-                    </>
+                    </div>
             }
         </section>
     )

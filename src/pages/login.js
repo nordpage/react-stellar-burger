@@ -5,7 +5,7 @@ import {useLocation, useNavigate } from "react-router-dom";
 import {usePostLoginMutation} from "../services/reducers/burgerApi";
 import {useDispatch} from "react-redux";
 import {setCredentials} from "../services/reducers/authSlice";
-import {REFRESH} from "../utils/constants";
+import {ACCESS, REFRESH} from "../utils/constants";
 
 export const LoginPage = () => {
     const dispatch = useDispatch()
@@ -43,6 +43,7 @@ export const LoginPage = () => {
                 if (response.success) {
                     dispatch(setCredentials({ ...response, response }))
                     localStorage.setItem(REFRESH, response.refreshToken)
+                    localStorage.setItem(ACCESS, response.accessToken)
                     if (from) {
                         navigate(from)
                     } else {

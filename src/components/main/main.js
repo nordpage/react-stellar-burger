@@ -6,13 +6,10 @@ import BurgerConstructor from "../burger-constructor/burger-constructor";
 function Main() {
 
     return(
-        <>
-            <main className={styles.container}>
-                <BurgerIngredients/>
-                <BurgerConstructor/>
-            </main>
-
-        </>
+        <main className={styles.container}>
+            <BurgerIngredients/>
+            <BurgerConstructor/>
+        </main>
     )
 }
 

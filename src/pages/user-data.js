@@ -53,7 +53,7 @@ function UserDataPage() {
 
 
     return (
-        <div className={styles.container}>
+        <form onSubmit={onSave} className={styles.container}>
             <Input
                 type={"text"}
                 placeholder={'Имя'}
@@ -98,11 +98,11 @@ function UserDataPage() {
             />
             {(editName || editEmail || editPass) && <div className={styles.edit}>
                 <Button extraClass={styles.button} htmlType="button" type="secondary" size="medium" onClick={disableInputs}>Отмена</Button>
-                <Button htmlType="button" type="primary" size="medium" onClick={onSave}>
+                <Button htmlType="submit" type="primary" size="medium">
                     Сохранить
                 </Button>
             </div>}
-        </div>
+        </form>
     );
 }
 

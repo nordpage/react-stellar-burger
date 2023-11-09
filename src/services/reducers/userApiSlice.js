@@ -1,4 +1,5 @@
 import {apiSlice} from "./apiSlice";
+import {ACCESS} from "../../utils/constants";
 export const userApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         updateUserData: builder.mutation({
@@ -11,7 +12,10 @@ export const userApiSlice = apiSlice.injectEndpoints({
         getUserData: builder.query({
             query: () =>  ({
                 url: '/auth/user',
-                method: 'GET'
+                method: 'GET',
+                headers: {
+                    "authorization": localStorage.getItem(ACCESS)
+                }
             }),
             transformResponse: (response) => {
                 return response

@@ -16,7 +16,7 @@ const AppHeader = function(){
                         {({ isActive }) => <span className={`${styles.button} text text_type_main-small p-5 ${isActive ? '' : 'text_color_inactive'}`}><BurgerIcon type={isActive ? 'primary' : 'secondary'} />Лента заказов</span>}
                     </NavLink>
                 </div>
-                <Logo/>
+                <NavLink to="/" className={styles.link}><Logo/></NavLink>
                 <NavLink to="/profile" className={styles.link}>
                     {({ isActive }) => <span className={`${styles.button} text text_type_main-small p-5 ${isActive ? '' : 'text_color_inactive'}`}><ProfileIcon type={isActive ? 'primary' : 'secondary'} />Личный кабинет</span>}
                 </NavLink>
