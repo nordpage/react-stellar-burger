@@ -63,7 +63,6 @@ function UserDataPage() {
                 onIconClick={() => setEditName(true)}
                 onChange={onChange}
                 value={user.name}
-                defaultValue=""
                 error={false}
                 errorText={'Ошибка'}
                 size={'default'}
@@ -78,7 +77,6 @@ function UserDataPage() {
                 name={'login'}
                 onChange={onChange}
                 value={user.email}
-                defaultValue=""
                 error={false}
                 errorText={'Ошибка'}
                 size={'default'}

@@ -1,5 +1,4 @@
 import React, {useCallback, useState} from 'react';
-import AppHeader from "../components/header/appHeader";
 import styles from "./inputs.module.css";
 import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import { useNavigate } from "react-router-dom";
@@ -68,48 +67,45 @@ const RegisterPage = () => {
     )
 
     return(
-        <div>
-            <AppHeader/>
-            <div className={styles.container}>
-                <p className="text text_type_main-default">Регистрация</p>
-                <form>
-                    <Input
-                        type={'text'}
-                        onChange={onChange}
-                        value={form.name}
-                        placeholder={'Имя'}
-                        name={'name'}
-                        error={isNameError}
-                        errorText={'Поле \"Имя\" не может быть пустым'}
-                        size={'default'}
-                        extraClass="mt-6"
-                    />
-                    <EmailInput
-                        onChange={onChange}
-                        value={form.email}
-                        name={'email'}
-                        error={isEmailError}
-                        errorText={'Поле \"E-mail\" не может быть пустым'}
-                        placeholder="E-mail"
-                        extraClass="mt-6"
-                    />
-                    <PasswordInput
-                        onChange={onChange}
-                        value={form.password}
-                        placeholder={'Пароль'}
-                        name={'password'}
-                        error={isPasswordError}
-                        errorText={'Поле \"Пароль\" не может быть пустым'}
-                        size={'default'}
-                        extraClass="mt-6"
-                    />
-                </form>
-                <Button htmlType="button" type="primary" size="large" extraClass="mt-6" onClick={register}>
-                    Зарегистрироваться
-                </Button>
-                <div className={`${styles.buttons} mt-20`}><p className="text text_type_main-default">Уже зарегистрированы?</p> <Button extraClass={styles.button} htmlType="button" type="secondary" size="medium" onClick={() => toLogin()}>
-                    Войти</Button></div>
-            </div>
+        <div className={styles.container}>
+            <p className="text text_type_main-default">Регистрация</p>
+            <form>
+                <Input
+                    type={'text'}
+                    onChange={onChange}
+                    value={form.name}
+                    placeholder={'Имя'}
+                    name={'name'}
+                    error={isNameError}
+                    errorText={'Поле \"Имя\" не может быть пустым'}
+                    size={'default'}
+                    extraClass="mt-6"
+                />
+                <EmailInput
+                    onChange={onChange}
+                    value={form.email}
+                    name={'email'}
+                    error={isEmailError}
+                    errorText={'Поле \"E-mail\" не может быть пустым'}
+                    placeholder="E-mail"
+                    extraClass="mt-6"
+                />
+                <PasswordInput
+                    onChange={onChange}
+                    value={form.password}
+                    placeholder={'Пароль'}
+                    name={'password'}
+                    error={isPasswordError}
+                    errorText={'Поле \"Пароль\" не может быть пустым'}
+                    size={'default'}
+                    extraClass="mt-6"
+                />
+            </form>
+            <Button htmlType="button" type="primary" size="large" extraClass="mt-6" onClick={register}>
+                Зарегистрироваться
+            </Button>
+            <div className={`${styles.buttons} mt-20`}><p className="text text_type_main-default">Уже зарегистрированы?</p> <Button extraClass={styles.button} htmlType="button" type="secondary" size="medium" onClick={() => toLogin()}>
+                Войти</Button></div>
         </div>
     );
 }

@@ -1,6 +1,5 @@
-import React, {useCallback, useState} from 'react';
+import React, {useState} from 'react';
 import styles from "./inputs.module.css"
-import AppHeader from "../components/header/appHeader";
 import {Button, EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useLocation, useNavigate } from "react-router-dom";
 import {usePostLoginMutation} from "../services/reducers/burgerApi";
@@ -63,48 +62,43 @@ export const LoginPage = () => {
         }
     }
 
-    let login = useCallback(
-        e => {
-            e.preventDefault()
-            loginUser(form)
-        },
-        [form]
-    )
+    const login = (e) => {
+        e.preventDefault()
+        loginUser(form)
+    }
+
 
     return (
-        <div>
-            <AppHeader/>
-            <div className={styles.container}>
-                <p className="text text_type_main-default">Вход</p>
-                <form>
-                    <EmailInput
-                        onChange={onChange}
-                        value={form.email}
-                        name={'email'}
-                        error={isEmailError}
-                        errorText={'Поле \"E-mail\" не может быть пустым'}
-                        placeholder="E-mail"
-                        extraClass="mt-6"
-                    />
-                    <PasswordInput
-                        onChange={onChange}
-                        value={form.password}
-                        placeholder={'Пароль'}
-                        name={'password'}
-                        error={isPasswordError}
-                        errorText={'Поле \"Пароль\" не может быть пустым'}
-                        size={'default'}
-                        extraClass="mt-6"
-                    />
-                </form>
-                <Button htmlType="button" type="primary" size="large" extraClass="mt-6" onClick={login}>
+        <div className={styles.container}>
+            <p className="text text_type_main-default">Вход</p>
+            <form onSubmit={login}>
+                <EmailInput
+                    onChange={onChange}
+                    value={form.email}
+                    name={'email'}
+                    error={isEmailError}
+                    errorText={'Поле \"E-mail\" не может быть пустым'}
+                    placeholder="E-mail"
+                    extraClass="mt-6"
+                />
+                <PasswordInput
+                    onChange={onChange}
+                    value={form.password}
+                    placeholder={'Пароль'}
+                    name={'password'}
+                    error={isPasswordError}
+                    errorText={'Поле \"Пароль\" не может быть пустым'}
+                    size={'default'}
+                    extraClass="mt-6"
+                />
+                <Button htmlType="submit" type="primary" size="large" extraClass="mt-6">
                     Войти
                 </Button>
-                <div className={`${styles.buttons} mt-20`}><p className="text text_type_main-default">Вы — новый пользователь?</p> <Button extraClass={styles.button} htmlType="button" type="secondary" size="medium" onClick={() => toRegister()}>
-                    Зарегистрироваться</Button></div>
-                <div className={`${styles.buttons} mt-6`}><p className="text text_type_main-default">Забыли пароль?</p> <Button extraClass={styles.button} htmlType="button" type="secondary" size="medium" onClick={() => toForgotPassword()}>
-                    Восстановить пароль</Button></div>
-            </div>
+            </form>
+            <div className={`${styles.buttons} mt-20`}><p className="text text_type_main-default">Вы — новый пользователь?</p> <Button extraClass={styles.button} htmlType="button" type="secondary" size="medium" onClick={() => toRegister()}>
+                Зарегистрироваться</Button></div>
+            <div className={`${styles.buttons} mt-6`}><p className="text text_type_main-default">Забыли пароль?</p> <Button extraClass={styles.button} htmlType="button" type="secondary" size="medium" onClick={() => toForgotPassword()}>
+                Восстановить пароль</Button></div>
         </div>
     );
 }

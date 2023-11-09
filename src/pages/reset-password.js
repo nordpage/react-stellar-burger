@@ -1,5 +1,4 @@
 import React, {useCallback, useState} from 'react';
-import AppHeader from "../components/header/appHeader";
 import styles from "./inputs.module.css";
 import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Navigate, useLocation, useNavigate} from "react-router-dom";
@@ -42,8 +41,7 @@ function ResetPasswordPage() {
     return (
         <div>
             {
-                isHasAccess() ? <div>
-                    <AppHeader/>
+                isHasAccess() ?
                     <div className={styles.container}>
                         <p className="text text_type_main-default">Восстановление пароля</p>
                         <form>
@@ -73,7 +71,6 @@ function ResetPasswordPage() {
                         </Button>
                         <div className={`${styles.buttons} mt-20`}><p className="text text_type_main-default">Вспомнили пароль?</p> <Button extraClass={styles.button} htmlType="button" type="secondary" size="medium" onClick={() => toLogin()}>
                             Войти</Button></div>
-                    </div>
                 </div> : <Navigate to="/404" replace />
             }
         </div>

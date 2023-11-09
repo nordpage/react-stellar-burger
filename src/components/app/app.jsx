@@ -20,6 +20,7 @@ import {modalTypes} from "../../utils/modal-types";
 import OrderDetails from "../modal/order-details/order-details";
 import {addOrderNumber} from "../../services/reducers/orderSlice";
 import {clearCart} from "../../services/reducers/burgerSlice";
+import AppHeader from "../header/appHeader";
 
 const App = function() {
     const location = useLocation();
@@ -36,6 +37,7 @@ const App = function() {
 
   return (
     <div className={styles.app}>
+            <AppHeader />
             <Routes location={background || location}>
                 <Route path="/" element={<MainPage/>}/>
                 <Route path="/register" element={<RegisterPage/>}/>
