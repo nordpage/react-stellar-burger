@@ -53,7 +53,7 @@ const BurgerComponent = function () {
                                 thumbnail={cart.bun.image}
                             />
                         </div>}
-                    <div className={`${styles.ingredients} custom-scroll mr-4 mt-4 mb-4`}>
+                    <div className={`${styles.ingredients} custom-scroll mr-4 mt-4`}>
                         {
                             memorizedIngredients
                         }

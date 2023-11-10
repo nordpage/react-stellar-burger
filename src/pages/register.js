@@ -6,17 +6,15 @@ import {usePostRegisterMutation} from "../services/reducers/burgerApi";
 import {setCredentials} from "../services/reducers/authSlice";
 import {useDispatch} from "react-redux";
 import {ACCESS, REFRESH} from "../utils/constants";
+import {useForm} from "../hooks/useForm";
 
 const RegisterPage = () => {
     const dispatch = useDispatch()
 
     const [postRegister] = usePostRegisterMutation();
-    const onChange = e => {
-        setValue({ ...form, [e.target.name]: e.target.value });
-    };
 
 
-    const [form, setValue] = useState({ name: '', email: '', password: '' });
+    const {values, handleChange } = useForm({});
 
 
     const [isNameError, setNameError] = useState(false)
@@ -62,9 +60,9 @@ const RegisterPage = () => {
     let register = useCallback(
         e => {
             e.preventDefault()
-            registerUser(form)
+            registerUser(values)
         },
-        [form]
+        [values]
     )
 
     return(
@@ -73,8 +71,8 @@ const RegisterPage = () => {
             <form onSubmit={register}>
                 <Input
                     type={'text'}
-                    onChange={onChange}
-                    value={form.name}
+                    onChange={handleChange}
+                    value={values.name}
                     placeholder={'Имя'}
                     name={'name'}
                     error={isNameError}
@@ -83,8 +81,8 @@ const RegisterPage = () => {
                     extraClass="mt-6"
                 />
                 <EmailInput
-                    onChange={onChange}
-                    value={form.email}
+                    onChange={handleChange}
+                    value={values.email}
                     name={'email'}
                     error={isEmailError}
                     errorText={'Поле \"E-mail\" не может быть пустым'}
@@ -92,8 +90,8 @@ const RegisterPage = () => {
                     extraClass="mt-6"
                 />
                 <PasswordInput
-                    onChange={onChange}
-                    value={form.password}
+                    onChange={handleChange}
+                    value={values.password}
                     placeholder={'Пароль'}
                     name={'password'}
                     error={isPasswordError}

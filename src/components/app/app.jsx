@@ -22,6 +22,8 @@ import {addOrderNumber} from "../../services/reducers/orderSlice";
 import {clearCart} from "../../services/reducers/burgerSlice";
 import AppHeader from "../header/appHeader";
 import {CURRENT} from "../../utils/constants";
+import {useGetIngredientsQuery} from "../../services/reducers/burgerApi";
+import {addAll} from "../../services/reducers/ingredientsSlice";
 
 const App = function() {
     const location = useLocation();
@@ -43,6 +45,17 @@ const App = function() {
         if (currentId != null) localStorage.removeItem(CURRENT)
         navigate(-1);
     };
+
+    const {
+        data: ingredients = [],
+        isSuccess
+    } = useGetIngredientsQuery();
+
+    useEffect(() => {
+        if (isSuccess && ingredients !== undefined) {
+            dispatch(addAll(ingredients))
+        }
+    }, [ingredients]);
 
   return (
     <div className={styles.app}>

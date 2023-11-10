@@ -1,19 +1,17 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styles from "./inputs.module.css";
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useNavigate} from "react-router-dom";
 import {usePostForgotMutation} from "../services/reducers/burgerApi";
+import {useForm} from "../hooks/useForm";
 
 export const ForgotPasswordPage = () => {
 
     const navigate = useNavigate();
-    const [form, setValue] = useState({email:''})
+
     const [postForgot] = usePostForgotMutation();
+    const {values, handleChange } = useForm({});
 
-
-    const onChange = e => {
-        setValue({ ...form, email: e.target.value });
-    };
 
     function toLogin() {
         navigate("/login")
@@ -27,7 +25,7 @@ export const ForgotPasswordPage = () => {
     }
 
     async function forgotRequest() {
-        const response = await postForgot(form).unwrap();
+        const response = await postForgot(values).unwrap();
         try {
             if (response.success) {
                 toReset()
@@ -44,15 +42,15 @@ export const ForgotPasswordPage = () => {
                 <Input
                     type={'email'}
                     placeholder={'E-mail'}
-                    value={form.email}
-                    onChange={onChange}
+                    value={values.email}
+                    onChange={handleChange}
                     name={'name'}
                     error={false}
                     errorText={'Ошибка'}
                     size={'default'}
                     extraClass="mt-6"
                 />
-                <Button htmlType="submit" type="primary" size="large" extraClass="mt-6" disabled={form.email === ''}>
+                <Button htmlType="submit" type="primary" size="large" extraClass="mt-6" disabled={values.email === ''}>
                     Восстановить
                 </Button>
             </form>

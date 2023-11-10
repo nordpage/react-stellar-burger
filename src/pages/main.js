@@ -1,37 +1,15 @@
-import React, {useEffect} from 'react';
-import {useGetIngredientsQuery} from "../services/reducers/burgerApi";
-import {useDispatch} from "react-redux";
-import {addAll} from "../services/reducers/ingredientsSlice";
-import {FadeLoader} from "react-spinners";
-import Main from "../components/main/main";
+import React from 'react';
 import styles from "./main.module.css"
+import BurgerIngredients from "../components/burger-ingredients/burger-ingredients";
+import BurgerConstructor from "../components/burger-constructor/burger-constructor";
 
 
 export const MainPage = () => {
 
-    const {
-        data: ingredients = [],
-        isError,
-        error,
-        isLoading,
-        isFetching,
-        isSuccess
-    } = useGetIngredientsQuery();
-
-    const dispatch = useDispatch()
-    useEffect(() => {
-        if (isSuccess && ingredients !== undefined) {
-            dispatch(addAll(ingredients))
-        }
-    }, [ingredients]);
-
     return (
         <div className={styles.container}>
-            {isError && <h2>{error}</h2>}
-            {isLoading && isFetching && <div className={styles.loader}>
-                <FadeLoader color="#8585AD" />
-            </div>}
-            {isSuccess && ingredients !== undefined && <Main/>}
+            <BurgerIngredients/>
+            <BurgerConstructor/>
         </div>
     );
 }

@@ -8,7 +8,7 @@ import {openModal} from "../../../services/reducers/modalSlice";
 import {modalTypes} from "../../../utils/modal-types";
 import {FadeLoader} from "react-spinners";
 import {useNavigate} from "react-router-dom";
-import {selectCurrentToken} from "../../../services/reducers/authSlice";
+import {ACCESS} from "../../../utils/constants";
 
 const BurgerPrice = function() {
 
@@ -17,7 +17,7 @@ const BurgerPrice = function() {
     const {cart} = useSelector((store) => store.burger)
     const [postOrder] = usePostOrderMutation()
     const navigate = useNavigate();
-    const accessToken = useSelector(selectCurrentToken)
+    const accessToken = localStorage.getItem(ACCESS)
 
 
    async function postOrderRequest(burger) {
@@ -38,16 +38,20 @@ const BurgerPrice = function() {
         }
    }
 
+   const disabled = () => {
+     return cart.bun === null
+   }
+
     return(
-        <section className={`${styles.bottomContainer} mr-4`}>
+        <section className='mr-4 mt-5' >
         {
                 (loading) ?
                     <div className={styles.loader}>
                         <FadeLoader color="#8585AD" />
                     </div> :
-                    <div>
+                    <div className={styles.bottomContainer}>
                             <div className={styles.priceContainer}><p className="text text_type_digits-medium">{cart.sum}</p> <CurrencyIcon type="primary"/></div>
-                            <Button htmlType="button" type="primary" size="large" onClick={() => postOrderRequest(cart)}>Оформить заказ</Button>
+                            <Button htmlType="button" type="primary" size="large" onClick={() => postOrderRequest(cart)} disabled={disabled()}>Оформить заказ</Button>
                     </div>
             }
         </section>

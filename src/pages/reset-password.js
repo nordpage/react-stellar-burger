@@ -1,15 +1,17 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback } from 'react';
 import styles from "./inputs.module.css";
 import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Navigate, useLocation, useNavigate} from "react-router-dom";
 import {usePostResetMutation} from "../services/reducers/burgerApi";
+import {useForm} from "../hooks/useForm";
 
 function ResetPasswordPage() {
 
     const navigate = useNavigate();
     let location = useLocation();
-    const [form, setValue] = useState({password: '', token: ''})
     const [postReset] = usePostResetMutation();
+    const {values, handleChange } = useForm({});
+
 
     const isHasAccess = useCallback(() => {
         return location.state && location.state.hasAccess !== null ? location.state.hasAccess : false;
@@ -20,11 +22,11 @@ function ResetPasswordPage() {
     }
 
     const disabled = () => {
-        return form.password === '' || form.token === ''
+        return values.password === '' || values.token === ''
     }
 
     async function resetRequest() {
-        const response = await postReset(form).unwrap()
+        const response = await postReset(values).unwrap()
         try {
             if (response.success) {
                 navigate('/')
@@ -33,10 +35,6 @@ function ResetPasswordPage() {
             console.error(e)
         }
     }
-
-    const onChange = e => {
-        setValue({ ...form, [e.target.name]: e.target.value });
-    };
 
     return (
         <div>
@@ -48,8 +46,8 @@ function ResetPasswordPage() {
                             <PasswordInput
                                 placeholder={'Введите новый пароль'}
                                 name={'password'}
-                                value={form.password}
-                                onChange={onChange}
+                                value={values.password}
+                                onChange={handleChange}
                                 error={false}
                                 errorText={'Ошибка'}
                                 size={'default'}
@@ -58,8 +56,8 @@ function ResetPasswordPage() {
                             <Input type={'text'}
                                    placeholder={'Введите код из письма'}
                                    name={'token'}
-                                   value={form.token}
-                                   onChange={onChange}
+                                   value={values.token}
+                                   onChange={handleChange}
                                    error={false}
                                    errorText={'Ошибка'}
                                    size={'default'}
