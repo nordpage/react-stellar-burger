@@ -1,9 +1,7 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import styles from "./ingredients.module.css";
-import {useDispatch} from "react-redux";
 import IngredientDetails from "../components/modal/ingredient-details/ingredient-details";
 import {useGetIngredientsQuery} from "../services/reducers/burgerApi";
-import {addAll} from "../services/reducers/ingredientsSlice";
 import {FadeLoader} from "react-spinners";
 import {DETAILS} from "../utils/constants";
 
@@ -16,12 +14,6 @@ export const IngredientsPage = () => {
         isFetching,
         isSuccess
     } = useGetIngredientsQuery();
-    const dispatch = useDispatch()
-    useEffect(() => {
-        if (isSuccess && ingredients !== undefined) {
-            dispatch(addAll(ingredients))
-        }
-    }, [ingredients]);
 
     return (
         <div className={styles.container}>
@@ -33,7 +25,7 @@ export const IngredientsPage = () => {
                 <div className={`${styles.top} mt-10 ml-10 mr-10`}>
                     <h1 className={`${styles.title} text text_type_main-large`}>{DETAILS}</h1>
                 </div>
-                <IngredientDetails />
+                <IngredientDetails ingredients={ingredients} />
             </div> }
         </div>
     );

@@ -21,9 +21,7 @@ import OrderDetails from "../modal/order-details/order-details";
 import {addOrderNumber} from "../../services/reducers/orderSlice";
 import {clearCart} from "../../services/reducers/burgerSlice";
 import AppHeader from "../header/appHeader";
-import {CURRENT} from "../../utils/constants";
-import {useGetIngredientsQuery} from "../../services/reducers/burgerApi";
-import {addAll} from "../../services/reducers/ingredientsSlice";
+import {CURRENT, DETAILS} from "../../utils/constants";
 
 const App = function() {
     const location = useLocation();
@@ -45,17 +43,6 @@ const App = function() {
         if (currentId != null) localStorage.removeItem(CURRENT)
         navigate(-1);
     };
-
-    const {
-        data: ingredients = [],
-        isSuccess
-    } = useGetIngredientsQuery();
-
-    useEffect(() => {
-        if (isSuccess && ingredients !== undefined) {
-            dispatch(addAll(ingredients))
-        }
-    }, [ingredients]);
 
   return (
     <div className={styles.app}>
@@ -81,7 +68,7 @@ const App = function() {
                     <Route
                         path='/ingredients/:ingredientId'
                         element={
-                         modal.type === modalTypes.Ingredient && <Modal children={<IngredientDetails/>} onModalClose={handleModalClose}/>
+                         modal.type === modalTypes.Ingredient && <Modal title={DETAILS} children={<IngredientDetails/>} onModalClose={handleModalClose}/>
                     }
                     />
                 </Routes>

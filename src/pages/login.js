@@ -31,7 +31,7 @@ export const LoginPage = () => {
         navigate("/forgot-password")
     }
 
-    const {values, handleChange } = useForm({});
+    const {values, handleChange } = useForm({ });
 
 
     const loginUser = async form => {
@@ -80,7 +80,7 @@ export const LoginPage = () => {
             <form onSubmit={login}>
                 <EmailInput
                     onChange={handleChange}
-                    value={values.email}
+                    value={values.email || ''}
                     name={'email'}
                     error={isEmailError}
                     errorText={'Поле \"E-mail\" не может быть пустым'}
@@ -89,7 +89,7 @@ export const LoginPage = () => {
                 />
                 <PasswordInput
                     onChange={handleChange}
-                    value={values.password}
+                    value={values.password  || ''}
                     placeholder={'Пароль'}
                     name={'password'}
                     error={isPasswordError}

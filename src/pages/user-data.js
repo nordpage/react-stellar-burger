@@ -62,7 +62,7 @@ function UserDataPage() {
                 name={'name'}
                 onIconClick={() => setEditName(true)}
                 onChange={onChange}
-                value={user.name}
+                value={user.name || ''}
                 error={false}
                 errorText={'Ошибка'}
                 size={'default'}
@@ -76,7 +76,7 @@ function UserDataPage() {
                 onIconClick={() => setEditEmail(true)}
                 name={'login'}
                 onChange={onChange}
-                value={user.email}
+                value={user.email || ''}
                 error={false}
                 errorText={'Ошибка'}
                 size={'default'}

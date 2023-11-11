@@ -4,14 +4,9 @@ import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
 import ModalOverlay from "./modal-overlay/modal-overlay";
-import {useSelector} from "react-redux";
-import {modalTypes} from "../../utils/modal-types";
-import {DETAILS} from "../../utils/constants";
 
-const Modal = function ({children, onModalClose}) {
-    const {modal} = useSelector((store) => store.modal)
+const Modal = function ({title, children, onModalClose}) {
 
-    const title = modal.type === modalTypes.Ingredient ? DETAILS : ""
     const onClose = () => {
         onModalClose()
     }

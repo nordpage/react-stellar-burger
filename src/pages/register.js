@@ -72,7 +72,7 @@ const RegisterPage = () => {
                 <Input
                     type={'text'}
                     onChange={handleChange}
-                    value={values.name}
+                    value={values.name || ''}
                     placeholder={'Имя'}
                     name={'name'}
                     error={isNameError}
@@ -82,7 +82,7 @@ const RegisterPage = () => {
                 />
                 <EmailInput
                     onChange={handleChange}
-                    value={values.email}
+                    value={values.email || ''}
                     name={'email'}
                     error={isEmailError}
                     errorText={'Поле \"E-mail\" не может быть пустым'}
@@ -91,7 +91,7 @@ const RegisterPage = () => {
                 />
                 <PasswordInput
                     onChange={handleChange}
-                    value={values.password}
+                    value={values.password || ''}
                     placeholder={'Пароль'}
                     name={'password'}
                     error={isPasswordError}

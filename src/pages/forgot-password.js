@@ -42,7 +42,7 @@ export const ForgotPasswordPage = () => {
                 <Input
                     type={'email'}
                     placeholder={'E-mail'}
-                    value={values.email}
+                    value={values.email || ''}
                     onChange={handleChange}
                     name={'name'}
                     error={false}

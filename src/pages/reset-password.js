@@ -46,7 +46,7 @@ function ResetPasswordPage() {
                             <PasswordInput
                                 placeholder={'Введите новый пароль'}
                                 name={'password'}
-                                value={values.password}
+                                value={values.password || ''}
                                 onChange={handleChange}
                                 error={false}
                                 errorText={'Ошибка'}
@@ -56,7 +56,7 @@ function ResetPasswordPage() {
                             <Input type={'text'}
                                    placeholder={'Введите код из письма'}
                                    name={'token'}
-                                   value={values.token}
+                                   value={values.token || ''}
                                    onChange={handleChange}
                                    error={false}
                                    errorText={'Ошибка'}

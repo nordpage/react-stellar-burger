@@ -1,12 +1,14 @@
 import React from "react";
 import styles from "./ingredient-details.module.css"
 import {useParams} from "react-router-dom";
-import {useSelector} from "react-redux";
 import {CURRENT} from "../../../utils/constants";
+import {useGetIngredientsQuery} from "../../../services/reducers/burgerApi";
 
 const IngredientDetails = function () {
 
-    const {ingredients} = useSelector((store) => store.ingredients)
+    const {
+        data: ingredients = []
+    } = useGetIngredientsQuery();
 
     const {ingredientId} = useParams();
 
