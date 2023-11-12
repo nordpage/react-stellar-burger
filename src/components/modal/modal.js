@@ -1,25 +1,20 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import styles from "./modal.module.css"
 import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
 import ModalOverlay from "./modal-overlay/modal-overlay";
 
-const Modal = function ({title, children, shown, onModalClose}) {
-    const [visibility, setVisibility] = useState(shown)
+const Modal = function ({title, children, onModalClose}) {
 
     const onClose = () => {
         onModalClose()
     }
 
-    const onAnimationEnd = () => {
-        if (!visibility) onClose()
-    }
-
     useEffect(() => {
         const handleEsc = (event) => {
             if (event.key === 'Escape') {
-               setVisibility(false)
+               onClose()
             }
         };
         window.addEventListener('keydown', handleEsc);
@@ -33,10 +28,10 @@ const Modal = function ({title, children, shown, onModalClose}) {
     return ReactDOM.createPortal(
         <div className={styles.modal}>
             <ModalOverlay onClick={onClose}/>
-            <div className={`${styles.window} ${visibility ? styles.showModal : styles.hideModal}`} onAnimationEnd={() => onAnimationEnd()}>
+            <div className={`${styles.window}`}>
                 <div className={`${styles.top} mt-10 ml-10 mr-10`}>
                     {title && <h1 className={`${styles.title} text text_type_main-large`}>{title}</h1>}
-                    <div className={styles.closeContainer}><CloseIcon type="primary" onClick={() => setVisibility(false)}/></div>
+                    <div className={styles.closeContainer} onClick={onClose}><CloseIcon type="primary"/></div>
                 </div>
                 <div className={`${styles.container} ml-25 mr-25 mb-15`}>
                     {children}
@@ -50,8 +45,6 @@ const Modal = function ({title, children, shown, onModalClose}) {
 export default Modal
 
 Modal.propTypes = {
-    shown: PropTypes.bool.isRequired,
-    title: PropTypes.string,
     children: PropTypes.node.isRequired,
     onModalClose: PropTypes.func.isRequired
 }

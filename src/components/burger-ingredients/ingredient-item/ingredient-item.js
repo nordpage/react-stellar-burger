@@ -3,9 +3,8 @@ import styles from './ingredient-item.module.css';
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {ingredientPropType} from "../../../utils/prop-types";
 import {useDispatch, useSelector} from "react-redux";
-import {addCurrentIngredient} from "../../../services/reducers/currentIngredientSlice";
 import {useDrag} from "react-dnd";
-import {BUN} from "../../../utils/constants";
+import {BUN, CURRENT} from "../../../utils/constants";
 import {openModal} from "../../../services/reducers/modalSlice";
 import {modalTypes} from "../../../utils/modal-types";
 
@@ -40,11 +39,8 @@ const IngredientItem = function({item}) {
         }
     }, [cart]);
 
-
-
-
     function onItemClick(item) {
-        dispatch(addCurrentIngredient(item))
+        localStorage.setItem(CURRENT, item._id)
         dispatch(openModal(modalTypes.Ingredient))
     }
 

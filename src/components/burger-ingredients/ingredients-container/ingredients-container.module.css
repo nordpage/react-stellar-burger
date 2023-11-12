@@ -1,5 +1,11 @@
 .scroll {
-    max-height: 756px;
+    max-height: 440px;
     overflow: auto;
     scroll-behavior: smooth;
+}
+
+.loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

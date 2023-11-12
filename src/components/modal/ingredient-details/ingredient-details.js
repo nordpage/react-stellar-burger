@@ -1,11 +1,26 @@
 import React from "react";
 import styles from "./ingredient-details.module.css"
-import {ingredientPropType} from "../../../utils/prop-types";
+import {useParams} from "react-router-dom";
+import {CURRENT} from "../../../utils/constants";
+import {useGetIngredientsQuery} from "../../../services/reducers/burgerApi";
 
-const IngredientDetails = function ({item}) {
+const IngredientDetails = function () {
 
-    return (
-        <>
+    const {
+        data: ingredients = []
+    } = useGetIngredientsQuery();
+
+    const {ingredientId} = useParams();
+
+    const currentId = localStorage.getItem(CURRENT);
+
+    const id = currentId !== null ? currentId : ingredientId;
+
+    const item = ingredients.find(x => x._id === id)
+
+
+    return item && (
+        <div className={styles.container}>
             <img alt="Ingredient Picture" src={item.image_large} className={`${styles.image} pl-5 pr-5`}/>
             <h2 className="text text_type_main-medium mt-4">{item.name}</h2>
             <div className={`${styles.details} mt-8`}>
@@ -26,12 +41,8 @@ const IngredientDetails = function ({item}) {
                     <h3 className="text text_type_digits-medium text_color_inactive">{item.carbohydrates}</h3>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 
 export default IngredientDetails
-
-IngredientDetails.propTypes = {
-   item: ingredientPropType.isRequired
-}

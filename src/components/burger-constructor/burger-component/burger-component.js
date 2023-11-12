@@ -40,9 +40,9 @@ const BurgerComponent = function () {
     }, [cart.ingredients])
 
     return(
-        <div className={styles.burger}  ref={dropRef}>
+        <div className={`${styles.burger} pt-25`}  ref={dropRef}>
             {
-                (cart.bun || cart.ingredients.length > 0) ? <>
+                (cart.bun || cart.ingredients.length > 0) ? <div>
                     {cart.bun &&
                         <div className="mr-8 ml-8" key="top">
                             <ConstructorElement
@@ -51,10 +51,9 @@ const BurgerComponent = function () {
                                 text={`${cart.bun.name} (верх)`}
                                 price={cart.bun.price}
                                 thumbnail={cart.bun.image}
-                                extraClass="mb-4"
                             />
                         </div>}
-                    <div className={`${styles.ingredients} custom-scroll mr-4`}>
+                    <div className={`${styles.ingredients} custom-scroll mr-4 mt-4`}>
                         {
                             memorizedIngredients
                         }
@@ -70,11 +69,9 @@ const BurgerComponent = function () {
                             />
                         </div>
                     }
-                </> : <>
-                    <div className={styles.placeholderContainer}>
-                        <h1 className="text text_type_main-medium">Добавьте булку и ингредиенты в конструктор</h1>
-                    </div>
-                </>
+                </div> : <div className={styles.placeholderContainer}>
+                    <h1 className="text text_type_main-medium">Добавьте булку и ингредиенты в конструктор</h1>
+                </div>
             }
         </div>
     )

@@ -13,10 +13,6 @@
     align-items: center;
 }
 
-.hidden {
-    display: none;
-}
-
 .window {
     position: absolute;
     width: 718px;
@@ -57,14 +53,6 @@
 
 .closeContainer:hover {
     cursor: pointer;
-}
-
-.showModal {
-    animation: show 300ms ease-in-out;
-}
-
-.hideModal {
-    animation: hide 300ms ease-in-out;
 }
 
 .modal {

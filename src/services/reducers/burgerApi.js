@@ -12,14 +12,50 @@ export const burgerApi = createApi({
                 return response.data
             },
         }),
+        postLogout: builder.mutation({
+            query: (form) => ({
+                url: `/auth/logout`,
+                method: "POST",
+                body: form
+            }),
+        }),
+        postLogin : builder.mutation({
+            query:(form) => ({
+                url: `/auth/login`,
+                method: "POST",
+                body: form
+            }),
+        }),
+        postRegister: builder.mutation({
+            query:(form) => ({
+                url: `/auth/register`,
+                method: "POST",
+                body: form
+            }),
+        }),
         postOrder: builder.mutation({
             query: (payload) => ({
                 url: `/orders`,
                 method: "POST",
                 body: { ingredients: payload },
             }),
+        }),
+        postForgot: builder.mutation({
+            query:(form) => ({
+                url: `/password-reset`,
+                method: "POST",
+                body: form
+            }),
+        }),
+        postReset: builder.mutation({
+            query:(form) => ({
+                url: `/password-reset/reset`,
+                method: "POST",
+                body: form
+            }),
         })
     }),
 })
 
-export const {useGetIngredientsQuery, usePostOrderMutation} = burgerApi;
+
+export const {useGetIngredientsQuery, usePostLogoutMutation, usePostRegisterMutation, usePostLoginMutation, usePostOrderMutation, usePostForgotMutation, usePostResetMutation} = burgerApi;
