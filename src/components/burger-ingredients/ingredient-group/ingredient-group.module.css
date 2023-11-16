@@ -1,0 +1,15 @@
+.scroll_margin {
+    scroll-margin-top: 10px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(2, 272px);
+    gap: 24px;
+    padding: 0;
+}
+
+.link {
+    color: white;
+    text-decoration: none;
+}

@@ -1,0 +1,20 @@
+.bottomContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: end;
+    gap: 40px;
+}
+
+.priceContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+
+.loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
