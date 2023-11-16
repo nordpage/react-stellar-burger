@@ -22,7 +22,7 @@ import {addOrderNumber} from "../../services/reducers/orderSlice";
 import {clearCart} from "../../services/reducers/burgerSlice";
 import AppHeader from "../header/appHeader";
 import {CURRENT, DETAILS} from "../../utils/constants";
-import FeedPage from "../../pages/feed";
+import FeedPage from "../../pages/feed/feed";
 import SingleFeedPage from "../../pages/single-feed";
 
 const App = function() {

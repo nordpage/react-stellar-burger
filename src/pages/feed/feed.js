@@ -1,7 +1,8 @@
-import React, {useEffect} from 'react';
-import styles from "./feed.module.css"
-import {useGetFeedQuery} from "../services/reducers/burgerApi";
+import React, {useEffect, useState} from 'react';
+import styles from "../feed.module.css"
+import {useGetFeedQuery, useGetIngredientsQuery} from "../../services/reducers/burgerApi";
 import {FadeLoader} from "react-spinners";
+import FeedOrder from "./feed-order";
 
 function FeedPage() {
 
@@ -14,10 +15,6 @@ function FeedPage() {
         isSuccess
     } = useGetFeedQuery();
 
-    useEffect(() => {
-
-    }, [feed])
-
     return (
         <div className={styles.container}>
             <div>
@@ -29,15 +26,7 @@ function FeedPage() {
                 {isSuccess && feed && <div className={styles.orders}>
                     {
                         feed.orders.map(order => {
-                            return <div key={order._id} className={styles.card}>
-                                <div className={styles.number}>
-                                    <p className="text text_type_main-default">#{order.number}</p>
-                                    <p className="text text_type_main-default text_color_inactive">
-                                        The quick brown fox jumps over the lazy dog.
-                                    </p>
-                                </div>
-                                <p className="text text_type_main-default">{order.name}</p>
-                            </div>
+                            return <FeedOrder key={order._id} order={order}/>
                         })
                     }
                 </div>}
