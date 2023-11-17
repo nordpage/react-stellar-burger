@@ -1,9 +1,11 @@
 import React from 'react';
-import styles from "../feed.module.css";
+import styles from "./feed.module.css";
 
-function ImageSlot({image, isExtra, extra}) {
+function ImageSlot({image, index, amount}) {
     return (
-        isExtra && extra !== 0 ? <div className={styles.extra}><img className={styles.extraImage} src={image}/><p className={`${styles.extraTitle} text text_type_main-medium`}>+{extra}</p></div> : <div className={styles.slot}><img className={styles.image} src={image}/></div>
+        <div className={`${styles.slot}`} style={{zIndex: index}}><img className={styles.image} src={image}/>{amount !== 0 && index === 0 && <p className={`${styles.extraTitle} text text_type_main-default`}>
+            +{amount}
+        </p>}</div>
     );
 }
 

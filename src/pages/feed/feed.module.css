@@ -1,5 +1,8 @@
-.container {
-    margin: 40px auto;
+.feed {
+    margin: 0 auto;
+}
+
+.container{
     display: grid;
     grid-template-columns: repeat(2, 600px);
     gap: 40px;
@@ -11,13 +14,6 @@
     align-items: center;
 }
 
-.orders {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    margin-top: 20px;
-}
-
 .card {
     display: flex;
     flex-direction: column;
@@ -27,6 +23,7 @@
     min-width: 536px;
     min-height: 166px;
     padding: 24px;
+    margin-right: 8px;
 }
 
 .horizontal {
@@ -60,14 +57,14 @@
 }
 
 .slot {
-    margin-right: -16px;
-}
-
-.extra {
     position: relative;
     width: 64px;
     height: 64px;
     margin-right: -16px;
+}
+
+.slot:last-child > .image {
+    opacity: 0.6;
 }
 
 .extraTitle {
@@ -75,13 +72,6 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    opacity: 1;
 }
 
-.extraImage {
-    width: 62px;
-    height: 62px;
-    border-radius: 100px;
-    border: 2px solid #801AB2;
-    background: #131316;
-    position: absolute;
-}
