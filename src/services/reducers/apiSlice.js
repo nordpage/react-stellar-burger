@@ -1,16 +1,17 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import {setCredentials} from "./authSlice";
-import {API_URL} from "../../utils/constants";
+import {ACCESS, API_URL} from "../../utils/constants";
 
 const baseQuery = fetchBaseQuery({
     baseUrl: API_URL,
     prepareHeaders: (headers, { getState }) => {
         const token = getState().auth.token
         if (token) {
-            headers.set("authorization", token)
+            headers.set("Authorization", token)
         }
         return headers
-    }
+    },
+    method: "POST"
 })
 
 const baseQueryWithReAuth = async (args, api, extraOptions) => {

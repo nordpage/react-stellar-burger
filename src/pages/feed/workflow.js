@@ -20,8 +20,8 @@ function Workflow({feed}) {
                     </p>
                     <div className={styles.readyList}>
                         {
-                            readyList().map(item => {
-                                return <p className={`${styles.readyTitle} text text_type_digits-medium`}>
+                            readyList().map((item, index) => {
+                                return <p key={index} className={`${styles.readyTitle} text text_type_digits-medium`}>
                                     {item.number}
                                 </p>
                             })
@@ -34,8 +34,8 @@ function Workflow({feed}) {
                     </p>
                     <div className={styles.readyList}>
                         {
-                            workList().map(item => {
-                                return <p className="text text_type_digits-medium">
+                            workList().map((item, index) => {
+                                return <p key={index} className="text text_type_digits-medium">
                                     {item.number}
                                 </p>
                             })

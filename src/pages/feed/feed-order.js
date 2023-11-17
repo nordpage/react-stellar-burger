@@ -6,7 +6,7 @@ import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import moment from "moment";
 import {BUN} from "../../utils/constants";
 
-function FeedOrder({order}) {
+function FeedOrder({order, isUser = false}) {
 
     const [photos, setPhotos] = useState([])
     const [sum, setSum] = useState(0)
@@ -56,6 +56,7 @@ function FeedOrder({order}) {
                 </p>
             </div>
             <p className="text text_type_main-medium">{order.name}</p>
+            {isUser && <p className="text text_type_main-medium">{order.status}</p>}
             <div className={styles.horizontal}>
                 <div className={styles.images}>
                     {

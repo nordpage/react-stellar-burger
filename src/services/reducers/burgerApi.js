@@ -82,8 +82,36 @@ export const burgerApi = createApi({
                 ws.close();
             },
         }),
+        getUserFeed: builder.query({
+            query: (accessToken) => ({
+                url: `/orders?token=${accessToken}`
+            }),
+            async onCacheEntryAdded(
+                arg,
+                { updateCachedData, cacheDataLoaded, cacheEntryRemoved }
+            ) {
+                const ws = new WebSocket("wss://norma.nomoreparties.space");
+                try {
+                    await cacheDataLoaded;
+                    const listener = (event) => {
+                        const data = JSON.parse(event.data);
+                        if (data.channel !== arg) return;
+
+                        updateCachedData((draft) => {
+                            draft.push(data);
+                        });
+
+                    };
+                    ws.addEventListener("message", listener);
+                } catch {
+                    console.log("error")
+                }
+                await cacheEntryRemoved;
+                ws.close();
+            },
+        }),
     }),
 })
 
 
-export const {useGetIngredientsQuery, usePostLogoutMutation, usePostRegisterMutation, usePostLoginMutation, usePostOrderMutation, usePostForgotMutation, usePostResetMutation, useGetFeedQuery} = burgerApi;
+export const {useGetIngredientsQuery, usePostLogoutMutation, usePostRegisterMutation, usePostLoginMutation, usePostOrderMutation, usePostForgotMutation, usePostResetMutation, useGetFeedQuery, useGetUserFeedQuery} = burgerApi;
