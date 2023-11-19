@@ -75,3 +75,17 @@
     opacity: 1;
 }
 
+.title {
+    align-self: start;
+}
+
+.created {
+    align-self: start;
+    color: #00CCCC;
+}
+
+.decline {
+
+}
+
+

@@ -1,6 +1,7 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
-import {API_URL} from "../../utils/constants";
+import {ACCESS, API_URL} from "../../utils/constants";
 
+const accessToken = localStorage.getItem(ACCESS)
 
 export const burgerApi = createApi({
     reducerPath: 'burgerApi',
@@ -37,6 +38,9 @@ export const burgerApi = createApi({
             query: (payload) => ({
                 url: `/orders`,
                 method: "POST",
+                headers: {
+                    Authorization: accessToken
+                },
                 body: { ingredients: payload },
             }),
         }),
@@ -83,14 +87,15 @@ export const burgerApi = createApi({
             },
         }),
         getUserFeed: builder.query({
-            query: (accessToken) => ({
-                url: `/orders?token=${accessToken}`
+            query: (channel) => ({
+                url: `/orders`,
+                headers: {Authorization: accessToken},
             }),
             async onCacheEntryAdded(
                 arg,
                 { updateCachedData, cacheDataLoaded, cacheEntryRemoved }
-            ) {
-                const ws = new WebSocket("wss://norma.nomoreparties.space");
+            )  {
+                const ws = new WebSocket(`wss://norma.nomoreparties.space/orders?token=${accessToken.replace("Bearer ","")}`);
                 try {
                     await cacheDataLoaded;
                     const listener = (event) => {
@@ -98,13 +103,13 @@ export const burgerApi = createApi({
                         if (data.channel !== arg) return;
 
                         updateCachedData((draft) => {
-                            draft.push(data);
+                          // draft.push(data);
                         });
 
                     };
                     ws.addEventListener("message", listener);
-                } catch {
-                    console.log("error")
+                } catch(e) {
+                    console.log(e);
                 }
                 await cacheEntryRemoved;
                 ws.close();
@@ -112,6 +117,5 @@ export const burgerApi = createApi({
         }),
     }),
 })
-
 
 export const {useGetIngredientsQuery, usePostLogoutMutation, usePostRegisterMutation, usePostLoginMutation, usePostOrderMutation, usePostForgotMutation, usePostResetMutation, useGetFeedQuery, useGetUserFeedQuery} = burgerApi;

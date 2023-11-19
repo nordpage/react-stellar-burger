@@ -47,6 +47,12 @@ function FeedOrder({order, isUser = false}) {
         return `${day}, ${time} i-GMT+3`;
     }
 
+    const status = () => {
+        if (order.status === "done") {
+            return <p className={`${styles.title} text text_type_main-medium`}>Выполнен</p>
+        }
+    }
+
     return (
         <div className={styles.card}>
             <div className={styles.horizontal}>
@@ -55,7 +61,7 @@ function FeedOrder({order, isUser = false}) {
                     {date()}
                 </p>
             </div>
-            <p className="text text_type_main-medium">{order.name}</p>
+            <p className={`${styles.title} text text_type_main-medium`}>{order.name}</p>
             {isUser && <p className="text text_type_main-medium">{order.status}</p>}
             <div className={styles.horizontal}>
                 <div className={styles.images}>
