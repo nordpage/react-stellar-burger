@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import styles from "./feed.module.css";
-import {useGetFeedQuery, useGetIngredientsQuery} from "../../services/reducers/burgerApi";
+import {useGetIngredientsQuery} from "../../services/reducers/burgerApi";
 import ImageSlot from "./image-slot";
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import moment from "moment";
 import {BUN, FEED} from "../../utils/constants";
 import {useDispatch} from "react-redux";
 import {openModal} from "../../services/reducers/modalSlice";
@@ -39,8 +38,6 @@ function FeedOrder({order, isUser = false}) {
         let minutes = Math.floor(diffTime / 60000);
         let hours = Math.round(minutes / 60);
         let diffDays = Math.round(hours / 24);
-        console.log(diffTime + " milliseconds");
-        console.log(diffDays + " days");
         let day;
 
         if (diffDays === 0) {

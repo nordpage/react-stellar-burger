@@ -1,0 +1,56 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 640px;
+    height: 620px;
+    margin: 0 auto;
+    align-items: center;
+    text-align: center;
+}
+
+
+.created {
+    align-self: start;
+    color: #ffffff;
+    margin-top: 8px;
+}
+
+.title {
+    align-self: start;
+    text-align: start;
+}
+
+.pending {
+    align-self: start;
+    color: #00CCCC;
+    margin-top: 8px;
+}
+
+.decline {
+    align-self: start;
+    color: #E52B1A;
+    margin-top: 8px;
+}
+
+.ingredients {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: 366px;
+    overflow: auto;
+    scroll-behavior: smooth;
+}
+
+.horizontal {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.priceContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}

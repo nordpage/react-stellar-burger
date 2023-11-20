@@ -2,8 +2,8 @@ import React from 'react';
 import styles from './order-full.module.css'
 import {useGetUserFeedQuery} from "../../services/reducers/burgerApi";
 import {FadeLoader} from "react-spinners";
-import SingleFeedPage from "../single-feed";
-function OrderFull() {
+import SingleFeedPage from "./single-feed";
+function OrderFull({isUser = false}) {
 
     const { data, isLoading, isSuccess } = useGetUserFeedQuery();
 
@@ -12,7 +12,7 @@ function OrderFull() {
             {isLoading && <div className={styles.loader}>
                 <FadeLoader color="#8585AD" />
             </div>}
-            {isSuccess && data !== undefined && <SingleFeedPage /> }
+            {isSuccess && data !== undefined && <SingleFeedPage isUser={isUser}/> }
         </div>
     );
 }

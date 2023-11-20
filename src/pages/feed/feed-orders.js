@@ -1,8 +1,10 @@
 import React from 'react';
 import FeedOrder from "./feed-order";
 import styles from "./orders.module.css"
+import {Link, useLocation} from "react-router-dom";
 
 function FeedOrders({orders}) {
+    const location = useLocation();
 
     return (
         <div className={styles.container}>
@@ -10,7 +12,14 @@ function FeedOrders({orders}) {
             <div className={`${styles.orders} custom-scroll`}>
                 {
                     orders.map(order => {
-                        return <FeedOrder key={order._id} order={order}/>
+                        return <Link
+                            key={order._id}
+                            to={`/feed/${order._id}/`}
+                            // а также сохраняем в свойство background роут,
+                            // на котором была открыта наша модалка
+                            state={{ background: location }}
+                            className={styles.link}
+                        ><FeedOrder key={order._id} order={order}/></Link>
                     })
                 }
             </div>
