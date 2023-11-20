@@ -6,7 +6,7 @@ function FeedOrders({orders}) {
 
     return (
         <div className={styles.container}>
-            <p className="text text_type_main-large">Лента заказов</p>
+            <p className="text text_type_main-large mb-5">Лента заказов</p>
             <div className={`${styles.orders} custom-scroll`}>
                 {
                     orders.map(order => {

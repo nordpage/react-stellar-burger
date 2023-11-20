@@ -21,9 +21,10 @@ import OrderDetails from "../modal/order-details/order-details";
 import {addOrderNumber} from "../../services/reducers/orderSlice";
 import {clearCart} from "../../services/reducers/burgerSlice";
 import AppHeader from "../header/appHeader";
-import {CURRENT, DETAILS} from "../../utils/constants";
+import {CURRENT, DETAILS, FEED} from "../../utils/constants";
 import FeedPage from "../../pages/feed/feed";
 import SingleFeedPage from "../../pages/single-feed";
+import OrderFull from "../../pages/feed/order-full";
 
 const App = function() {
     const location = useLocation();
@@ -33,16 +34,20 @@ const App = function() {
     const dispatch = useDispatch();
     const {order} = useSelector((store) => store.order)
     const currentId = localStorage.getItem(CURRENT)
+    const feedId = localStorage.getItem(FEED)
 
 
     useEffect(() => {
         if (currentId !== null) {
             dispatch(openModal(modalTypes.Ingredient))
+        } else if (feedId !== null) {
+            dispatch(openModal(modalTypes.Feed))
         }
-    }, [currentId])
+    }, [currentId, feedId])
 
     const handleModalClose = () => {
-        if (currentId != null) localStorage.removeItem(CURRENT)
+        if (currentId !== null) localStorage.removeItem(CURRENT)
+        if (feedId !== null) localStorage.removeItem(FEED)
         navigate(-1);
     };
 
@@ -54,7 +59,9 @@ const App = function() {
                 <Route path="/register" element={<RegisterPage/>}/>
                 <Route path="/profile" element={<ProtectedRoute authRequired={true} children={<ProfilePage/>}/> }>
                     <Route path="/profile/" element={<UserDataPage/>}/>
-                    <Route path="/profile/orders" element={<OrdersPage/>}/>
+                    <Route path="/profile/orders" element={<OrdersPage/>}>
+                        <Route path="/profile/orders/:id" element={<OrderFull/>}/>
+                    </Route>
                 </Route>
 
                 <Route path="/feed" element={<FeedPage/>}>

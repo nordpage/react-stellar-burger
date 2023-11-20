@@ -26,7 +26,7 @@
     flex-direction: column;
     gap: 20px;
     margin-top: 20px;
-    max-height: 965px;
+    max-height: calc(100vh - 208px);
     overflow: auto;
     scroll-behavior: smooth;
 }

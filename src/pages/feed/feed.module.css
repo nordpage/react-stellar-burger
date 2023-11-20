@@ -17,11 +17,10 @@
 .card {
     display: flex;
     flex-direction: column;
-    gap: 24px;
     border-radius: 40px;
     background: #1C1C21;
     min-width: 536px;
-    min-height: 166px;
+    height: auto;
     padding: 24px;
     margin-right: 8px;
 }
@@ -77,15 +76,25 @@
 
 .title {
     align-self: start;
+    text-align: start;
 }
 
 .created {
     align-self: start;
+    color: #ffffff;
+    margin-top: 8px;
+}
+
+.pending {
+    align-self: start;
     color: #00CCCC;
+    margin-top: 8px;
 }
 
 .decline {
-
+    align-self: start;
+    color: #E52B1A;
+    margin-top: 8px;
 }
 
 

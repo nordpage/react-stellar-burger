@@ -22,6 +22,7 @@ const baseQueryWithReAuth = async (args, api, extraOptions) => {
         const refreshResult = await baseQuery({ url: "/auth/token", method: "POST", body: { token: refreshToken } }, api, extraOptions)
         console.log(refreshResult)
         if (refreshResult?.data) {
+            console.log(refreshResult?.data)
             localStorage.setItem(ACCESS, refreshResult?.data.accessToken);
             localStorage.setItem(REFRESH, refreshResult?.data.refreshToken);
             // retry the original query with new access token
