@@ -88,7 +88,7 @@ export const burgerApi = createApi({
         }),
         getUserFeed: builder.query({
             query: (channel) => ({
-                url: `/orders`,
+                url: `/orders?token=${accessToken.replace("Bearer ","")}`,
                 headers: {Authorization: accessToken},
             }),
             async onCacheEntryAdded(

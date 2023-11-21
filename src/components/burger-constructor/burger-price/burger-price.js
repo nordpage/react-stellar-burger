@@ -32,6 +32,8 @@ const BurgerPrice = function() {
                 setLoading(false)
             } catch (e) {
                 console.error(e)
+                localStorage.removeItem(ACCESS);
+                navigate("/login")
             }
         } else {
             navigate("/login")
