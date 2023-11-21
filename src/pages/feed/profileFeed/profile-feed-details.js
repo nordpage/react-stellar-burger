@@ -6,13 +6,13 @@ import SingleFeedPage from "../single-feed";
 
 function ProfileFeedDetails() {
     
-    const {data = []} = useGetUserFeedQuery();
+    const {data = [], isSuccess} = useGetUserFeedQuery();
     const {id} = useParams();
     const feedId = localStorage.getItem(FEED);
 
     const currentId = feedId !== null ? feedId : id;
 
-    const order = data.orders.find(x => x._id === currentId);
+    const order = isSuccess ? data.orders.find(x => x._id === currentId) : null;
     
     return order && (
         <SingleFeedPage order={order}/>

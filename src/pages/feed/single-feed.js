@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import styles from "./single-feed.module.css"
 import {useGetIngredientsQuery} from "../../services/reducers/burgerApi";
 import {BUN} from "../../utils/constants";
@@ -32,9 +32,23 @@ function SingleFeedPage({order}) {
         }
     }
 
-    const composition = () => {
-
-    }
+    const composition = useCallback((ingredients) => {
+        const uniqueIngredients = [...new Set(ingredients)];
+        return <div className={`${styles.ingredients} custom-scroll mt-6`}>
+            {
+                uniqueIngredients.map(value => {
+                    const count = value.type === BUN ? 2 : ingredients.filter(x => x._id === value._id).length;
+                    return <div key={value._id} className={styles.feed}>
+                        <img className={styles.image} alt={value.name} src={value.image}/>
+                        <p className="text text_type_main-medium">
+                            {value.name}
+                        </p>
+                        <div className={styles.priceContainer}><p className="text text_type_digits-default">{count} x {value.price}</p> <CurrencyIcon type="primary"/></div>
+                    </div>
+                })
+            }
+        </div>;
+    },[items]);
 
     const date = () => {
 
@@ -59,6 +73,7 @@ function SingleFeedPage({order}) {
         return `${day}, ${time}`;
     }
 
+
     return (
         <div className={styles.container}>
             <p className="text text_type_digits-default">
@@ -69,9 +84,9 @@ function SingleFeedPage({order}) {
             <p className={`${styles.title} text text_type_main-medium mt-15`}>
                 Состав:
             </p>
-            <div className={`${styles.ingredients} mt-6`}>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium animi aperiam commodi consequatur delectus deleniti dolorum eum ex fuga ipsa labore laboriosam minima molestiae nemo odit officia officiis optio perspiciatis quae, quaerat, quos recusandae rem, reprehenderit sapiente sed similique suscipit vel! Consequuntur, nihil, quis? Excepturi facere molestiae necessitatibus placeat unde?
-            </div>
+            {
+                composition(items)
+            }
             <div className={`${styles.horizontal} mt-10 mb-10`}>
                 <p className="text text_type_main-default text_color_inactive">
                     {date()}

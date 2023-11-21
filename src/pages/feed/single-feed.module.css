@@ -5,13 +5,12 @@
     height: 620px;
     margin: 0 auto;
     align-items: center;
-    text-align: center;
 }
 
 
 .created {
     align-self: start;
-    color: #ffffff;
+    color: #00CCCC;
     margin-top: 8px;
 }
 
@@ -22,7 +21,7 @@
 
 .pending {
     align-self: start;
-    color: #00CCCC;
+    color: #ffffff;
     margin-top: 8px;
 }
 
@@ -35,8 +34,11 @@
 .ingredients {
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    height: 366px;
+    width: 640px;
+    height: 264px;
+    align-items: flex-start;
+    gap: 24px;
+    flex-shrink: 0;
     overflow: auto;
     scroll-behavior: smooth;
 }
@@ -53,4 +55,21 @@
     flex-direction: row;
     align-items: center;
     gap: 8px;
+}
+
+.feed {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    align-self: stretch;
+}
+
+.image {
+    width: 62px;
+    height: 62px;
+    border-radius: 100px;
+    border: 2px solid #801AB2;
+    background: #131316;
+    object-fit: contain;
 }
