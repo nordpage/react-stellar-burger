@@ -7,6 +7,8 @@ import {BUN, date, FEED, status} from "../../utils/constants";
 import {useDispatch} from "react-redux";
 import {openModal} from "../../services/reducers/modalSlice";
 import {modalTypes} from "../../utils/modal-types";
+import {feedPropType} from "../../utils/prop-types";
+import PropTypes from "prop-types";
 
 function FeedOrder({order, isUser = false}) {
 
@@ -65,3 +67,8 @@ function FeedOrder({order, isUser = false}) {
 }
 
 export default FeedOrder;
+
+FeedOrder.propTypes = {
+    order: feedPropType.isRequired,
+    isUser: PropTypes.bool
+}
