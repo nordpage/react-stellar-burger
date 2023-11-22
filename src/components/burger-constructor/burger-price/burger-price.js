@@ -21,7 +21,7 @@ const BurgerPrice = function() {
 
 
    async function postOrderRequest(burger) {
-        if (accessToken) {
+        if (accessToken !== null) {
             setLoading(true)
             if (!burger.bun || !burger.ingredients) return;
             const orderIds = [burger.bun, burger.ingredients, burger.bun].flat().map(item => item._id)

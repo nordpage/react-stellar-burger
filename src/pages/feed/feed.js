@@ -1,8 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import styles from "./feed.module.css"
-import {useGetFeedQuery, useGetIngredientsQuery} from "../../services/reducers/burgerApi";
+import {useGetFeedQuery} from "../../services/reducers/burgerApi";
 import {FadeLoader} from "react-spinners";
-import FeedOrder from "./feed-order";
 import FeedOrders from "./feed-orders";
 import Workflow from "./workflow";
 

@@ -29,11 +29,12 @@
 .ingredients {
     display: flex;
     flex-direction: column;
-    width: 640px;
     height: 264px;
-    align-items: flex-start;
     gap: 24px;
-    flex-shrink: 0;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: stretch;
+    align-items: flex-start;
     overflow: auto;
     scroll-behavior: smooth;
 }
@@ -45,26 +46,47 @@
     width: 100%;
 }
 
-.priceContainer {
-    display: flex;
-    flex-direction: row;
+.titleContainer {
+    display: inline-flex;
     align-items: center;
+    justify-content: flex-start;
+    flex: 1 1 auto;
+}
+
+.priceContainer {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    text-align: right;
     gap: 8px;
 }
 
 .feed {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
-    align-self: flex-start;
+    display: grid;
+    grid-template-columns: 64px 1fr 150px;
+    grid-template-rows: 64px;
+    grid-column-gap: 16px;
 }
 
 .image {
     width: 62px;
     height: 62px;
+    margin-right: 16px;
     border-radius: 100px;
     border: 2px solid #801AB2;
     background: #131316;
     object-fit: contain;
+}
+
+.title {
+    margin-right: 16px;
+    display: inline-flex;
+    align-items: center;
+    line-height: 24px;
+    text-align: left;
+    flex-grow: 1;
+}
+
+.header {
+    align-self: flex-start;
 }

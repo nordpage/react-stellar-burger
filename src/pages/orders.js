@@ -6,7 +6,7 @@ import {useGetUserFeedQuery} from "../services/reducers/burgerApi";
 
 function OrdersPage() {
 
-    const { data, isLoading } = useGetUserFeedQuery();
+    const { data, isLoading, isSuccess } = useGetUserFeedQuery();
 
 
     return (
@@ -14,7 +14,7 @@ function OrdersPage() {
             {isLoading && <div className={styles.loader}>
                 <FadeLoader color="#8585AD" />
             </div>}
-            {data && <UserOrders orders={data.orders} /> }
+            {isSuccess && data && <UserOrders orders={data.orders} /> }
         </div>
     );
 }

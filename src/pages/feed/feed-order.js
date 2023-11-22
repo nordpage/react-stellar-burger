@@ -3,7 +3,7 @@ import styles from "./feed.module.css";
 import {useGetIngredientsQuery} from "../../services/reducers/burgerApi";
 import ImageSlot from "./image-slot";
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {BUN, FEED} from "../../utils/constants";
+import {BUN, date, FEED, status} from "../../utils/constants";
 import {useDispatch} from "react-redux";
 import {openModal} from "../../services/reducers/modalSlice";
 import {modalTypes} from "../../utils/modal-types";
@@ -30,39 +30,6 @@ function FeedOrder({order, isUser = false}) {
        }
     }, [order, ingredients])
 
-    const date = () => {
-
-        const date1 = new Date();
-        const date2 = new Date(order.createdAt);
-        const diffTime = Math.abs(date1 - date2);
-        let minutes = Math.floor(diffTime / 60000);
-        let hours = Math.round(minutes / 60);
-        let diffDays = Math.round(hours / 24);
-        let day;
-
-        if (diffDays === 0) {
-            day = "Сегодня"
-        } else if (diffDays === 1) {
-            day = "Вчера"
-        } else {
-            day = `${diffDays} дня назад`
-        }
-
-        const time = date2.toTimeString().split(" (")[0];
-
-        return `${day}, ${time}`;
-    }
-
-    const status = () => {
-        if (order.status === "done") {
-            return <p className={`${styles.created} text text_type_main-small`}>Выполнен</p>
-        } else if (order.status === "pending") {
-            return <p className={`${styles.pending} text text_type_main-small`}>Готовится</p>
-        } else {
-            return <p className={`${styles.decline} text text_type_main-small`}>Отменен</p>
-        }
-    }
-
     function onItemClick(order) {
         localStorage.setItem(FEED, order._id)
         dispatch(openModal(modalTypes.Feed))
@@ -73,11 +40,11 @@ function FeedOrder({order, isUser = false}) {
             <div className={`${styles.horizontal} mb-6`}>
                 <p className="text text_type_main-medium">#{order.number}</p>
                 <p className="text text_type_main-default text_color_inactive">
-                    {date()}
+                    {date(order)}
                 </p>
             </div>
             <p className={`${styles.title} text text_type_main-medium`}>{order.name}</p>
-            {isUser && status()}
+            {isUser && status(order)}
             <div className={`${styles.horizontal} mt-6`}>
                 <div className={styles.images}>
                     {
