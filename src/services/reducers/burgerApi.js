@@ -1,5 +1,7 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 import {ACCESS, API_URL} from "../../utils/constants";
+import {io} from "socket.io-client";
+import {updateFeeds} from "./feedSlice";
 
 const accessToken = localStorage.getItem(ACCESS)
 
@@ -59,31 +61,29 @@ export const burgerApi = createApi({
             }),
         }),
         getFeed: builder.query({
-            query: () => ({
+            query: (arg) => ({
                 url: `/orders/all`
             }),
-            async onCacheEntryAdded(
-                arg,
-                { updateCachedData, cacheDataLoaded, cacheEntryRemoved }
-            ) {
-                const ws = new WebSocket("wss://norma.nomoreparties.space");
-                try {
-                    await cacheDataLoaded;
-                    const listener = (event) => {
-                        const data = JSON.parse(event.data);
-                        if (data.channel !== arg) return;
+            async onCacheEntryAdded(_arg, { dispatch, cacheEntryRemoved, getState, getCacheEntry }) {
+                const socket = io('wss://norma.nomoreparties.space');
 
-                        updateCachedData((draft) => {
-                            draft.push(data);
-                        });
+                socket.on('disconnect', reason => {
+                    // Logic on disconnect
+                    console.log('reason', reason);
+                });
 
-                    };
-                    ws.addEventListener("message", listener);
-                } catch {
-                    console.log("error")
-                }
+                socket.on('connect', function () {
+                    console.log('connected!');
+
+                    socket.on('message', function (message) {
+                        console.log('message!', message);
+
+                        dispatch(updateFeeds(message.data));
+                    });
+                });
+
                 await cacheEntryRemoved;
-                ws.close();
+                socket.close();
             },
         }),
         getUserFeed: builder.query({

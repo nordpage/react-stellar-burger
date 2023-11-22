@@ -5,6 +5,7 @@ import {orderSlice} from "./orderSlice";
 import {modalSlice} from "./modalSlice";
 import {apiSlice} from "./apiSlice";
 import authReducer from './authSlice'
+import {feedSlice} from "./feedSlice";
 
 
 const store = configureStore({
@@ -14,6 +15,7 @@ const store = configureStore({
         burger: burgerSlice.reducer,
         order: orderSlice.reducer,
         modal: modalSlice.reducer,
+        feed: feedSlice.reducer,
         auth: authReducer
     },
     middleware: getDefaultMiddleware =>
