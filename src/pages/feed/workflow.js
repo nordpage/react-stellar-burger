@@ -8,7 +8,7 @@ function Workflow({feed}) {
     }
 
     const workList = () => {
-        return feed.orders.filter(x => x.status !== "done").slice(0, 20);
+        return feed.orders.filter(x => x.status === "pending").slice(0, 20);
     }
 
     return (
