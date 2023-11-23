@@ -2,9 +2,13 @@ import React from 'react';
 import FeedOrder from "./feed-order";
 import styles from "./orders.module.css"
 import {Link, useLocation} from "react-router-dom";
+import PropTypes from "prop-types";
+import {feedPropType} from "../../utils/prop-types";
+import {useSelector} from "react-redux";
 
-function FeedOrders({orders}) {
+function FeedOrders() {
     const location = useLocation();
+    const {orders} = useSelector((store) => store.feed);
 
     return (
         <div className={styles.container}>
@@ -28,3 +32,7 @@ function FeedOrders({orders}) {
 }
 
 export default FeedOrders;
+
+FeedOrders.propTypes = {
+    orders: PropTypes.arrayOf(feedPropType).isRequired
+}

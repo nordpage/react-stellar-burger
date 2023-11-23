@@ -5,12 +5,14 @@ import {orderSlice} from "./orderSlice";
 import {modalSlice} from "./modalSlice";
 import {apiSlice} from "./apiSlice";
 import authReducer from './authSlice'
+import {feedSlice} from "./feedSlice";
 
 
 const store = configureStore({
     reducer: {
         [burgerApi.reducerPath]: burgerApi.reducer,
         [apiSlice.reducerPath] : apiSlice.reducer,
+        feed: feedSlice.reducer,
         burger: burgerSlice.reducer,
         order: orderSlice.reducer,
         modal: modalSlice.reducer,

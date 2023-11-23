@@ -1,5 +1,6 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 import {ACCESS, API_URL} from "../../utils/constants";
+import {updateData} from "./feedSlice";
 
 const accessToken = localStorage.getItem(ACCESS)
 
@@ -64,26 +65,34 @@ export const burgerApi = createApi({
             }),
             async onCacheEntryAdded(
                 arg,
-                { updateCachedData, cacheDataLoaded, cacheEntryRemoved }
+                { dispatch, updateCachedData, cacheDataLoaded, cacheEntryRemoved }
             ) {
-                const ws = new WebSocket("wss://norma.nomoreparties.space");
+                // create a websocket connection when the cache subscription starts
+                const ws = new WebSocket('wss://norma.nomoreparties.space/orders/all')
                 try {
-                    await cacheDataLoaded;
+                    // wait for the initial query to resolve before proceeding
+                    await cacheDataLoaded
+
+                    // when data is received from the socket connection to the server,
+                    // if it is a message and for the appropriate channel,
+                    // update our query result with the received message
                     const listener = (event) => {
-                        const data = JSON.parse(event.data);
-                        if (data.channel !== arg) return;
-
+                        const data = JSON.parse(event.data)
+                        console.log(data);
                         updateCachedData((draft) => {
-                            draft.push(data);
-                        });
+                            dispatch(updateData(data))
+                        })
+                    }
 
-                    };
-                    ws.addEventListener("message", listener);
+                    ws.addEventListener('message', listener)
                 } catch {
-                    console.log("error")
+                    // no-op in case `cacheEntryRemoved` resolves before `cacheDataLoaded`,
+                    // in which case `cacheDataLoaded` will throw
                 }
-                await cacheEntryRemoved;
-                ws.close();
+                // cacheEntryRemoved will resolve when the cache subscription is no longer active
+                await cacheEntryRemoved
+                // perform cleanup steps once the `cacheEntryRemoved` promise resolves
+                ws.close()
             },
         }),
         getUserFeed: builder.query({
@@ -93,17 +102,16 @@ export const burgerApi = createApi({
             }),
             async onCacheEntryAdded(
                 arg,
-                { updateCachedData, cacheDataLoaded, cacheEntryRemoved }
+                { dispatch, updateCachedData, cacheDataLoaded, cacheEntryRemoved }
             )  {
                 const ws = new WebSocket(`wss://norma.nomoreparties.space/orders?token=${accessToken.replace("Bearer ","")}`);
                 try {
                     await cacheDataLoaded;
                     const listener = (event) => {
                         const data = JSON.parse(event.data);
-                        if (data.channel !== arg) return;
 
                         updateCachedData((draft) => {
-                          // draft.push(data);
+                            dispatch(updateData(data))
                         });
 
                     };

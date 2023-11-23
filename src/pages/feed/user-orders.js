@@ -2,25 +2,27 @@ import React, {useCallback} from 'react';
 import styles from "./orders.module.css";
 import FeedOrder from "./feed-order";
 import {Link, useLocation} from "react-router-dom";
+import PropTypes from "prop-types";
+import {feedPropType} from "../../utils/prop-types";
+import {useSelector} from "react-redux";
 
-function UserOrders({orders}) {
+function UserOrders() {
     const location = useLocation();
 
+    const {orders} = useSelector((store) => store.feed);
+
+    const arrayForSort = [...orders]
     const sorted = useCallback(
         () => {
-            if (orders !== undefined && orders.length > 0) {
-                return orders.sort(function(a,b){
-                        // Turn your strings into dates, and then subtract them
-                        // to get a value that is either negative, positive, or zero.
-                        return new Date(b.createAt) - new Date(a.createAt);
-                    })
+            if (arrayForSort !== undefined && arrayForSort.length > 0) {
+                return arrayForSort.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
             }
                 },
-        [orders],
+        [arrayForSort],
     );
 
 
-    return (
+    return orders.length > 0 && (
         <div className={styles.container}>
             <div className={`${styles.orders} custom-scroll`}>
                 {
@@ -39,3 +41,7 @@ function UserOrders({orders}) {
 }
 
 export default UserOrders;
+
+UserOrders.propTypes = {
+    orders: PropTypes.arrayOf(feedPropType).isRequired
+};

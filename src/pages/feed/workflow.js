@@ -1,17 +1,19 @@
 import React from 'react';
 import styles from "./orders.module.css"
+import {useSelector} from "react-redux";
 
-function Workflow({feed}) {
+function Workflow() {
+    const {orders, total, totalToday} = useSelector((store) => store.feed);
 
     const readyList = () => {
-        return feed.orders.filter(x => x.status === "done").slice(0, 20);
+        return orders.filter(x => x.status === "done").slice(0, 20);
     }
 
     const workList = () => {
-        return feed.orders.filter(x => x.status !== "done").slice(0, 20);
+        return orders.filter(x => x.status === "pending").slice(0, 20);
     }
 
-    return (
+    return (orders.length > 0 && total !== 0 && totalToday !== 0) && (
         <div className={styles.workflow}>
             <div className={styles.boards}>
                 <div className={styles.board}>
@@ -47,13 +49,13 @@ function Workflow({feed}) {
                 <p className="text text_type_main-medium">
                     Выполнено за все время:
                 </p>
-                <p className="text text_type_digits-large">{feed.total}</p>
+                <p className="text text_type_digits-large">{total}</p>
             </div>
             <div className={styles.total}>
                 <p className="text text_type_main-medium">
                     Выполнено за сегодня:
                 </p>
-                <p className="text text_type_digits-large">{feed.totalToday}</p>
+                <p className="text text_type_digits-large">{totalToday}</p>
             </div>
         </div>
     );

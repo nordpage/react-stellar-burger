@@ -3,6 +3,7 @@ import styles from "./single-feed.module.css"
 import {useGetIngredientsQuery} from "../../services/reducers/burgerApi";
 import {BUN, date, status} from "../../utils/constants";
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {feedPropType} from "../../utils/prop-types";
 
 function SingleFeedPage({order}) {
 
@@ -68,3 +69,7 @@ function SingleFeedPage({order}) {
 }
 
 export default SingleFeedPage;
+
+SingleFeedPage.propTypes = {
+    order: feedPropType.isRequired
+}
