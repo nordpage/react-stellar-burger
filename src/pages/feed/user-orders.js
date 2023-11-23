@@ -2,8 +2,6 @@ import React, {useCallback} from 'react';
 import styles from "./orders.module.css";
 import FeedOrder from "./feed-order";
 import {Link, useLocation} from "react-router-dom";
-import PropTypes from "prop-types";
-import {feedPropType} from "../../utils/prop-types";
 import {useSelector} from "react-redux";
 
 function UserOrders() {
@@ -41,7 +39,3 @@ function UserOrders() {
 }
 
 export default UserOrders;
-
-UserOrders.propTypes = {
-    orders: PropTypes.arrayOf(feedPropType).isRequired
-};
