@@ -1,7 +1,6 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 import {ACCESS, API_URL} from "../../utils/constants";
-import {io} from "socket.io-client";
-import {updateFeeds} from "./feedSlice";
+import {updateData} from "./feedSlice";
 
 const accessToken = localStorage.getItem(ACCESS)
 
@@ -61,29 +60,39 @@ export const burgerApi = createApi({
             }),
         }),
         getFeed: builder.query({
-            query: (arg) => ({
+            query: () => ({
                 url: `/orders/all`
             }),
-            async onCacheEntryAdded(_arg, { dispatch, cacheEntryRemoved, getState, getCacheEntry }) {
-                const socket = io('wss://norma.nomoreparties.space');
+            async onCacheEntryAdded(
+                arg,
+                { dispatch, updateCachedData, cacheDataLoaded, cacheEntryRemoved }
+            ) {
+                // create a websocket connection when the cache subscription starts
+                const ws = new WebSocket('wss://norma.nomoreparties.space/orders/all')
+                try {
+                    // wait for the initial query to resolve before proceeding
+                    await cacheDataLoaded
 
-                socket.on('disconnect', reason => {
-                    // Logic on disconnect
-                    console.log('reason', reason);
-                });
+                    // when data is received from the socket connection to the server,
+                    // if it is a message and for the appropriate channel,
+                    // update our query result with the received message
+                    const listener = (event) => {
+                        const data = JSON.parse(event.data)
+                        console.log(data);
+                        updateCachedData((draft) => {
+                            dispatch(updateData(data))
+                        })
+                    }
 
-                socket.on('connect', function () {
-                    console.log('connected!');
-
-                    socket.on('message', function (message) {
-                        console.log('message!', message);
-
-                        dispatch(updateFeeds(message.data));
-                    });
-                });
-
-                await cacheEntryRemoved;
-                socket.close();
+                    ws.addEventListener('message', listener)
+                } catch {
+                    // no-op in case `cacheEntryRemoved` resolves before `cacheDataLoaded`,
+                    // in which case `cacheDataLoaded` will throw
+                }
+                // cacheEntryRemoved will resolve when the cache subscription is no longer active
+                await cacheEntryRemoved
+                // perform cleanup steps once the `cacheEntryRemoved` promise resolves
+                ws.close()
             },
         }),
         getUserFeed: builder.query({
@@ -93,17 +102,16 @@ export const burgerApi = createApi({
             }),
             async onCacheEntryAdded(
                 arg,
-                { updateCachedData, cacheDataLoaded, cacheEntryRemoved }
+                { dispatch, updateCachedData, cacheDataLoaded, cacheEntryRemoved }
             )  {
                 const ws = new WebSocket(`wss://norma.nomoreparties.space/orders?token=${accessToken.replace("Bearer ","")}`);
                 try {
                     await cacheDataLoaded;
                     const listener = (event) => {
                         const data = JSON.parse(event.data);
-                        if (data.channel !== arg) return;
 
                         updateCachedData((draft) => {
-                          // draft.push(data);
+                            dispatch(updateData(data))
                         });
 
                     };

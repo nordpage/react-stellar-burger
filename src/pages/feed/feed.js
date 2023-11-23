@@ -24,8 +24,8 @@ function FeedPage() {
             </div>}
             {isSuccess && feed &&
              <div className={styles.container}>
-                 <FeedOrders orders={feed.orders} />
-                 <Workflow feed={feed} />
+                 <FeedOrders />
+                 <Workflow />
              </div>
             }
         </div>

@@ -12,6 +12,7 @@ const store = configureStore({
     reducer: {
         [burgerApi.reducerPath]: burgerApi.reducer,
         [apiSlice.reducerPath] : apiSlice.reducer,
+        feed: feedSlice.reducer,
         burger: burgerSlice.reducer,
         order: orderSlice.reducer,
         modal: modalSlice.reducer,

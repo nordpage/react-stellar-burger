@@ -2,18 +2,22 @@ import {createSlice} from "@reduxjs/toolkit";
 
 export const feedSlice = createSlice({
     name: "feed",
-    initialState: {
-        feed: []
+    initialState : {
+        orders: [],
+        total: 0,
+        totalToday: 0
     },
-    reducers: {
-        updateFeeds: (state, action) => {
-            state.feed = action.payload
+reducers: {
+        updateData: (state, action) => {
+            state.orders = action.payload.orders;
+            state.total = action.payload.total;
+            state.totalToday = action.payload.totalToday;
         }
-    }
+}
 });
 
 export const {
-    updateFeeds
+    updateData
 } = feedSlice.actions
 
 export default feedSlice.reducer

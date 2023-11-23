@@ -14,7 +14,7 @@ function OrdersPage() {
             {isLoading && <div className={styles.loader}>
                 <FadeLoader color="#8585AD" />
             </div>}
-            {isSuccess && data && <UserOrders orders={data.orders} /> }
+            {isSuccess && data && <UserOrders /> }
         </div>
     );
 }
