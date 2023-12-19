@@ -21,7 +21,10 @@ import OrderDetails from "../modal/order-details/order-details";
 import {addOrderNumber} from "../../services/reducers/orderSlice";
 import {clearCart} from "../../services/reducers/burgerSlice";
 import AppHeader from "../header/appHeader";
-import {CURRENT, DETAILS} from "../../utils/constants";
+import {CURRENT, DETAILS, FEED} from "../../utils/constants";
+import FeedPage from "../../pages/feed/feed";
+import ProfileFeedPage from "../../pages/feed/profileFeed/profile-feed";
+import OrderFeedPage from "../../pages/feed/orderFeed/order-feed";
 
 const App = function() {
     const location = useLocation();
@@ -31,16 +34,19 @@ const App = function() {
     const dispatch = useDispatch();
     const {order} = useSelector((store) => store.order)
     const currentId = localStorage.getItem(CURRENT)
-
+    const feedId = localStorage.getItem(FEED)
 
     useEffect(() => {
         if (currentId !== null) {
             dispatch(openModal(modalTypes.Ingredient))
+        } else if (feedId !== null) {
+            dispatch(openModal(modalTypes.Feed))
         }
-    }, [currentId])
+    }, [currentId, feedId])
 
     const handleModalClose = () => {
-        if (currentId != null) localStorage.removeItem(CURRENT)
+        if (currentId !== null) localStorage.removeItem(CURRENT)
+        if (feedId !== null) localStorage.removeItem(FEED)
         navigate(-1);
     };
 
@@ -55,6 +61,10 @@ const App = function() {
                     <Route path="/profile/orders" element={<OrdersPage/>}/>
                 </Route>
 
+                <Route path="/profile/orders/:id" element={<ProtectedRoute authRequired={true} children={<ProfileFeedPage/>}/> }/>
+
+                <Route path="/feed" element={<FeedPage/>}/>
+                <Route path="/feed/:id" element={<OrderFeedPage/>}/>
 
                 <Route path="/login" element={<ProtectedRoute authRequired={false} children={<LoginPage/>}/> } />
 
@@ -63,16 +73,26 @@ const App = function() {
                 <Route path="/ingredients/:ingredientId" element={<IngredientsPage/>}/>
                 <Route path="*" element={<NotFound />} />
             </Routes>
-            {(background || currentId !== null) && (
-                <Routes>
-                    <Route
-                        path='/ingredients/:ingredientId'
-                        element={
-                         modal.type === modalTypes.Ingredient && <Modal title={DETAILS} children={<IngredientDetails/>} onModalClose={handleModalClose}/>
+            {background && <Routes>
+                <Route
+                    path='/ingredients/:ingredientId'
+                    element={
+                        modal.type === modalTypes.Ingredient && <Modal title={DETAILS} children={<IngredientDetails/>} onModalClose={handleModalClose}/>
                     }
-                    />
-                </Routes>
-            )}
+                />
+                <Route
+                    path='/feed/:id'
+                    element={
+                        modal.type === modalTypes.Feed && <Modal children={<OrderFeedPage/>} onModalClose={handleModalClose}/>
+                    }
+                />
+                <Route
+                    path='/profile/orders/:id'
+                    element={
+                        modal.type === modalTypes.Feed && <Modal children={<ProfileFeedPage/>} onModalClose={handleModalClose}/>
+                    }
+                />
+            </Routes>}
         {
             modal.type === modalTypes.Order &&  <Modal onModalClose={() => {
                 dispatch(addOrderNumber(0))

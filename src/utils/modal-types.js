@@ -1,4 +1,5 @@
 export const modalTypes = {
     Ingredient: "ingredient",
-    Order: "order"
+    Order: "order",
+    Feed: "feed"
 }

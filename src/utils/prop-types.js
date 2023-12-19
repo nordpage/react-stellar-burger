@@ -14,3 +14,13 @@ export const ingredientPropType = PropTypes.shape({
     image_large: PropTypes.string,
     __v: PropTypes.number
 });
+
+export const feedPropType = PropTypes.shape({
+    _id: PropTypes.string,
+    ingredients: PropTypes.arrayOf(PropTypes.string),
+    status: PropTypes.string,
+    name: PropTypes.string,
+    createdAt: PropTypes.string,
+    updatedAt: PropTypes.string,
+    number: PropTypes.number
+})

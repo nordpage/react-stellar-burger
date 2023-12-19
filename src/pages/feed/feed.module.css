@@ -1,0 +1,100 @@
+.feed {
+    margin: 0 auto;
+}
+
+.container{
+    display: grid;
+    grid-template-columns: repeat(2, 600px);
+    gap: 40px;
+}
+
+.loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    border-radius: 40px;
+    background: #1C1C21;
+    min-width: 536px;
+    height: auto;
+    padding: 24px;
+    margin-right: 8px;
+}
+
+.horizontal {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.images {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    max-width: 304px;
+    max-height: 64px;
+}
+
+.priceContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+
+.image {
+    width: 62px;
+    height: 62px;
+    border-radius: 100px;
+    border: 2px solid #801AB2;
+    background: #131316;
+    object-fit: contain;
+}
+
+.slot {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    margin-right: -16px;
+}
+
+.slot:last-child > .image {
+    opacity: 0.6;
+}
+
+.extraTitle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 1;
+}
+
+.title {
+    align-self: start;
+    text-align: start;
+}
+
+.created {
+    align-self: start;
+    color: #00CCCC;
+    margin-top: 8px;
+}
+
+.pending {
+    align-self: start;
+    color: #ffffff;
+    margin-top: 8px;
+}
+
+.decline {
+    align-self: start;
+    color: #E52B1A;
+    margin-top: 8px;
+}
+
+

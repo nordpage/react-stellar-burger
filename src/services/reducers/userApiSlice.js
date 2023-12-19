@@ -14,7 +14,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 url: '/auth/user',
                 method: 'GET',
                 headers: {
-                    "authorization": localStorage.getItem(ACCESS)
+                    "Authorization": localStorage.getItem(ACCESS)
                 }
             }),
             transformResponse: (response) => {

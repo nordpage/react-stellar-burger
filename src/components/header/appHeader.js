@@ -12,7 +12,7 @@ const AppHeader = function(){
                     <NavLink to="/" end className={styles.link}>
                         {({ isActive }) => <span className={`${styles.button} text text_type_main-small p-5 ${isActive ? '' : 'text_color_inactive'}`}><ListIcon type={isActive ? 'primary' : 'secondary'} />Конструктор</span>}
                     </NavLink>
-                    <NavLink to="/list" className={styles.link}>
+                    <NavLink to="/feed" className={styles.link}>
                         {({ isActive }) => <span className={`${styles.button} text text_type_main-small p-5 ${isActive ? '' : 'text_color_inactive'}`}><BurgerIcon type={isActive ? 'primary' : 'secondary'} />Лента заказов</span>}
                     </NavLink>
                 </div>
