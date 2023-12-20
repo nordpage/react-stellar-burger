@@ -1,6 +1,9 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 import {ACCESS, API_URL} from "../../utils/constants";
 import {updateData} from "./feedSlice";
+import {QueryArgs} from "@testing-library/react";
+import {BaseQueryResult} from "@reduxjs/toolkit/dist/query/baseQueryTypes";
+import {Ingredient, Response} from "../../utils/types";
 
 const accessToken = localStorage.getItem(ACCESS)
 
@@ -8,10 +11,10 @@ export const burgerApi = createApi({
     reducerPath: 'burgerApi',
     baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
     endpoints: builder => ({
-        getIngredients: builder.query({
+        getIngredients: builder.query<Response, string>({
             query: () => `/ingredients`,
             transformResponse: (response) => {
-                return response.data
+                return response!!.data
             },
         }),
         postLogout: builder.mutation({
@@ -36,7 +39,7 @@ export const burgerApi = createApi({
             }),
         }),
         postOrder: builder.mutation({
-            query: (payload) => ({
+            query: (payload: QueryArgs) => ({
                 url: `/orders`,
                 method: "POST",
                 headers: {
@@ -97,14 +100,14 @@ export const burgerApi = createApi({
         }),
         getUserFeed: builder.query({
             query: (channel) => ({
-                url: `/orders?token=${accessToken.replace("Bearer ","")}`,
+                url: `/orders?token=${accessToken!!.replace("Bearer ","")}`,
                 headers: {Authorization: accessToken},
             }),
             async onCacheEntryAdded(
                 arg,
                 { dispatch, updateCachedData, cacheDataLoaded, cacheEntryRemoved }
             )  {
-                const ws = new WebSocket(`wss://norma.nomoreparties.space/orders?token=${accessToken.replace("Bearer ","")}`);
+                const ws = new WebSocket(`wss://norma.nomoreparties.space/orders?token=${accessToken!!.replace("Bearer ","")}`);
                 try {
                     await cacheDataLoaded;
                     const listener = (event) => {

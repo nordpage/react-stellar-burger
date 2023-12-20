@@ -1,3 +1,8 @@
+export interface Response {
+    success: boolean,
+    data: any
+}
+
 export interface Ingredient {
     _id: string,
     name: string,
@@ -17,4 +22,8 @@ export interface Cart {
     bun?: string,
     ingredients: Ingredient[],
     sum: number
+}
+
+export interface Order {
+    order: { orderNumber: number }
 }
