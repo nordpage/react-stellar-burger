@@ -5,15 +5,21 @@ import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
 import ModalOverlay from "./modal-overlay/modal-overlay";
 
-const Modal = function ({title, children, onModalClose}) {
+type Props = {
+    title?: string,
+    children: React.ReactNode,
+    onModalClose: () => void
+}
+
+const Modal = function ({title, children, onModalClose} : Props) {
 
     const onClose = () => {
         onModalClose()
     }
 
     useEffect(() => {
-        const handleEsc = (event) => {
-            if (event.key === 'Escape') {
+        const handleEsc = (event: React.KeyboardEvent<HTMLDivElement>) => {
+            if (event.code === 'Escape') {
                onClose()
             }
         };
@@ -38,7 +44,7 @@ const Modal = function ({title, children, onModalClose}) {
                 </div>
             </div>
         </div>,
-        document.querySelector("#modals")
+        document.querySelector("#modals")!!
     )
 }
 

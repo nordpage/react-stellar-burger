@@ -3,8 +3,14 @@ import IngredientItem from "../ingredient-item/ingredient-item";
 import styles from "./ingredient-group.module.css"
 import PropTypes from "prop-types";
 import {Link, useLocation} from "react-router-dom";
+import {Ingredient} from "../../../utils/types";
 
-const IngredientGroup = function({ingredients, name}) {
+type Props = {
+    ingredients: Ingredient[],
+    name: string
+}
+
+const IngredientGroup = function({ingredients, name} : Props) {
 
     const location = useLocation();
 

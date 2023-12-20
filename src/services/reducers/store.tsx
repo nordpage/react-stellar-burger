@@ -8,7 +8,7 @@ import authReducer from './authSlice'
 import {feedSlice} from "./feedSlice";
 
 
-const store = configureStore({
+export const store = configureStore({
     reducer: {
         [burgerApi.reducerPath]: burgerApi.reducer,
         [apiSlice.reducerPath] : apiSlice.reducer,
@@ -16,11 +16,10 @@ const store = configureStore({
         burger: burgerSlice.reducer,
         order: orderSlice.reducer,
         modal: modalSlice.reducer,
-        feed: feedSlice.reducer,
         auth: authReducer
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(burgerApi.middleware).concat(apiSlice.middleware)
 })
 
-export default store
+export type TStore = ReturnType<typeof store.getState>;

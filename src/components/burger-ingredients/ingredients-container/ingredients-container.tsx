@@ -5,10 +5,15 @@ import PropTypes from "prop-types";
 import {BUN, MAIN, SAUCE} from "../../../utils/constants";
 import {useGetIngredientsQuery} from "../../../services/reducers/burgerApi";
 import {FadeLoader} from "react-spinners";
+import {Ingredient} from "../../../utils/types";
 
-const IngredientsContainer = function({onScroll}) {
+type Props = {
+    onScroll: (event: React.ChangeEvent<HTMLInputElement>) => void
+}
 
-     function handleScroll(event) {
+const IngredientsContainer = function({onScroll} : Props) {
+
+     function handleScroll(event: React.ChangeEvent<HTMLInputElement>) {
          onScroll(event)
     }
 
@@ -20,7 +25,7 @@ const IngredientsContainer = function({onScroll}) {
     } = useGetIngredientsQuery();
 
     const keys = [BUN, SAUCE, MAIN]
-    const sectionName = (type) => {
+    const sectionName = (type: string) => {
         switch (type) {
             case BUN:
                 return "Булки";
@@ -31,7 +36,7 @@ const IngredientsContainer = function({onScroll}) {
 
         }
     }
-    const groups = useCallback((ingredients) => {
+    const groups = useCallback((ingredients: Ingredient[]) => {
         const ingredientsMap = new Map();
         if (isSuccess && ingredients !== undefined && ingredients.length > 0) {
             ingredients.forEach((ingredient) => ingredientsMap.set(ingredient.type, {

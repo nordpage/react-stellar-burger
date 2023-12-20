@@ -9,18 +9,20 @@ import {modalTypes} from "../../../utils/modal-types";
 import {FadeLoader} from "react-spinners";
 import {useNavigate} from "react-router-dom";
 import {ACCESS} from "../../../utils/constants";
+import {Cart} from "../../../utils/types";
+import {TStore} from "../../../services/reducers/store";
 
 const BurgerPrice = function() {
 
     const [loading, setLoading] = useState(false)
     const dispatch = useDispatch();
-    const {cart} = useSelector((store) => store.burger)
+    const {cart} = useSelector((store: TStore) => store.burger)
     const [postOrder] = usePostOrderMutation()
     const navigate = useNavigate();
     const accessToken = localStorage.getItem(ACCESS)
 
 
-   async function postOrderRequest(burger) {
+   async function postOrderRequest(burger: Cart) {
         if (accessToken !== null) {
             setLoading(true)
             if (!burger.bun || !burger.ingredients) return;

@@ -25,14 +25,15 @@ import {CURRENT, DETAILS, FEED} from "../../utils/constants";
 import FeedPage from "../../pages/feed/feed";
 import ProfileFeedPage from "../../pages/feed/profileFeed/profile-feed";
 import OrderFeedPage from "../../pages/feed/orderFeed/order-feed";
+import {TStore} from "../../services/reducers/store";
 
 const App = function() {
     const location = useLocation();
     const navigate = useNavigate();
     const background = location.state && location.state.background;
-    const {modal} = useSelector((store) => store.modal)
+    const {modal} = useSelector((store: TStore) => store.modal)
     const dispatch = useDispatch();
-    const {order} = useSelector((store) => store.order)
+    const {order} = useSelector((store: TStore) => store.order)
     const currentId = localStorage.getItem(CURRENT)
     const feedId = localStorage.getItem(FEED)
 

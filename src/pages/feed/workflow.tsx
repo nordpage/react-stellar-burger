@@ -1,9 +1,10 @@
 import React from 'react';
 import styles from "./orders.module.css"
 import {useSelector} from "react-redux";
+import {TStore} from "../../services/reducers/store";
 
 function Workflow() {
-    const {orders, total, totalToday} = useSelector((store) => store.feed);
+    const {orders, total, totalToday} = useSelector((store: TStore) => store.feed);
 
     const readyList = () => {
         return orders.filter(x => x.status === "done").slice(0, 20);

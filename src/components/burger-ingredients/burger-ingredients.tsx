@@ -8,7 +8,7 @@ const BurgerIngredients = function() {
 
     const [current, setCurrent] = React.useState('bun')
 
-    function chooseTab(currentValue) {
+    function chooseTab(currentValue: string) {
         setCurrent(currentValue)
         const element = document.getElementById(currentValue);
         if (element) {
@@ -16,10 +16,10 @@ const BurgerIngredients = function() {
         }
     }
 
-    const handleScroll = event => {
+    const handleScroll = (event: React.ChangeEvent<HTMLInputElement>) => {
         const scrollPosition = event.currentTarget.scrollTop;
         const ingredientsContainer = document.querySelector('.custom-scroll');
-        const sections = ingredientsContainer.querySelectorAll('.scroll-section');
+        const sections = ingredientsContainer!!.querySelectorAll('.scroll-section');
 
         sections.forEach((section) => {
             const rect = section.getBoundingClientRect();
