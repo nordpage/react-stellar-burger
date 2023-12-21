@@ -3,7 +3,7 @@ import {ACCESS, API_URL} from "../../utils/constants";
 import {updateData} from "./feedSlice";
 import {QueryArgs} from "@testing-library/react";
 import {BaseQueryResult} from "@reduxjs/toolkit/dist/query/baseQueryTypes";
-import {Ingredient, Response} from "../../utils/types";
+import {BasicItemsResponse, Ingredient} from "../../utils/types";
 
 const accessToken = localStorage.getItem(ACCESS)
 
@@ -11,9 +11,9 @@ export const burgerApi = createApi({
     reducerPath: 'burgerApi',
     baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
     endpoints: builder => ({
-        getIngredients: builder.query<Response, string>({
+        getIngredients: builder.query<BasicItemsResponse<Ingredient>, string>({
             query: () => `/ingredients`,
-            transformResponse: (response) => {
+            transformResponse: (response: BasicItemsResponse<Ingredient>) => {
                 return response!!.data
             },
         }),

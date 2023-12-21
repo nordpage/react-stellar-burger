@@ -1,7 +1,5 @@
-export interface Response {
-    success: boolean,
-    data: any
-}
+export type BasicResponse = { isSuccess: true, message: null } | { isSuccess: false, message: string }
+export type BasicItemsResponse<T> = { isSuccess: true, data: T[] } | { isSuccess: false, data: null }
 
 export interface Ingredient {
     _id: string,

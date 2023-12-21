@@ -1,7 +1,6 @@
 import React from 'react';
 import IngredientItem from "../ingredient-item/ingredient-item";
 import styles from "./ingredient-group.module.css"
-import PropTypes from "prop-types";
 import {Link, useLocation} from "react-router-dom";
 import {Ingredient} from "../../../utils/types";
 
@@ -15,7 +14,7 @@ const IngredientGroup = function({ingredients, name} : Props) {
     const location = useLocation();
 
     function Items ()  {
-        return ingredients.map((item, index) => (
+        return ingredients.map((item:Ingredient, index:number) => (
             <Link
                 key={item._id}
                 to={`/ingredients/${item._id}`}
@@ -41,7 +40,3 @@ const IngredientGroup = function({ingredients, name} : Props) {
 }
 
 export default IngredientGroup
-
-IngredientGroup.propTypes = {
-  name: PropTypes.string.isRequired
-}
