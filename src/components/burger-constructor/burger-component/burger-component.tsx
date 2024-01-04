@@ -5,10 +5,11 @@ import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import {useDispatch, useSelector} from "react-redux";
 import {useDrop} from "react-dnd";
 import {addToBurger, sorting} from "../../../services/reducers/burgerSlice";
+import {TStore} from "../../../services/reducers/store";
 
 const BurgerComponent = function () {
 
-    const {cart} = useSelector((store) => store.burger)
+    const {cart} = useSelector((store:TStore) => store.burger)
     const dispatch = useDispatch()
 
 

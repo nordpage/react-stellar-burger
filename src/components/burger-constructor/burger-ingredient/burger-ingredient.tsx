@@ -1,12 +1,19 @@
 import React, {useRef} from 'react';
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-ingredient.module.css";
-import {ingredientPropType} from "../../../utils/prop-types";
 import {useDispatch} from "react-redux";
 import {removeIngredient} from "../../../services/reducers/burgerSlice";
 import {useDrag, useDrop} from "react-dnd";
+import {Ingredient} from "../../../utils/types";
 
-const BurgerIngredient = function ({id, item, index, moveIngredient}) {
+type Props = {
+    id?: string,
+    item: Ingredient,
+    index: number,
+    moveIngredient: () => void
+}
+
+const BurgerIngredient = function ({id, item, index, moveIngredient} : Props) {
 
     const ref = useRef(null)
     const [{ handlerId }, dropRef] = useDrop({
@@ -81,7 +88,3 @@ const BurgerIngredient = function ({id, item, index, moveIngredient}) {
 }
 
 export default BurgerIngredient;
-
-BurgerIngredient.propTypes = {
-    item: ingredientPropType.isRequired
-}

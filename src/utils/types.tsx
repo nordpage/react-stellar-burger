@@ -25,3 +25,12 @@ export interface Cart {
 export interface Order {
     order: { orderNumber: number }
 }
+
+export interface IOrder {
+    ingredients: string[]
+    _id: string
+    status: string
+    number: number
+    createdAt: string
+    updatedAt: string
+}

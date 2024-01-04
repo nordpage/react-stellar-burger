@@ -3,17 +3,19 @@ import styles from "./orders.module.css";
 import FeedOrder from "./feed-order";
 import {Link, useLocation} from "react-router-dom";
 import {useSelector} from "react-redux";
+import {TStore} from "../../services/reducers/store";
+import {IOrder} from "../../utils/types";
 
 function UserOrders() {
     const location = useLocation();
 
-    const {orders} = useSelector((store) => store.feed);
+    const {orders} = useSelector((store: TStore) => store.feed);
 
     const arrayForSort = [...orders]
     const sorted = useCallback(
         () => {
             if (arrayForSort !== undefined && arrayForSort.length > 0) {
-                return arrayForSort.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+                return arrayForSort.sort((a: IOrder, b: IOrder) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
             }
                 },
         [arrayForSort],
