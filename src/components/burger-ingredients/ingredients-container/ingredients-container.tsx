@@ -13,7 +13,7 @@ type Props = {
 
 const IngredientsContainer = function({onScroll} : Props) {
 
-    const handleScroll = (e: UIEvent<HTMLDivElement>) => {
+    const handleScroll: UIEvent<HTMLDivElement> = (e) => {
         onScroll(e)
     };
 

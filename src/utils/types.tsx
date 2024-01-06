@@ -14,7 +14,8 @@ export interface Ingredient {
     image: string,
     image_mobile: string,
     image_large: string,
-    __v: number
+    __v: number,
+    key?: string
 }
 
 export interface Cart {
@@ -48,3 +49,9 @@ export type Feed = {
 }
 
 export type Inputs = { [key: string]: any; }
+
+export interface IRefresh {
+    success: boolean,
+    accessToken: string,
+    refreshToken: string
+}

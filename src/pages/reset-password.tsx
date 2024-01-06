@@ -48,8 +48,6 @@ function ResetPasswordPage() {
                                 name={'password'}
                                 value={values.password || ''}
                                 onChange={handleChange}
-                                error={false}
-                                errorText={'Ошибка'}
                                 size={'default'}
                                 extraClass="mt-6"
                             />
@@ -58,8 +56,6 @@ function ResetPasswordPage() {
                                    name={'token'}
                                    value={values.token || ''}
                                    onChange={handleChange}
-                                   error={false}
-                                   errorText={'Ошибка'}
                                    size={'default'}
                                    extraClass="mt-6"
                             />

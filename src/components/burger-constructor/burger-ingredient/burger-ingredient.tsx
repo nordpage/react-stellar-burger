@@ -1,9 +1,8 @@
-import React, {useRef} from 'react';
+import React, {LegacyRef, useRef} from 'react';
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-ingredient.module.css";
-import {useDispatch} from "react-redux";
 import {removeIngredient} from "../../../services/reducers/burgerSlice";
-import {useDrag, useDrop} from "react-dnd";
+import {DropTargetMonitor, useDrag, useDrop} from "react-dnd";
 import {Ingredient} from "../../../utils/types";
 import {useAppDispatch} from "../../../hooks/hooks";
 
@@ -16,15 +15,15 @@ type Props = {
 
 const BurgerIngredient = function ({id, item, index, moveIngredient} : Props) {
 
-    const ref = useRef(null)
+    const ref = useRef<HTMLDivElement>(null)
     const [{ handlerId }, dropRef] = useDrop({
         accept: "item",
-        collect(monitor) {
+        collect(monitor: DropTargetMonitor) {
             return {
                 handlerId: monitor.getHandlerId(),
             }
         },
-        hover(item: Ingredient, monitor) {
+        hover(item: { index: number; type: string; id: string }, monitor: DropTargetMonitor) {
             if (!ref.current) {
                 return
             }

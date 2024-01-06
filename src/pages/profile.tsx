@@ -5,7 +5,11 @@ import {usePostLogoutMutation} from "../services/reducers/burgerApi";
 import {useDispatch} from "react-redux";
 import {logOut} from "../services/reducers/authSlice";
 import {REFRESH} from "../utils/constants";
+import {useAppDispatch} from "../hooks/hooks";
 
+interface IForm {
+    token: string
+}
 function ProfilePage() {
 
     const refreshToken = localStorage.getItem(REFRESH)
@@ -13,10 +17,10 @@ function ProfilePage() {
     let form = null;
 
     const [postLogout] = usePostLogoutMutation();
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
 
-    const logoutUser = async form =>{
+    const logoutUser = async (form: IForm) =>{
 
         const response = await postLogout(form).unwrap();
         try {

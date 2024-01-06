@@ -13,10 +13,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
         getUserData: builder.query({
             query: () =>  ({
                 url: '/auth/user',
-                method: 'GET',
-                headers: {
-                    "Authorization": localStorage.getItem(ACCESS)
-                }
+                method: 'GET'
             }),
             transformResponse: (response: User) => {
                 return response

@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import {BaseQueryFn, createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError} from '@reduxjs/toolkit/query/react'
 import {ACCESS, API_URL, REFRESH} from "../../utils/constants";
 
 const baseQuery = fetchBaseQuery({
@@ -12,7 +12,11 @@ const baseQuery = fetchBaseQuery({
     }
 })
 
-const baseQueryWithReAuth = async (args, api, extraOptions) => {
+const baseQueryWithReAuth: BaseQueryFn<
+    string | FetchArgs,
+    unknown,
+    FetchBaseQueryError
+> = async (args, api, extraOptions) => {
     let result = await baseQuery(args, api, extraOptions)
     const refreshToken = localStorage.getItem(REFRESH);
     if (result?.error?.status === 401 || result?.error?.status === 403) {
@@ -20,10 +24,13 @@ const baseQueryWithReAuth = async (args, api, extraOptions) => {
         // send refresh token to get new access token
         const refreshResult = await baseQuery({ url: "/auth/token", method: "POST", body: { token: refreshToken } }, api, extraOptions)
         console.log(refreshResult)
+        const tokens = refreshResult as {
+            data: { accessToken: string; refreshToken: string };
+        };
         if (refreshResult?.data) {
             console.log(refreshResult?.data)
-            localStorage.setItem(ACCESS, refreshResult?.data.accessToken);
-            localStorage.setItem(REFRESH, refreshResult?.data.refreshToken);
+            localStorage.setItem(ACCESS, tokens?.data.accessToken);
+            localStorage.setItem(REFRESH, tokens?.data.refreshToken);
             // retry the original query with new access token
             result = await baseQuery(args, api, extraOptions)
         }
