@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import styles from "./feed.module.css";
-import {useGetIngredientsQuery} from "../../services/reducers/burgerApi";
 import ImageSlot from "./image-slot";
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {BUN, date, FEED, status} from "../../utils/constants";
@@ -9,29 +8,27 @@ import {openModal} from "../../services/reducers/modalSlice";
 import {modalTypes} from "../../utils/modal-types";
 import {Ingredient, IOrder} from "../../utils/types";
 type Props = {
+    ingredients: Ingredient[]
     order: IOrder,
     isUser: boolean
 }
-function FeedOrder({order, isUser} : Props) {
+function FeedOrder({ingredients, order, isUser} : Props) {
 
     const [photos, setPhotos] = useState<Ingredient[]>()
-    const [sum, setSum] = useState(0)
+    const [sum, setSum] = useState<number>(0)
     const dispatch = useDispatch()
 
     let _index = 6;
-    const {
-        data
-    } = useGetIngredientsQuery(undefined);
 
 
     useEffect(() => {
-       if (data !== undefined && data.isSuccess) {
-           const filtered = data!.data!!.filter(item => order.ingredients.includes(item._id));
+       if (ingredients !== null) {
+           const filtered = ingredients.filter(item => order.ingredients.includes(item._id));
            const amount = filtered.reduce((a,v) => v.type === BUN ? a + v.price * 2 : a + v.price, 0)
            setPhotos(filtered)
            setSum(amount)
        }
-    }, [order, data])
+    }, [order, ingredients])
 
     function onItemClick(order: IOrder) {
         localStorage.setItem(FEED, order._id)
@@ -51,7 +48,7 @@ function FeedOrder({order, isUser} : Props) {
             <div className={`${styles.horizontal} mt-6`}>
                 <div className={styles.images}>
                     {
-                        photos!
+                       photos !== undefined && photos!
                             .map((photo, index) => {
                             const isExtra = photos!.length > 5;
                             const amount = isExtra ? photos!.length - 5 : 0;

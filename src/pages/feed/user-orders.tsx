@@ -5,11 +5,16 @@ import {Link, useLocation} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {TStore} from "../../services/reducers/store";
 import {IOrder} from "../../utils/types";
+import {useGetIngredientsQuery} from "../../services/reducers/burgerApi";
 
 function UserOrders() {
     const location = useLocation();
 
     const {orders} = useSelector((store: TStore) => store.feed);
+
+    const {
+        data
+    } = useGetIngredientsQuery(undefined);
 
     const arrayForSort = [...orders]
     const sorted = useCallback(
@@ -35,7 +40,7 @@ function UserOrders() {
                                         to={`/profile/orders/${order._id}`}
                                         state={{ background: location }}
                                         className={styles.link}
-                                    ><FeedOrder key={order._id} order={order} isUser={true}/></Link>
+                                    ><FeedOrder ingredients={data!.data!} key={order._id} order={order} isUser={true}/></Link>
                                 })
                             }
                         </div>

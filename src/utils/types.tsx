@@ -1,4 +1,3 @@
-export type BasicResponse = { isSuccess: true, message: null } | { isSuccess: false, message: string }
 export type BasicItemsResponse<T> = { isSuccess: true, data: T[] } | { isSuccess: false, data: null }
 
 export interface Ingredient {
@@ -37,10 +36,10 @@ export interface IOrder {
 export interface User  {
     success: boolean,
     user: {
-        name: string;
-        email: string;
-    };
-};
+        name: string
+        email: string
+    }
+}
 
 export type Feed = {
     orders: IOrder[],

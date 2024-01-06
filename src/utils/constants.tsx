@@ -12,7 +12,6 @@ export const REFRESH = "refresh"
 export const ACCESS = "access"
 export const CURRENT = "current"
 export const FEED = "feed"
-export const USER = "user"
 export const DETAILS = "Детали ингредиента"
 
 export const date = (order: IOrder) => {

@@ -1,23 +1,30 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 import {ACCESS, API_URL} from "../../utils/constants";
 import {updateData} from "./feedSlice";
-import {QueryArgs} from "@testing-library/react";
-import {BaseQueryResult} from "@reduxjs/toolkit/dist/query/baseQueryTypes";
-import {BasicItemsResponse, Ingredient, IOrder} from "../../utils/types";
+import {BasicItemsResponse, Ingredient} from "../../utils/types";
 import {Feed} from "../../utils/types";
 
 const accessToken = localStorage.getItem(ACCESS)
 
 type Channel = "redux" | "general";
-
+const baseQuery = fetchBaseQuery({
+    baseUrl: API_URL,
+    prepareHeaders: (headers) => {
+        const token = localStorage.getItem(ACCESS);
+        if (token) {
+            headers.set("Authorization", token)
+        }
+        return headers
+    }
+})
 
 export const burgerApi = createApi({
     reducerPath: 'burgerApi',
-    baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
+    baseQuery: baseQuery,
     endpoints: builder => ({
         getIngredients: builder.query({
             query: () => `/ingredients`,
-            transformResponse: (response: BasicItemsResponse<Ingredient>, meta) => {
+            transformResponse: (response: BasicItemsResponse<Ingredient>) => {
                 return response
             }
         }),
@@ -85,10 +92,9 @@ export const burgerApi = createApi({
                     // update our query result with the received message
                     const listener = (event: MessageEvent) => {
                         const data = JSON.parse(event.data)
-                        console.log(data);
+                       // console.log(data);
                         updateCachedData((draft) => {
                             dispatch(updateData(data))
-                            return data
                         })
                     }
 

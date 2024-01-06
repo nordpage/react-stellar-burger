@@ -16,7 +16,7 @@ const BurgerIngredients = function() {
         }
     }
 
-    const handleScroll = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
         const scrollPosition = event.currentTarget.scrollTop;
         const ingredientsContainer = document.querySelector('.custom-scroll');
         const sections = ingredientsContainer!!.querySelectorAll('.scroll-section');

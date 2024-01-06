@@ -3,7 +3,7 @@ import styles from "./single-feed.module.css"
 import {useGetIngredientsQuery} from "../../services/reducers/burgerApi";
 import {BUN, date, status} from "../../utils/constants";
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {BasicItemsResponse, Ingredient, IOrder} from "../../utils/types";
+import {Ingredient, IOrder} from "../../utils/types";
 
 type Props = {
     order: IOrder

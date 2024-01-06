@@ -1,5 +1,4 @@
 import {apiSlice} from "./apiSlice";
-import {ACCESS} from "../../utils/constants";
 import {User} from "../../utils/types";
 export const userApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({

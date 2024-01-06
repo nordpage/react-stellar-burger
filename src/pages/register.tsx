@@ -1,4 +1,4 @@
-import React, {FormEvent, useCallback, useState} from 'react';
+import React, {FormEvent, useCallback} from 'react';
 import styles from "./inputs.module.css";
 import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import { useNavigate } from "react-router-dom";

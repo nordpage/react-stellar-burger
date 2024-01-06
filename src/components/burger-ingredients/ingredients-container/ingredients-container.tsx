@@ -1,27 +1,22 @@
 import React, {useCallback} from 'react';
 import styles from "./ingredients-container.module.css"
 import IngredientGroup from "../ingredient-group/ingredient-group";
-import PropTypes from "prop-types";
 import {BUN, MAIN, SAUCE} from "../../../utils/constants";
 import {useGetIngredientsQuery} from "../../../services/reducers/burgerApi";
-import {FadeLoader} from "react-spinners";
 import {Ingredient} from "../../../utils/types";
 
 type Props = {
-    onScroll: (event: React.ChangeEvent<HTMLInputElement>) => void
+    onScroll: (event: React.UIEvent<HTMLDivElement>) => void
 }
 
 const IngredientsContainer = function({onScroll} : Props) {
 
-    const handleScroll: UIEvent<HTMLDivElement> = (e) => {
+    const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
         onScroll(e)
     };
 
     const {
-        data: ingredients = [],
-        isLoading,
-        isFetching,
-        isSuccess
+        data
     } = useGetIngredientsQuery(undefined);
 
     const keys = [BUN, SAUCE, MAIN]
@@ -38,7 +33,7 @@ const IngredientsContainer = function({onScroll} : Props) {
     }
     const groups = useCallback((ingredients: Ingredient[]) => {
         const ingredientsMap = new Map();
-        if (isSuccess && ingredients !== undefined && ingredients.length > 0) {
+        if (ingredients !== undefined && ingredients.length > 0) {
             ingredients.forEach((ingredient) => ingredientsMap.set(ingredient.type, {
                 name: sectionName(ingredient.type),
                 ingredients: ingredients.filter(item => item.type === ingredient.type)
@@ -54,23 +49,13 @@ const IngredientsContainer = function({onScroll} : Props) {
                     })
                 }
             </section>
-        } else if (isLoading && isFetching) {
-            return <div className={styles.loader}>
-                <FadeLoader color="#8585AD" />
-            </div>
         }
 
-    },[ingredients]);
+    },[data]);
 
-    return (
-        <>
-            groups(ingredients)
-        </>
-    )
+    return <>{
+        data! !== undefined && groups(data!.data!)
+    }</>
 }
 
 export default IngredientsContainer
-
-IngredientsContainer.propTypes = {
-  handleScroll: PropTypes.func
-}

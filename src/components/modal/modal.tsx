@@ -1,7 +1,6 @@
 import React, {useEffect} from "react";
 import styles from "./modal.module.css"
 import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
 import ModalOverlay from "./modal-overlay/modal-overlay";
 
@@ -50,8 +49,3 @@ const Modal = function ({title, children, onModalClose} : Props) {
 }
 
 export default Modal
-
-Modal.propTypes = {
-    children: PropTypes.node.isRequired,
-    onModalClose: PropTypes.func.isRequired
-}

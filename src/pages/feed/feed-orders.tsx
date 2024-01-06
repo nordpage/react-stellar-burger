@@ -4,10 +4,14 @@ import styles from "./orders.module.css"
 import {Link, useLocation} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {TStore} from "../../services/reducers/store";
+import {useGetIngredientsQuery} from "../../services/reducers/burgerApi";
 
 function FeedOrders() {
     const location = useLocation();
     const {orders} = useSelector((store: TStore) => store.feed);
+    const {
+        data
+    } = useGetIngredientsQuery(undefined);
 
     return (
         <div className={styles.container}>
@@ -22,7 +26,7 @@ function FeedOrders() {
                             // на котором была открыта наша модалка
                             state={{ background: location }}
                             className={styles.link}
-                        ><FeedOrder key={order._id} order={order} isUser={false}/></Link>
+                        ><FeedOrder ingredients={data!.data!} key={order._id} order={order} isUser={false}/></Link>
                     })
                 }
             </div>

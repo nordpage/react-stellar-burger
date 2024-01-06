@@ -15,7 +15,7 @@ const IngredientDetails = function () {
 
     const id = currentId !== null ? currentId : ingredientId;
 
-    const item = data!.data!.find(x => x._id === id)
+    const item = data! !== undefined ? data!.data!.find(x => x._id === id) : null
 
 
     return <>

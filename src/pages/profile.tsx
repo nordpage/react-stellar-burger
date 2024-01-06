@@ -2,7 +2,6 @@ import React, {useCallback} from 'react';
 import styles from './profile.module.css'
 import {NavLink, Outlet} from "react-router-dom";
 import {usePostLogoutMutation} from "../services/reducers/burgerApi";
-import {useDispatch} from "react-redux";
 import {logOut} from "../services/reducers/authSlice";
 import {REFRESH} from "../utils/constants";
 import {useAppDispatch} from "../hooks/hooks";

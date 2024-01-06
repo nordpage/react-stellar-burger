@@ -2,40 +2,30 @@ import React, {useEffect, useState} from 'react';
 import styles from './user-data.module.css'
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useGetUserDataQuery, useUpdateUserDataMutation} from "../services/reducers/userApiSlice";
-import {User} from "../utils/types";
 import {useForm} from "../hooks/useForm";
 
 function UserDataPage() {
 
-
-    const [user, setUser] = useState<User>();
-
     const [editName, setEditName] = useState(false)
-    const [editEmail, setEditEmail] = useState(false)
+    const [editEmail, setEditEmail] = useState<boolean>(false)
     const [editPass, setEditPass] = useState(false)
     const [postUpdateUser] = useUpdateUserDataMutation()
-    const {values, handleChange } = useForm({});
+    const {values, setValues, handleChange } = useForm({});
 
-    const {
-        data,
-        isError,
-        isSuccess
-    } = useGetUserDataQuery(undefined);
+    const {data, isSuccess} = useGetUserDataQuery(undefined);
 
 
     useEffect( () => {
-        if (isSuccess && data !== undefined) {
-            setUser(data!.user!)
-        } else if (isError) {
-
+        if (isSuccess && data!.success) {
+            setValues(data.user)
         }
     }, [data]);
 
     async function onSave() {
-        const response = await postUpdateUser(user).unwrap();
+        const response = await postUpdateUser(values).unwrap();
         try {
             if (response.success) {
-                setUser(response.user)
+                setValues(response.user)
                 disableInputs()
             }
         } catch (e) {
@@ -73,7 +63,7 @@ function UserDataPage() {
                 icon={"EditIcon"}
                 disabled={!editEmail}
                 onIconClick={() => setEditEmail(true)}
-                name={'login'}
+                name={'email'}
                 onChange={handleChange}
                 value={values.email || ''}
                 error={false}
