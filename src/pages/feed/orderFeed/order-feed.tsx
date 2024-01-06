@@ -5,7 +5,7 @@ import {FadeLoader} from "react-spinners";
 import OrderFeedDetails from "./order-feed-details";
 
 function OrderFeedPage() {
-    const {data, isLoading, isSuccess} = useGetFeedQuery();
+    const {data, isLoading, isSuccess} = useGetFeedQuery("general");
 
     return (
         <div>

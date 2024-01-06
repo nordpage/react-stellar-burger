@@ -6,11 +6,13 @@ import {useDispatch, useSelector} from "react-redux";
 import {useDrop} from "react-dnd";
 import {addToBurger, sorting} from "../../../services/reducers/burgerSlice";
 import {TStore} from "../../../services/reducers/store";
+import {Ingredient} from "../../../utils/types";
+import {useAppDispatch} from "../../../hooks/hooks";
 
 const BurgerComponent = function () {
 
     const {cart} = useSelector((store:TStore) => store.burger)
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
 
     const [{ isHover }, dropRef] = useDrop({
@@ -18,18 +20,18 @@ const BurgerComponent = function () {
         collect: (monitor) => ({
             isHover: monitor.isOver()
         }),
-        drop(item) {
+        drop(item: Ingredient) {
             dispatch(addToBurger(item))
         }
     })
 
 
-    const moveIngredient = useCallback((dragIndex, hoverIndex) => {
+    const moveIngredient = useCallback((dragIndex: number, hoverIndex: number) => {
         dispatch(sorting({dragIndex, hoverIndex}))
     }, [dispatch])
-    const renderIngredient = useCallback((ingredient, index) => {
+    const renderIngredient = useCallback((ingredient: Ingredient, index: number) => {
         return (
-            <BurgerIngredient item={ingredient} index={index} id={ingredient.uid} key={ingredient.key} moveIngredient = {moveIngredient}/>
+            <BurgerIngredient item={ingredient} index={index} id={ingredient.uid} key={ingredient.uid} moveIngredient = {moveIngredient}/>
         )
     }, [])
 

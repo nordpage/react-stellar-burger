@@ -22,22 +22,27 @@ function UserOrders() {
     );
 
 
-    return orders.length > 0 && (
-        <div className={styles.container}>
-            <div className={`${styles.orders} custom-scroll`}>
-                {
-                    sorted().map(order => {
-                        return <Link
-                            key={order._id}
-                            to={`/profile/orders/${order._id}`}
-                            state={{ background: location }}
-                            className={styles.link}
-                        ><FeedOrder key={order._id} order={order} isUser={true}/></Link>
-                    })
-                }
-            </div>
-        </div>
-    );
+    return (
+        <>
+            {
+                orders.length > 0 &&
+                    <div className={styles.container}>
+                        <div className={`${styles.orders} custom-scroll`}>
+                            {
+                                sorted()!.map(order => {
+                                    return <Link
+                                        key={order._id}
+                                        to={`/profile/orders/${order._id}`}
+                                        state={{ background: location }}
+                                        className={styles.link}
+                                    ><FeedOrder key={order._id} order={order} isUser={true}/></Link>
+                                })
+                            }
+                        </div>
+                    </div>
+            }
+        </>
+    )
 }
 
 export default UserOrders;

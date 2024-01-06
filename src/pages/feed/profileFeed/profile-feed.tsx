@@ -6,7 +6,7 @@ import ProfileFeedDetails from "./profile-feed-details";
 
 function ProfileFeedPage() {
 
-    const {data, isLoading, isSuccess} = useGetFeedQuery();
+    const {data, isLoading, isSuccess} = useGetFeedQuery("general");
 
     return (
         <div>

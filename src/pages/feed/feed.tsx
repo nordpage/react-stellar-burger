@@ -7,22 +7,14 @@ import Workflow from "./workflow";
 
 function FeedPage() {
 
-    const {
-        data: feed = [],
-        isLoading,
-        isFetching,
-        isError,
-        error,
-        isSuccess
-    } = useGetFeedQuery();
+    const { data, isFetching, isSuccess, isLoading } = useGetFeedQuery("general");
 
     return (
         <div className={styles.feed}>
-            {isError && <h2>{error}</h2>}
             {isLoading && isFetching && <div className={styles.loader}>
                 <FadeLoader color="#8585AD" />
             </div>}
-            {isSuccess && feed &&
+            {isSuccess && data &&
              <div className={styles.container}>
                  <FeedOrders />
                  <Workflow />

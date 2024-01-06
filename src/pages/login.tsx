@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {FormEvent, FormEventHandler, useState} from 'react';
 import styles from "./inputs.module.css"
 import {Button, EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useLocation, useNavigate } from "react-router-dom";
@@ -7,6 +7,7 @@ import {useDispatch} from "react-redux";
 import {setCredentials} from "../services/reducers/authSlice";
 import {ACCESS, REFRESH} from "../utils/constants";
 import {useForm} from "../hooks/useForm";
+import {Inputs} from "../utils/types";
 
 export const LoginPage = () => {
     const dispatch = useDispatch()
@@ -17,9 +18,6 @@ export const LoginPage = () => {
     let location = useLocation();
     let { from } = location.state || { from: { pathname: "/" } };
 
-
-    const [isEmailError, setEmailError] = useState(false)
-    const [isPasswordError, setPasswordError] = useState(false)
 
     const navigate = useNavigate();
 
@@ -34,9 +32,7 @@ export const LoginPage = () => {
     const {values, handleChange } = useForm({ });
 
 
-    const loginUser = async form => {
-        setEmailError(false)
-        setPasswordError(false)
+    const loginUser = async (form: Inputs) => {
         if (values.email && values.password) {
             const response = await postLogin(form).unwrap();
 
@@ -54,17 +50,10 @@ export const LoginPage = () => {
             } catch (e) {
                 console.error(e)
             }
-        } else {
-            if (form.email === ''){
-                setEmailError(true)
-            }
-            if (form.password === ''){
-                setPasswordError(true)
-            }
         }
     }
 
-    const login = (e) => {
+    const login = (e: FormEvent) => {
         e.preventDefault()
         loginUser(values)
     }
@@ -77,13 +66,11 @@ export const LoginPage = () => {
     return (
         <div className={styles.container}>
             <p className="text text_type_main-default">Вход</p>
-            <form onSubmit={login}>
+            <form onSubmit={(e) => login(e)}>
                 <EmailInput
                     onChange={handleChange}
                     value={values.email || ''}
                     name={'email'}
-                    error={isEmailError}
-                    errorText={'Поле \"E-mail\" не может быть пустым'}
                     placeholder="E-mail"
                     extraClass="mt-6"
                 />
@@ -92,8 +79,6 @@ export const LoginPage = () => {
                     value={values.password  || ''}
                     placeholder={'Пароль'}
                     name={'password'}
-                    error={isPasswordError}
-                    errorText={'Поле \"Пароль\" не может быть пустым'}
                     size={'default'}
                     extraClass="mt-6"
                 />

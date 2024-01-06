@@ -6,7 +6,7 @@ import {useGetUserFeedQuery} from "../services/reducers/burgerApi";
 
 function OrdersPage() {
 
-    const { data, isLoading, isSuccess } = useGetUserFeedQuery();
+    const { data, isLoading, isSuccess } = useGetUserFeedQuery("general");
 
 
     return (

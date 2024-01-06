@@ -1,4 +1,4 @@
-import {configureStore} from "@reduxjs/toolkit";
+import {Action, configureStore, ThunkAction} from "@reduxjs/toolkit";
 import {burgerApi} from "./burgerApi";
 import {burgerSlice} from "./burgerSlice";
 import {orderSlice} from "./orderSlice";
@@ -23,3 +23,12 @@ export const store = configureStore({
 })
 
 export type TStore = ReturnType<typeof store.getState>;
+
+export type AppDispatch = typeof store.dispatch
+export type AppThunk<ReturnType = void> = ThunkAction<
+    ReturnType,
+    TStore,
+    unknown,
+    Action<string>
+>;
+

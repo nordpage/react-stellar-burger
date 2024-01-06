@@ -18,7 +18,7 @@ const Modal = function ({title, children, onModalClose} : Props) {
     }
 
     useEffect(() => {
-        const handleEsc = (event: React.KeyboardEvent<HTMLDivElement>) => {
+        const handleEsc = (event: KeyboardEvent) => {
             if (event.code === 'Escape') {
                onClose()
             }
@@ -33,16 +33,17 @@ const Modal = function ({title, children, onModalClose} : Props) {
 
     return ReactDOM.createPortal(
         <div className={styles.modal}>
-            <ModalOverlay onClick={onClose}/>
-            <div className={`${styles.window}`}>
-                <div className={`${styles.top} mt-10 ml-10 mr-10`}>
-                    {title && <h1 className={`${styles.title} text text_type_main-large`}>{title}</h1>}
-                    <div className={styles.closeContainer} onClick={onClose}><CloseIcon type="primary"/></div>
+            <ModalOverlay onClick={onClose} children={
+                <div className={`${styles.window}`}>
+                    <div className={`${styles.top} mt-10 ml-10 mr-10`}>
+                        {title && <h1 className={`${styles.title} text text_type_main-large`}>{title}</h1>}
+                        <div className={styles.closeContainer} onClick={onClose}><CloseIcon type="primary"/></div>
+                    </div>
+                    <div className={`${styles.container} ml-25 mr-25 mb-15`}>
+                        {children}
+                    </div>
                 </div>
-                <div className={`${styles.container} ml-25 mr-25 mb-15`}>
-                    {children}
-                </div>
-            </div>
+            }/>
         </div>,
         document.querySelector("#modals")!!
     )

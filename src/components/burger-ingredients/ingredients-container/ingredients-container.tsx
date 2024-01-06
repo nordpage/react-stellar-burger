@@ -13,16 +13,16 @@ type Props = {
 
 const IngredientsContainer = function({onScroll} : Props) {
 
-     function handleScroll(event: React.ChangeEvent<HTMLInputElement>) {
-         onScroll(event)
-    }
+    const handleScroll = (e: UIEvent<HTMLDivElement>) => {
+        onScroll(e)
+    };
 
     const {
         data: ingredients = [],
         isLoading,
         isFetching,
         isSuccess
-    } = useGetIngredientsQuery();
+    } = useGetIngredientsQuery(undefined);
 
     const keys = [BUN, SAUCE, MAIN]
     const sectionName = (type: string) => {
@@ -63,7 +63,9 @@ const IngredientsContainer = function({onScroll} : Props) {
     },[ingredients]);
 
     return (
-        groups(ingredients)
+        <>
+            groups(ingredients)
+        </>
     )
 }
 

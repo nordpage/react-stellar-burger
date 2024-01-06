@@ -1,5 +1,8 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {Order} from "../../utils/types";
+
+type Order = {
+    order: { orderNumber: number }
+}
 
 const initialState: Order = {
     order: {orderNumber: 0}

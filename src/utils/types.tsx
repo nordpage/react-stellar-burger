@@ -2,6 +2,7 @@ export type BasicResponse = { isSuccess: true, message: null } | { isSuccess: fa
 export type BasicItemsResponse<T> = { isSuccess: true, data: T[] } | { isSuccess: false, data: null }
 
 export interface Ingredient {
+    uid: string,
     _id: string,
     name: string,
     type:string,
@@ -17,20 +18,33 @@ export interface Ingredient {
 }
 
 export interface Cart {
-    bun?: string,
+    bun: Ingredient | null,
     ingredients: Ingredient[],
     sum: number
-}
-
-export interface Order {
-    order: { orderNumber: number }
 }
 
 export interface IOrder {
     ingredients: string[]
     _id: string
+    name: string
     status: string
     number: number
     createdAt: string
     updatedAt: string
 }
+
+export interface User  {
+    success: boolean,
+    user: {
+        name: string;
+        email: string;
+    };
+};
+
+export type Feed = {
+    orders: IOrder[],
+    totalToday: number,
+    total: number
+}
+
+export type Inputs = { [key: string]: any; }

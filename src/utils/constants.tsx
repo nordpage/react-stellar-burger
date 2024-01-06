@@ -1,5 +1,6 @@
 import styles from "../pages/feed/single-feed.module.css";
 import React  from 'react';
+import {IOrder} from "./types";
 
 export const BUN = "bun"
 export const SAUCE = "sauce"
@@ -14,11 +15,11 @@ export const FEED = "feed"
 export const USER = "user"
 export const DETAILS = "Детали ингредиента"
 
-export const date = (order) => {
+export const date = (order: IOrder) => {
 
-    const date1 = new Date();
-    const date2 = new Date(order.createdAt);
-    const diffTime = Math.abs(date1 - date2);
+    const date1 : Date = new Date();
+    const date2: Date = new Date(order.createdAt);
+    const diffTime = Math.abs(date1.getDate() - date2.getDate());
     let minutes = Math.floor(diffTime / 60000);
     let hours = Math.round(minutes / 60);
     let diffDays = Math.round(hours / 24);
@@ -37,7 +38,7 @@ export const date = (order) => {
     return `${day}, ${time}`;
 }
 
-export const status = (order) => {
+export const status = (order: IOrder) => {
     if (order.status === "done") {
         return <p className={`${styles.created} text text_type_main-small mt-3`}>Выполнен</p>
     } else if (order.status === "pending") {

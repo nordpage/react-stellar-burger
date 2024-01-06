@@ -7,30 +7,33 @@ import {BUN, date, FEED, status} from "../../utils/constants";
 import {useDispatch} from "react-redux";
 import {openModal} from "../../services/reducers/modalSlice";
 import {modalTypes} from "../../utils/modal-types";
+import {Ingredient, IOrder} from "../../utils/types";
+type Props = {
+    order: IOrder,
+    isUser: boolean
+}
+function FeedOrder({order, isUser} : Props) {
 
-function FeedOrder({order, isUser = false}) {
-
-    const [photos, setPhotos] = useState([])
+    const [photos, setPhotos] = useState<Ingredient[]>()
     const [sum, setSum] = useState(0)
     const dispatch = useDispatch()
 
     let _index = 6;
     const {
-        data: ingredients = [],
-        isSuccess
-    } = useGetIngredientsQuery();
+        data
+    } = useGetIngredientsQuery(undefined);
 
 
     useEffect(() => {
-       if (isSuccess) {
-           const filtered = ingredients.filter(item => order.ingredients.includes(item._id));
+       if (data !== undefined && data.isSuccess) {
+           const filtered = data!.data!!.filter(item => order.ingredients.includes(item._id));
            const amount = filtered.reduce((a,v) => v.type === BUN ? a + v.price * 2 : a + v.price, 0)
            setPhotos(filtered)
            setSum(amount)
        }
-    }, [order, ingredients])
+    }, [order, data])
 
-    function onItemClick(order) {
+    function onItemClick(order: IOrder) {
         localStorage.setItem(FEED, order._id)
         dispatch(openModal(modalTypes.Feed))
     }
@@ -48,10 +51,10 @@ function FeedOrder({order, isUser = false}) {
             <div className={`${styles.horizontal} mt-6`}>
                 <div className={styles.images}>
                     {
-                        photos
+                        photos!
                             .map((photo, index) => {
-                            const isExtra = photos.length > 5;
-                            const amount = isExtra ? photos.length - 5 : 0;
+                            const isExtra = photos!.length > 5;
+                            const amount = isExtra ? photos!.length - 5 : 0;
                             _index -= 1;
                             return index < 6 && <ImageSlot key={photo._id} image={photo.image} index={_index} amount={amount}/>
 

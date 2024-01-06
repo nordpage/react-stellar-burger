@@ -2,27 +2,30 @@ import React, {useEffect, useState} from 'react';
 import styles from './user-data.module.css'
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useGetUserDataQuery, useUpdateUserDataMutation} from "../services/reducers/userApiSlice";
+import {User} from "../utils/types";
+import {useForm} from "../hooks/useForm";
 
 function UserDataPage() {
 
 
-    const [user, setUser] = useState({ name: null, email: null });
+    const [user, setUser] = useState<User>();
 
     const [editName, setEditName] = useState(false)
     const [editEmail, setEditEmail] = useState(false)
     const [editPass, setEditPass] = useState(false)
     const [postUpdateUser] = useUpdateUserDataMutation()
+    const {values, handleChange } = useForm({});
 
     const {
-        data = {},
+        data,
         isError,
         isSuccess
-    } = useGetUserDataQuery();
+    } = useGetUserDataQuery(undefined);
 
 
     useEffect( () => {
         if (isSuccess && data !== undefined) {
-            setUser(data.user)
+            setUser(data!.user!)
         } else if (isError) {
 
         }
@@ -41,10 +44,6 @@ function UserDataPage() {
 
     }
 
-    const onChange = e => {
-        setUser({...user, [e.target.name]: e.target.value})
-    }
-
     const disableInputs = () => {
         setEditName(false)
         setEditEmail(false)
@@ -61,8 +60,8 @@ function UserDataPage() {
                 disabled={!editName}
                 name={'name'}
                 onIconClick={() => setEditName(true)}
-                onChange={onChange}
-                value={user.name || ''}
+                onChange={handleChange}
+                value={values.name || ''}
                 error={false}
                 errorText={'Ошибка'}
                 size={'default'}
@@ -75,8 +74,8 @@ function UserDataPage() {
                 disabled={!editEmail}
                 onIconClick={() => setEditEmail(true)}
                 name={'login'}
-                onChange={onChange}
-                value={user.email || ''}
+                onChange={handleChange}
+                value={values.email || ''}
                 error={false}
                 errorText={'Ошибка'}
                 size={'default'}

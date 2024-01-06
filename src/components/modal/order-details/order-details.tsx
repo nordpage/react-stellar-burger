@@ -3,7 +3,11 @@ import Done from "../../../images/done.svg"
 import PropTypes from "prop-types";
 import styles from "./order-details.module.css";
 
-const OrderDetails = function ({order}) {
+type Props = {
+    order: number
+}
+
+const OrderDetails = function ({order} : Props) {
 
     return (
         <div className={styles.container}>
@@ -18,7 +22,3 @@ const OrderDetails = function ({order}) {
 }
 
 export default OrderDetails
-
-OrderDetails.propTypes = {
-    order: PropTypes.number.isRequired
-}

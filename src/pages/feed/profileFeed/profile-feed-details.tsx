@@ -6,17 +6,21 @@ import SingleFeedPage from "../single-feed";
 
 function ProfileFeedDetails() {
     
-    const {data = [], isSuccess} = useGetUserFeedQuery();
+    const {data, isSuccess} = useGetUserFeedQuery("general");
     const {id} = useParams();
     const feedId = localStorage.getItem(FEED);
 
     const currentId = feedId !== null ? feedId : id;
 
-    const order = isSuccess ? data.orders.find(x => x._id === currentId) : null;
+    const order = isSuccess ? data!.orders.find(x => x._id === currentId) : null;
     
-    return order && (
-        <SingleFeedPage order={order}/>
-    );
+    return (
+        <>
+            {
+                order && <SingleFeedPage order={order}/>
+            }
+        </>
+    )
 }
 
 export default ProfileFeedDetails;

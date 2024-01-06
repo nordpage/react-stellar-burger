@@ -3,10 +3,11 @@ import FeedOrder from "./feed-order";
 import styles from "./orders.module.css"
 import {Link, useLocation} from "react-router-dom";
 import {useSelector} from "react-redux";
+import {TStore} from "../../services/reducers/store";
 
 function FeedOrders() {
     const location = useLocation();
-    const {orders} = useSelector((store) => store.feed);
+    const {orders} = useSelector((store: TStore) => store.feed);
 
     return (
         <div className={styles.container}>
@@ -21,7 +22,7 @@ function FeedOrders() {
                             // на котором была открыта наша модалка
                             state={{ background: location }}
                             className={styles.link}
-                        ><FeedOrder key={order._id} order={order}/></Link>
+                        ><FeedOrder key={order._id} order={order} isUser={false}/></Link>
                     })
                 }
             </div>

@@ -1,12 +1,14 @@
 import {createSlice} from "@reduxjs/toolkit";
+import {Feed} from "../../utils/types";
 
+const initialState: Feed = {
+    orders: [],
+    total: 0,
+    totalToday: 0
+}
 export const feedSlice = createSlice({
     name: "feed",
-    initialState : {
-        orders: [],
-        total: 0,
-        totalToday: 0
-    },
+    initialState,
 reducers: {
         updateData: (state, action) => {
             state.orders = action.payload.orders;

@@ -5,12 +5,13 @@ import {useDispatch} from "react-redux";
 import {removeIngredient} from "../../../services/reducers/burgerSlice";
 import {useDrag, useDrop} from "react-dnd";
 import {Ingredient} from "../../../utils/types";
+import {useAppDispatch} from "../../../hooks/hooks";
 
 type Props = {
     id?: string,
     item: Ingredient,
     index: number,
-    moveIngredient: () => void
+    moveIngredient: (dragIndex: number, hoverIndex: number) => void
 }
 
 const BurgerIngredient = function ({id, item, index, moveIngredient} : Props) {
@@ -23,7 +24,7 @@ const BurgerIngredient = function ({id, item, index, moveIngredient} : Props) {
                 handlerId: monitor.getHandlerId(),
             }
         },
-        hover(item, monitor) {
+        hover(item: Ingredient, monitor) {
             if (!ref.current) {
                 return
             }
@@ -40,7 +41,7 @@ const BurgerIngredient = function ({id, item, index, moveIngredient} : Props) {
 
             const clientOffset = monitor.getClientOffset()
 
-            const hoverClientY = clientOffset.y - hoverBoundingRect.top
+            const hoverClientY = clientOffset!.y - hoverBoundingRect.top
 
             if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
                 return
@@ -68,9 +69,9 @@ const BurgerIngredient = function ({id, item, index, moveIngredient} : Props) {
     const opacity = isDragging ? 0 : 1
     const cursor = isDragging ? "move" : "none"
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
-    function onRemoveFromCart(item) {
+    function onRemoveFromCart(item: Ingredient) {
         dispatch(removeIngredient(item))
     }
 

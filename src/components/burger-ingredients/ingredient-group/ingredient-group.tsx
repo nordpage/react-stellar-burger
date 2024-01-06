@@ -14,18 +14,22 @@ const IngredientGroup = function({ingredients, name} : Props) {
     const location = useLocation();
 
     function Items ()  {
-        return ingredients.map((item:Ingredient, index:number) => (
-            <Link
-                key={item._id}
-                to={`/ingredients/${item._id}`}
-                // а также сохраняем в свойство background роут,
-                // на котором была открыта наша модалка
-                state={{ background: location }}
-                className={styles.link}
-            >
-            <IngredientItem item={item} key={index}/>
-            </Link>
-        ))
+        return <>
+            {
+                ingredients.map((item:Ingredient, index:number) => (
+                    <Link
+                        key={item._id}
+                        to={`/ingredients/${item._id}`}
+                        // а также сохраняем в свойство background роут,
+                        // на котором была открыта наша модалка
+                        state={{ background: location }}
+                        className={styles.link}
+                    >
+                        <IngredientItem item={item} key={index}/>
+                    </Link>
+                ))
+            }
+        </>
     }
 
 

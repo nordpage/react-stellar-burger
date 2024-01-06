@@ -3,29 +3,29 @@ import styles from "./single-feed.module.css"
 import {useGetIngredientsQuery} from "../../services/reducers/burgerApi";
 import {BUN, date, status} from "../../utils/constants";
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {BasicItemsResponse, Ingredient, IOrder} from "../../utils/types";
 
-
-function SingleFeedPage({order}) {
+type Props = {
+    order: IOrder
+}
+function SingleFeedPage({order} : Props) {
 
     const [sum, setSum] = useState(0)
-    const [items, setItems] = useState([])
+    const [items, setItems] = useState<Ingredient[]>([])
 
-    const {
-        data: ingredients = [],
-        isSuccess
-    } = useGetIngredientsQuery();
+    const { data: ingredients, isSuccess } = useGetIngredientsQuery(undefined);
 
     useEffect(() => {
         if (isSuccess) {
-            const filtered = ingredients.filter(item => order.ingredients.includes(item._id));
+            const filtered = ingredients.data!.filter(item => order.ingredients.includes(item._id));
             const amount = filtered.reduce((a,v) => v.type === BUN ? a + v.price * 2 : a + v.price, 0);
             setItems(filtered)
             setSum(amount)
         }
     }, [order, ingredients])
 
-    const composition = useCallback((ingredients) => {
-        const uniqueIngredients = [...new Set(ingredients)];
+    const composition = useCallback((ingredients: Ingredient[]) => {
+        const uniqueIngredients = Array.from(new Set(ingredients));
         return <div className={`${styles.ingredients} custom-scroll mt-6`}>
             {
                 uniqueIngredients.map(value => {

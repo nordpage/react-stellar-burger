@@ -3,19 +3,23 @@ import {ACCESS, API_URL} from "../../utils/constants";
 import {updateData} from "./feedSlice";
 import {QueryArgs} from "@testing-library/react";
 import {BaseQueryResult} from "@reduxjs/toolkit/dist/query/baseQueryTypes";
-import {BasicItemsResponse, Ingredient} from "../../utils/types";
+import {BasicItemsResponse, Ingredient, IOrder} from "../../utils/types";
+import {Feed} from "../../utils/types";
 
 const accessToken = localStorage.getItem(ACCESS)
+
+type Channel = "redux" | "general";
+
 
 export const burgerApi = createApi({
     reducerPath: 'burgerApi',
     baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
     endpoints: builder => ({
-        getIngredients: builder.query<BasicItemsResponse<Ingredient>, string>({
+        getIngredients: builder.query({
             query: () => `/ingredients`,
-            transformResponse: (response: BasicItemsResponse<Ingredient>) => {
-                return response!!.data
-            },
+            transformResponse: (response: BasicItemsResponse<Ingredient>, meta) => {
+                return response
+            }
         }),
         postLogout: builder.mutation({
             query: (form) => ({
@@ -39,13 +43,13 @@ export const burgerApi = createApi({
             }),
         }),
         postOrder: builder.mutation({
-            query: (payload: QueryArgs) => ({
+            query: (payload) => ({
                 url: `/orders`,
                 method: "POST",
-                headers: {
-                    Authorization: accessToken
+                body: {
+                    ingredients: payload,
+                    token: accessToken,
                 },
-                body: { ingredients: payload },
             }),
         }),
         postForgot: builder.mutation({
@@ -62,7 +66,7 @@ export const burgerApi = createApi({
                 body: form
             }),
         }),
-        getFeed: builder.query({
+        getFeed: builder.query<Feed, Channel>({
             query: () => ({
                 url: `/orders/all`
             }),
@@ -79,11 +83,12 @@ export const burgerApi = createApi({
                     // when data is received from the socket connection to the server,
                     // if it is a message and for the appropriate channel,
                     // update our query result with the received message
-                    const listener = (event) => {
+                    const listener = (event: MessageEvent) => {
                         const data = JSON.parse(event.data)
                         console.log(data);
                         updateCachedData((draft) => {
                             dispatch(updateData(data))
+                            return data
                         })
                     }
 
@@ -98,11 +103,8 @@ export const burgerApi = createApi({
                 ws.close()
             },
         }),
-        getUserFeed: builder.query({
-            query: (channel) => ({
-                url: `/orders?token=${accessToken!!.replace("Bearer ","")}`,
-                headers: {Authorization: accessToken},
-            }),
+        getUserFeed: builder.query<Feed, Channel>({
+            query: () => `/orders`,
             async onCacheEntryAdded(
                 arg,
                 { dispatch, updateCachedData, cacheDataLoaded, cacheEntryRemoved }
@@ -110,11 +112,12 @@ export const burgerApi = createApi({
                 const ws = new WebSocket(`wss://norma.nomoreparties.space/orders?token=${accessToken!!.replace("Bearer ","")}`);
                 try {
                     await cacheDataLoaded;
-                    const listener = (event) => {
+                    const listener = (event: MessageEvent) => {
                         const data = JSON.parse(event.data);
 
                         updateCachedData((draft) => {
                             dispatch(updateData(data))
+                            return data;
                         });
 
                     };

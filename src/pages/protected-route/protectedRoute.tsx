@@ -1,7 +1,12 @@
 import {Navigate, useLocation} from 'react-router-dom'
 import React from "react";
 import {ACCESS} from "../../utils/constants";
-const ProtectedRoute = ({authRequired = false, children}) => {
+
+type Props = {
+    authRequired: boolean,
+    children: React.ReactNode
+}
+const ProtectedRoute = ({authRequired, children} : Props) => {
     const token = localStorage.getItem(ACCESS)
     let location = useLocation();
 
@@ -14,7 +19,11 @@ const ProtectedRoute = ({authRequired = false, children}) => {
         return <Navigate to={from} />;
     }
 
-    return children;
+    return <>
+        {
+            children
+        }
+    </>;
 
 
 };

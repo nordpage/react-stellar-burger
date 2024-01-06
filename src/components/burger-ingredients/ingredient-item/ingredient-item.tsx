@@ -6,12 +6,17 @@ import {useDrag} from "react-dnd";
 import {BUN, CURRENT} from "../../../utils/constants";
 import {openModal} from "../../../services/reducers/modalSlice";
 import {modalTypes} from "../../../utils/modal-types";
+import {TStore} from "../../../services/reducers/store";
+import {Ingredient} from "../../../utils/types";
 
-const IngredientItem = function({item}) {
+type Props = {
+    item: Ingredient
+}
+const IngredientItem = function({item} : Props) {
 
     const [counter, setCounter] = useState(0)
     const dispatch = useDispatch()
-    const {cart} = useSelector((store) => store.burger)
+    const {cart} = useSelector((store: TStore) => store.burger)
 
     const [{isDragging}, drag] = useDrag(() => ({
         type: "ingredient",
@@ -38,7 +43,7 @@ const IngredientItem = function({item}) {
         }
     }, [cart]);
 
-    function onItemClick(item) {
+    function onItemClick(item : Ingredient) {
         localStorage.setItem(CURRENT, item._id)
         dispatch(openModal(modalTypes.Ingredient))
     }
