@@ -1,16 +1,16 @@
-import React, {FormEvent, FormEventHandler, useState} from 'react';
+import React, {FormEvent, } from 'react';
 import styles from "./inputs.module.css"
 import {Button, EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useLocation, useNavigate } from "react-router-dom";
 import {usePostLoginMutation} from "../services/reducers/burgerApi";
-import {useDispatch} from "react-redux";
 import {setCredentials} from "../services/reducers/authSlice";
 import {ACCESS, REFRESH} from "../utils/constants";
 import {useForm} from "../hooks/useForm";
 import {Inputs} from "../utils/types";
+import {useAppDispatch} from "../hooks/hooks";
 
 export const LoginPage = () => {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const [postLogin] = usePostLoginMutation();
 

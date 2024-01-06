@@ -1,8 +1,8 @@
-import {AnyAction, createSlice, current, nanoid, ThunkDispatch} from "@reduxjs/toolkit";
+import {createSlice, current, nanoid} from "@reduxjs/toolkit";
 import {BUN} from "../../utils/constants";
 import update from "immutability-helper"
 import {Ingredient} from "../../utils/types";
-import {AppThunk} from "./store";
+import {AppThunk, RootState} from "./store";
 
 type Cart = {
     cart: {bun: Ingredient | null, ingredients: Ingredient[], sum: number}
@@ -66,5 +66,6 @@ export const removeIngredient = (item: Ingredient) : AppThunk => dispatch => {
     dispatch(deleteFromList(item))
     dispatch(checkSum())
 }
+export const burgerSelector = (state: RootState) => state.burger
 
 export default burgerSlice.reducer

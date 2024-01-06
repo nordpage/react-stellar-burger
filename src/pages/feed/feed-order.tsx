@@ -3,10 +3,10 @@ import styles from "./feed.module.css";
 import ImageSlot from "./image-slot";
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {BUN, date, FEED, status} from "../../utils/constants";
-import {useDispatch} from "react-redux";
 import {openModal} from "../../services/reducers/modalSlice";
 import {modalTypes} from "../../utils/modal-types";
 import {Ingredient, IOrder} from "../../utils/types";
+import {useAppDispatch} from "../../hooks/hooks";
 type Props = {
     ingredients: Ingredient[]
     order: IOrder,
@@ -16,7 +16,7 @@ function FeedOrder({ingredients, order, isUser} : Props) {
 
     const [photos, setPhotos] = useState<Ingredient[]>()
     const [sum, setSum] = useState<number>(0)
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     let _index = 6;
 

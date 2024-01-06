@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-price.module.css"
-import {useDispatch, useSelector} from "react-redux";
 import {usePostOrderMutation} from "../../../services/reducers/burgerApi";
 import {addOrderNumber} from "../../../services/reducers/orderSlice";
 import {openModal} from "../../../services/reducers/modalSlice";
@@ -10,13 +9,14 @@ import {FadeLoader} from "react-spinners";
 import {useNavigate} from "react-router-dom";
 import {ACCESS} from "../../../utils/constants";
 import {Cart} from "../../../utils/types";
-import {TStore} from "../../../services/reducers/store";
+import {useAppDispatch, useAppSelector} from "../../../hooks/hooks";
+import {burgerSelector} from "../../../services/reducers/burgerSlice";
 
 const BurgerPrice = function() {
 
     const [loading, setLoading] = useState(false)
-    const dispatch = useDispatch();
-    const {cart} = useSelector((store: TStore) => store.burger)
+    const dispatch = useAppDispatch();
+    const {cart} = useAppSelector(burgerSelector)
     const [postOrder] = usePostOrderMutation()
     const navigate = useNavigate();
     const accessToken = localStorage.getItem(ACCESS)

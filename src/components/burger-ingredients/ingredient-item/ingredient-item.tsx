@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import styles from './ingredient-item.module.css';
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {useDispatch, useSelector} from "react-redux";
 import {useDrag} from "react-dnd";
 import {BUN, CURRENT} from "../../../utils/constants";
 import {openModal} from "../../../services/reducers/modalSlice";
 import {modalTypes} from "../../../utils/modal-types";
-import {TStore} from "../../../services/reducers/store";
 import {Ingredient} from "../../../utils/types";
+import {useAppDispatch, useAppSelector} from "../../../hooks/hooks";
+import {burgerSelector} from "../../../services/reducers/burgerSlice";
 
 type Props = {
     item: Ingredient
@@ -15,8 +15,8 @@ type Props = {
 const IngredientItem = function({item} : Props) {
 
     const [counter, setCounter] = useState(0)
-    const dispatch = useDispatch()
-    const {cart} = useSelector((store: TStore) => store.burger)
+    const dispatch = useAppDispatch()
+    const {cart} = useAppSelector(burgerSelector)
 
     const [{isDragging}, drag] = useDrag(() => ({
         type: "ingredient",

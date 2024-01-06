@@ -1,5 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {Feed} from "../../utils/types";
+import {RootState} from "./store";
 
 const initialState: Feed = {
     orders: [],
@@ -21,5 +22,7 @@ reducers: {
 export const {
     updateData
 } = feedSlice.actions
+
+export const feedSelector = (state: RootState) => state.feed
 
 export default feedSlice.reducer

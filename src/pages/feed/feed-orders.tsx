@@ -2,13 +2,13 @@ import React from 'react';
 import FeedOrder from "./feed-order";
 import styles from "./orders.module.css"
 import {Link, useLocation} from "react-router-dom";
-import {useSelector} from "react-redux";
-import {TStore} from "../../services/reducers/store";
 import {useGetIngredientsQuery} from "../../services/reducers/burgerApi";
+import {feedSelector} from "../../services/reducers/feedSlice";
+import {useAppSelector} from "../../hooks/hooks";
 
 function FeedOrders() {
     const location = useLocation();
-    const {orders} = useSelector((store: TStore) => store.feed);
+    const {orders} = useAppSelector(feedSelector);
     const {
         data
     } = useGetIngredientsQuery(undefined);

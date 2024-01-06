@@ -1,4 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
+import {RootState} from "./store";
 
 type Order = {
     order: { orderNumber: number }
@@ -20,5 +21,6 @@ export const orderSlice = createSlice({
 export const {
     addOrderNumber
 } = orderSlice.actions
+export const orderSelector = (state: RootState) => state.order
 
 export default orderSlice.reducer

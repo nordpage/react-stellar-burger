@@ -12,28 +12,27 @@ import OrdersPage from "../../pages/orders";
 import React, {useEffect} from "react";
 import ProtectedRoute from "../../pages/protected-route/protectedRoute";
 import NotFound from "../../pages/not-found";
-import {closeModal, openModal} from "../../services/reducers/modalSlice";
+import {closeModal, modalSelector, openModal} from "../../services/reducers/modalSlice";
 import IngredientDetails from "../modal/ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
-import {useDispatch, useSelector} from "react-redux";
 import {modalTypes} from "../../utils/modal-types";
 import OrderDetails from "../modal/order-details/order-details";
-import {addOrderNumber} from "../../services/reducers/orderSlice";
+import {addOrderNumber, orderSelector} from "../../services/reducers/orderSlice";
 import {clearCart} from "../../services/reducers/burgerSlice";
 import AppHeader from "../header/appHeader";
 import {CURRENT, DETAILS, FEED} from "../../utils/constants";
 import FeedPage from "../../pages/feed/feed";
 import ProfileFeedPage from "../../pages/feed/profileFeed/profile-feed";
 import OrderFeedPage from "../../pages/feed/orderFeed/order-feed";
-import {TStore} from "../../services/reducers/store";
+import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 
 const App = function() {
     const location = useLocation();
     const navigate = useNavigate();
     const background = location.state && location.state.background;
-    const {modal} = useSelector((store: TStore) => store.modal)
-    const dispatch = useDispatch();
-    const {order} = useSelector((store: TStore) => store.order)
+    const {modal} = useAppSelector(modalSelector)
+    const dispatch = useAppDispatch();
+    const {order} = useAppSelector(orderSelector)
     const currentId = localStorage.getItem(CURRENT)
     const feedId = localStorage.getItem(FEED)
 

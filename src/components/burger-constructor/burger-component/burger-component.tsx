@@ -2,16 +2,14 @@ import React, {useCallback, useMemo} from "react";
 import {ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../burger-constructor.module.css";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
-import {useDispatch, useSelector} from "react-redux";
 import {useDrop} from "react-dnd";
 import {addToBurger, sorting} from "../../../services/reducers/burgerSlice";
-import {TStore} from "../../../services/reducers/store";
 import {Ingredient} from "../../../utils/types";
-import {useAppDispatch} from "../../../hooks/hooks";
+import {useAppDispatch, useAppSelector} from "../../../hooks/hooks";
 
 const BurgerComponent = function () {
 
-    const {cart} = useSelector((store:TStore) => store.burger)
+    const {cart} = useAppSelector((store) => store.burger)
     const dispatch = useAppDispatch()
 
 
@@ -37,7 +35,7 @@ const BurgerComponent = function () {
 
 
     const memorizedIngredients = useMemo(() => {
-        return cart.ingredients.map((ingredient, index) =>
+        return cart.ingredients.map((ingredient: Ingredient, index: number) =>
             renderIngredient(ingredient, index)
         )
     }, [cart.ingredients])

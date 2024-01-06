@@ -7,7 +7,6 @@ import {apiSlice} from "./apiSlice";
 import authReducer from './authSlice'
 import {feedSlice} from "./feedSlice";
 
-
 export const store = configureStore({
     reducer: {
         [burgerApi.reducerPath]: burgerApi.reducer,
@@ -22,13 +21,15 @@ export const store = configureStore({
         getDefaultMiddleware().concat(burgerApi.middleware).concat(apiSlice.middleware)
 })
 
-export type TStore = ReturnType<typeof store.getState>;
+export type RootState = ReturnType<typeof store.getState>;
 
 export type AppDispatch = typeof store.dispatch
+
 export type AppThunk<ReturnType = void> = ThunkAction<
     ReturnType,
-    TStore,
+    RootState,
     unknown,
     Action<string>
 >;
+
 

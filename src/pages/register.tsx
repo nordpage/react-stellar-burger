@@ -4,13 +4,13 @@ import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-deve
 import { useNavigate } from "react-router-dom";
 import {usePostRegisterMutation} from "../services/reducers/burgerApi";
 import {setCredentials} from "../services/reducers/authSlice";
-import {useDispatch} from "react-redux";
 import {ACCESS, REFRESH} from "../utils/constants";
 import {useForm} from "../hooks/useForm";
 import {Inputs} from "../utils/types";
+import {useAppDispatch} from "../hooks/hooks";
 
 const RegisterPage = () => {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const [postRegister] = usePostRegisterMutation();
 
